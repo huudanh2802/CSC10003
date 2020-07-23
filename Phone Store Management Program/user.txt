@@ -1,0 +1,81 @@
+10
+0
+nv1
+123456
+2001 02 28
+Nguyen Van 1
+908226178
+Staff
+
+0
+nv2
+123456
+2001 03 01
+Nguyen Van 2
+908226179
+Manager
+
+0
+nv3
+123456
+2001 08 09
+Nguyen Van 3
+908226180
+Staff
+
+0
+nv4
+123456
+2001 08 09
+Nguyen Van 4
+908226181
+Staff
+
+0
+nv5
+123456
+2001 10 10
+Nguyen Van 5
+908226182
+Manager
+
+1
+nv6
+123456
+2001 08 09
+Nguyen Van 6
+908226183
+27 Nguyen Van Cu
+
+1
+nv7
+123456
+2001 09 09
+Nguyen Van 7
+908226184
+28 Nguyen Van Cu
+
+1
+nv8
+123456
+2001 01 01
+Nguyen Van 8
+908226185
+29 Nguyen Van Cu
+
+1
+nv9
+123456
+2002 02 02
+Nguyen Van 9
+908226186
+30 Nguyen Van Cu
+
+1
+nv10
+123456
+2003 08 09
+Nguyen Van 10
+908226187
+31 Nguyen Van Cu
+
