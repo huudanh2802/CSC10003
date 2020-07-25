@@ -78,29 +78,7 @@ int main()
 			}
 			case 2:
 				login = new Customer;
-				do {
-					system("cls");
-					cout << "1.Show menu\n2.Create Account\n3.Logout" << endl;
-					cout << "Choose function :";
-					cin >> func;
-					switch (func)
-					{
-					case 1:
-						login->viewMenu(list);
-						break;
-					case 2:
-					{
-						system("pause");
-						system("cls");
-						break;
-					}
-					case 3:
-					{
-						system("cls");
-						break;
-					}
-					}
-				} while (func != 3);
+				login->viewMenu(list);
 				break;
 			}
 		}
