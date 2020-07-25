@@ -49,7 +49,7 @@ void Customer::viewMenu(Database& list)
 	if (name.compare("//")==0)
 	{
 		do {
-			cout << "1.View all product\n2.Add product to cart\n3.Search product\n4.View cart\n5.Remove product from cart\n6.View list of products based on categories\n7.Compare 2 products\n8.Checkout\n0.Exit\nChoice :";
+			cout << "1.View all product\n2.Add product to cart\n3.Search product\n4.View cart\n5.Remove product from cart\n6.View list of products based on categories\n7.Compare 2 products\n8.Checkout\n9.Create account\n0.Exit\nChoice :";
 			cin >> choice;
 			switch (choice)
 			{
@@ -61,6 +61,7 @@ void Customer::viewMenu(Database& list)
 			case 6: break;
 			case 7: break;
 			case 8: break;
+			case 9: break;
 			case 0: break;
 			}
 		} while (choice != 0);
