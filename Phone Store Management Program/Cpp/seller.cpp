@@ -1,4 +1,5 @@
 #include "..//Header//seller.h"
+#include "..//Header//customer.h"
 
 Seller::Seller():Account()
 {
@@ -65,4 +66,20 @@ void Seller::viewMenu(Database& list)
 		case 0: break;
 		}
 	} while (choice != 0);
+}
+
+/*void Seller::serchviewProfilecustomer(Database&list)
+{
+	string s;
+	cout << "Enter name of customer you want to search: ";
+	getline(cin, s);
+	for (int i = 0; i < list.Number(); i++)
+	{
+		if(strcmp(s,list.))
+	}
+}*/
+
+int Seller::checkAccount()
+{
+	return 0;
 }

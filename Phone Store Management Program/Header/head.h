@@ -30,6 +30,7 @@ public:
 	int checkLogin(const string& input_username, const string& input_password);
 	Account* login(const string& input_username, const string& input_pass);
 	void changePassword();
+	virtual int checkAccount() = 0;
 };
 
 class Database {
@@ -40,6 +41,8 @@ public:
 	void deleteData();
 	void loadData(ifstream& user_data);
 	Account* login();
+	int Number();
+	void Searchname();
 };
 
 class Product {

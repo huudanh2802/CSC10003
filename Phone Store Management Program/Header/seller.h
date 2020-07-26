@@ -15,6 +15,8 @@ public:
 	void outputData(ofstream& fin);
 	void viewProfile();
 	void viewMenu(Database& list);// Store and execute function, pass in Database for function edit, search account
+	void serchviewProfilecustomer(Database& list);
+	int checkAccount();;
 };
 
 #endif

@@ -91,3 +91,17 @@ void Customer::viewMenu(Database& list)
 		} while (choice != 0);
 	}
 }
+
+int Customer::checkName(const string &searchname)
+{
+	if (name.compare(searchname) == 0)
+	{
+		return 1;
+	}
+	return 0;
+}
+
+int Customer::checkAccount()
+{
+	return 1;
+}

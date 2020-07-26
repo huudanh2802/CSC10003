@@ -90,6 +90,11 @@ Account* Database::login()
 	return account;
 }
 
+int Database::Number()
+{
+	return num;
+}
+
 void Account::outputData(ofstream& user_data)
 {
 	user_data << user << endl;
@@ -145,4 +150,21 @@ Voucher::Voucher()
 	expire.d = 0;
 	expire.y = 0;
 	expire.m = 0;
+}
+
+void Database::Searchname()
+{
+	string searchname;
+	cout << "Enter name of customer you want to search: ";
+	getline(cin, searchname);
+	for (int i = 0; i < num; i++)
+	{
+		if (data[i]->checkAccount() == 1)
+		{
+			if (data[i].Customer::checkName(searchname))
+			{
+				data[i]->viewProfile();
+			}
+		}
+	}
 }

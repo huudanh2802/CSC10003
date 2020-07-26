@@ -15,6 +15,9 @@ public:
 	void outputData(ofstream& fin);
 	void viewProfile();
 	void viewMenu(Database& list);// Store and execute function, pass in Database for function create, change profile information 
+	int checkName(const string& searchname);
+	string Searchname();
+	int checkAccount();
 };
 
 #endif
