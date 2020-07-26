@@ -161,7 +161,7 @@ void Database::Searchname()
 	{
 		if (data[i]->checkAccount() == 1)
 		{
-			if (data[i].Customer::checkName(searchname))
+			if (data[i]->checkName(searchname))
 			{
 				data[i]->viewProfile();
 			}

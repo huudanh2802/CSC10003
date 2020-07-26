@@ -83,3 +83,12 @@ int Seller::checkAccount()
 {
 	return 0;
 }
+
+int Seller::checkName(const string& searchname)
+{
+	if (name.compare(searchname) == 0)
+	{
+		return 1;
+	}
+	return 0;
+}
