@@ -151,20 +151,3 @@ Voucher::Voucher()
 	expire.y = 0;
 	expire.m = 0;
 }
-
-void Database::Searchname()
-{
-	string searchname;
-	cout << "Enter name of customer you want to search: ";
-	getline(cin, searchname);
-	for (int i = 0; i < num; i++)
-	{
-		if (data[i]->checkAccount() == 1)
-		{
-			if (data[i]->checkName(searchname))
-			{
-				data[i]->viewProfile();
-			}
-		}
-	}
-}
