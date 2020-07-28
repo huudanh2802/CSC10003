@@ -14,7 +14,7 @@ int main()
 		exit(0);
 	}
 	list.loadData(data_file);
-	int time = 0,choice;
+	int time = 0, choice;
 	int func;
 	do {
 		int status = 0;
@@ -30,7 +30,7 @@ int main()
 			list.deleteData();
 			return 0;
 		}
-		else 
+		else
 		{
 			system("cls");
 			++time;

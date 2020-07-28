@@ -1,7 +1,7 @@
 #include "..//Header//seller.h"
 #include "..//Header//customer.h"
 
-Seller::Seller():Account()
+Seller::Seller() :Account()
 {
 	name = "//";
 	title = "//";
@@ -31,7 +31,7 @@ void Seller::outputData(ofstream& user_data)
 	Account::outputData(user_data);
 	user_data << dob.y << " " << setfill('0') << setw(2) << dob.m << " " << setfill('0') << setw(2) << dob.d << endl;
 	user_data << name << endl;
-	user_data << setfill('0') << setw(10)<< phone << endl;
+	user_data << setfill('0') << setw(10) << phone << endl;
 	user_data << title << endl;
 }
 

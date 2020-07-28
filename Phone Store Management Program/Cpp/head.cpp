@@ -41,7 +41,7 @@ void Database::loadData(ifstream& user_data) //Load user from user.txt
 void Database::deleteData() //Deallocate vector data
 {
 	ofstream user_data;
-	user_data.open(((string)".//Data//user.txt").c_str(),ios::trunc);
+	user_data.open(((string)".//Data//user.txt").c_str(), ios::trunc);
 	if (!user_data.is_open()) {
 		cout << "user.txt can't be opened" << endl;
 		exit(0);
@@ -65,7 +65,7 @@ int Account::checkLogin(const string& input_username, const string& input_passwo
 
 Account* Database::login()
 {
-	Account* account =nullptr;
+	Account* account = nullptr;
 	string input_username, input_password;
 	while (true)
 	{
@@ -122,8 +122,8 @@ void Account::changePassword()
 		enterPass(tempPass1);
 		cout << "\nConfirm new password:";
 		enterPass(tempPass2);
-		if (tempPass1.compare( tempPass2) != 0) cout << "\nNew Password and confirmed new password is different" << endl;
-		else if (pass.compare( tempPass1) == 0) cout << "\nNew Password must different from old password" << endl;
+		if (tempPass1.compare(tempPass2) != 0) cout << "\nNew Password and confirmed new password is different" << endl;
+		else if (pass.compare(tempPass1) == 0) cout << "\nNew Password must different from old password" << endl;
 		else break;
 	};
 	pass = tempPass1;

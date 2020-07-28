@@ -1,6 +1,6 @@
 #include "..//Header//customer.h"
 
-Customer::Customer():Account()
+Customer::Customer() :Account()
 {
 	name = "//";
 	address = "//";
@@ -46,7 +46,7 @@ void Customer::viewProfile()
 void Customer::viewMenu(Database& list)
 {
 	int choice;
-	if (name.compare("//")==0)
+	if (name.compare("//") == 0)
 	{
 		do {
 			cout << "1.View all product\n2.Add product to cart\n3.Search product\n4.View cart\n5.Remove product from cart\n6.View list of products based on categories\n7.Compare 2 products\n8.Checkout\n9.Create account\n0.Exit\nChoice :";
@@ -92,7 +92,7 @@ void Customer::viewMenu(Database& list)
 	}
 }
 
-int Customer::checkName(const string &searchname)
+int Customer::checkName(const string& searchname)
 {
 	if (name.compare(searchname) == 0)
 	{
