@@ -32,6 +32,7 @@ public:
 	void changePassword();
 	virtual int checkName(const string& searchname) = 0;
 	virtual int checkAccount() = 0;
+	virtual void editProfile() = 0;
 };
 
 class Database {
@@ -43,7 +44,8 @@ public:
 	void loadData(ifstream& user_data);
 	Account* login();
 	int Number();
-	void Searchname();
+	void searchviewProfilecustomer();
+	void editProfilecustomer();
 };
 
 class Product {

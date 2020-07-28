@@ -105,3 +105,16 @@ int Customer::checkAccount()
 {
 	return 1;
 }
+
+void Customer::editProfile()
+{
+	cout << "Enter date of birth: ";
+	cin >> dob.d >> dob.m >> dob.y;
+	cout << "Enter phone: ";
+	cin >> phone;
+	cout << "Enter name: ";
+	getline(cin, name);
+	getline(cin, name);
+	cout << "Enter address: ";
+	getline(cin, address);
+}

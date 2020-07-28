@@ -58,8 +58,8 @@ void Seller::viewMenu(Database& list)
 		case 4: break;
 		case 5: break;
 		case 6: break;
-		case 7: break;
-		case 8: break;
+		case 7: list.searchviewProfilecustomer(); break;
+		case 8: list.editProfilecustomer(); break;
 		case 9: break;
 		case 10: break;
 		case 11: break;
@@ -67,17 +67,6 @@ void Seller::viewMenu(Database& list)
 		}
 	} while (choice != 0);
 }
-
-/*void Seller::serchviewProfilecustomer(Database&list)
-{
-	string s;
-	cout << "Enter name of customer you want to search: ";
-	getline(cin, s);
-	for (int i = 0; i < list.Number(); i++)
-	{
-		if(strcmp(s,list.))
-	}
-}*/
 
 int Seller::checkAccount()
 {
@@ -92,3 +81,74 @@ int Seller::checkName(const string& searchname)
 	}
 	return 0;
 }
+
+void Database::searchviewProfilecustomer()
+{
+	int flag = 0;
+	string searchname;
+	cout << "Enter name of customer you want to search and view: ";
+	getline(cin, searchname);
+	getline(cin, searchname);
+	for (int i = 0; i < num; i++)
+	{
+		if (data[i]->checkAccount() == 1)
+		{
+			if (data[i]->checkName(searchname))
+			{
+				data[i]->viewProfile();
+				flag = 1;
+			}
+		}
+	}
+	if (flag == 0)
+	{
+		cout << "Can't find customer" << endl;
+	}
+	else
+	{
+		cout << "Edit successfully" << endl;
+	}
+}
+
+void Seller:: editProfile()
+{
+	cout << "Enter date of birth: ";
+	cin >> dob.d >> dob.m >> dob.y;
+	cout << "Enter phone: ";
+	cin >> phone;
+	cout << "Enter name: ";
+	getline(cin, name);
+	getline(cin, name);
+	cout << "Enter title: ";
+	getline(cin, title);
+}
+
+void Database::editProfilecustomer()
+{
+	int flag = 0;
+	string searchname;
+	cout << "Enter name of customer you want to edit: ";
+	getline(cin, searchname);
+	getline(cin, searchname);
+	for (int i = 0; i < num; i++)
+	{
+		if (data[i]->checkAccount() == 1)
+		{
+			if (data[i]->checkName(searchname))
+			{
+				data[i]->editProfile();
+				flag = 1;
+			}
+		}
+	}
+	if (flag == 0)
+	{
+		cout << "Can't find customer" << endl;
+	}
+	else
+	{
+		cout << "Edit successfully" << endl;
+	}
+}
+
+
