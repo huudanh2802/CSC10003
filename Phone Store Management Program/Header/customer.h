@@ -18,6 +18,11 @@ public:
 	int checkName(const string& searchname);
 	int checkAccount();
 	void editProfile();
+	int Type();
+	string Name();
+	string getAddress();
+	Date Dob();
+	int Phone();
 };
 
 #endif

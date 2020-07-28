@@ -43,6 +43,31 @@ void Customer::viewProfile()
 	cout << "Address :" << address << endl;
 }
 
+int Customer::Type()
+{
+	return 1;
+}
+
+string Customer::Name()
+{
+	return name;
+}
+
+string Customer::getAddress()
+{
+	return address;
+}
+
+Date Customer::Dob()
+{
+	return dob;
+}
+
+int Customer::Phone()
+{
+	return phone;
+}
+
 void Customer::viewMenu(Database& list)
 {
 	int choice;

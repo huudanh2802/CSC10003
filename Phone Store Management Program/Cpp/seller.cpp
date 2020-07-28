@@ -44,6 +44,31 @@ void Seller::viewProfile()
 	cout << "Title :" << title << endl;
 }
 
+int Seller::Type()
+{
+	return 0;
+}
+
+string Seller::Name()
+{
+	return name;
+}
+
+string Seller::getAddress()
+{
+	return 0;
+}
+
+Date Seller::Dob()
+{
+	return dob;
+}
+
+int Seller::Phone()
+{
+	return phone;
+}
+
 void Seller::viewMenu(Database& list)
 {
 	int choice;
@@ -60,7 +85,7 @@ void Seller::viewMenu(Database& list)
 		case 6: break;
 		case 7: list.searchviewProfilecustomer(); break;
 		case 8: list.editProfilecustomer(); break;
-		case 9: break;
+		case 9: list.exportCustomerlist(); break;
 		case 10: break;
 		case 11: break;
 		case 0: break;
@@ -104,10 +129,6 @@ void Database::searchviewProfilecustomer()
 	{
 		cout << "Can't find customer" << endl;
 	}
-	else
-	{
-		cout << "Edit successfully" << endl;
-	}
 }
 
 void Seller:: editProfile()
@@ -148,6 +169,28 @@ void Database::editProfilecustomer()
 	else
 	{
 		cout << "Edit successfully" << endl;
+	}
+}
+
+void Database::exportCustomerlist()
+{
+	int flag = 0;
+	ofstream fo;
+	fo.open("Data/Customerlist.csv");
+	char s[] = "Name,Date of birth,Phone,Address\n";
+	fo << s;
+	for (int i = 0; i < data.size(); i++)
+	{
+		if (data[i]->Type() == 1)
+		{
+			flag = 1;
+			fo << data[i]->Name() << ","<< data[i]->Dob().y << "/" << data[i]->Dob().m << "/" << data[i]->Dob().d << "," << data[i]->Phone() << "," << data[i]->getAddress() << endl;
+		}
+	}
+	fo.close();
+	if (flag == 1)
+	{
+		cout << "Export successfully" << endl;
 	}
 }
 
