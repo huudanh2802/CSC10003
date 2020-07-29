@@ -10,11 +10,16 @@
 #include <vector>
 #include <stdexcept>
 #include <conio.h>
+#include<sstream>
+#include<time.h>
+#include<stdlib.h>
+
 
 using namespace std;
 
 struct Date {
 	int d, m, y;
+	void input();
 };
 
 class Database;
@@ -42,12 +47,34 @@ public:
 	Account* login();
 };
 
+
+/// PRODUCT
 class Product {
-private:int ID, price, stock;
-	   string name;
+private:
+	int ID, price, stock;
+	string name;
 public:
 	Product();
+	void loadFromCSV(ifstream& fin, string data);
+	void saveToTxt(ofstream& fout);
+	void loadFromTxt(ifstream& fin);
+	bool operator == (const Product&);
+	
 };
+
+class Store {
+private:
+	string name;
+	vector<Product*> store;
+public:
+	void loadFromCSV();
+	void saveToTxt();
+	void loadFromTxt();
+	void importProductFromCSV();
+};
+
+
+/// </PRODUCT>
 
 class Order {
 private:int ID, num;
@@ -58,7 +85,11 @@ public:
 
 class Voucher {
 private:Date expire;
+	   int code;
 	   int stock, discount;
 public:Voucher();
+	  void createVoucher();
+	  void loadFromTxt();
+	  void saveToTxt();
 };
 #endif

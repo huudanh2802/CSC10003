@@ -13,6 +13,109 @@ Database::Database()
 	num = 0;
 }
 
+void Date::input() {
+	cout << "Day: ";
+	cin >> d;
+	cout << "Month";
+	cin >> m;
+	cout << "Year: ";
+	cin >> y;
+}
+
+// PRODUCT 
+Product::Product() {
+	ID = 0;
+	price = 0;
+	stock = 0;
+	name = "";
+}
+
+bool Product::operator==(const Product& a) {
+	if (a.ID == this->ID) return true;
+	return false;
+}
+
+
+void Product::loadFromCSV(ifstream& fin, string data) {
+
+	stringstream ss(data);
+	string tmp = "";
+
+	getline(ss, tmp, ',');
+	ID = stoi(tmp);
+
+	getline(ss, tmp, ',');
+	name = tmp;
+
+	getline(ss, tmp, ',');
+	price = stoi(tmp);
+
+	getline(ss, tmp, '\n');
+	stock = stoi(tmp);
+
+}
+
+void Product::saveToTxt(ofstream& fout)
+{
+	fout << ID << endl;
+	fout << name << endl;
+	fout << price << endl;
+	fout << stock << endl;
+}
+
+void Product::loadFromTxt(ifstream& fin) {
+	fin >> ID;
+
+	fin.ignore(1);
+	getline(fin, name, '\n');
+
+	fin >> price;
+	fin >> stock;
+
+}
+
+void Store::loadFromCSV() {
+	ifstream fin;
+	fin.open("Product.csv");
+
+	string s;
+	getline(fin, s);
+
+	Product* p;
+
+	while (getline(fin, s)) {
+		p = NULL;
+		p = new Product;
+		p->loadFromCSV(fin, s);
+		store.push_back(p);
+	}
+
+	fin.close();
+}
+
+void Store::loadFromTxt() {
+	ifstream fin;
+	int n;
+
+	Product* p;
+
+	fin >> n;
+	for (int i = 0; i < n; i++)
+	{
+		p = NULL;
+		p = new Product;
+		p->loadFromTxt(fin);
+		store.push_back(p);
+	}
+
+	fin.close();
+}
+
+
+
+// <\PRODUCT> 
+
+
 void Account::inputData(ifstream& user_data) //Get username and password
 {
 	getline(user_data, user);
@@ -124,13 +227,6 @@ void Account::changePassword()
 	pass = tempPass1;
 }
 
-Product::Product()
-{
-	ID = 0;
-	price = 0;
-	stock = 0;
-	name = "//";
-}
 
 Order::Order()
 {
@@ -138,11 +234,33 @@ Order::Order()
 	num = 0;
 }
 
+// VOUCHER
 Voucher::Voucher()
 {
+	srand(unsigned(time(NULL)));
+	code = 0;
 	stock = 0;
 	discount = 0;
 	expire.d = 0;
 	expire.y = 0;
 	expire.m = 0;
 }
+
+void Voucher::createVoucher() {
+	cout << "The number of voucher you want to create: ";
+	cin >> stock;
+	cout << "Expire date: "<<endl;
+	expire.input();
+	cout << "Discount (ex: 200.000 vnd) : ";
+	cin >> discount;
+	code = rand() % (RAND_MAX) + 1000;
+}
+
+void Voucher::saveToTxt() {
+	ofstream voucher_txt;
+	voucher_txt.open("Voucher.txt");
+	voucher_txt << code<<endl;
+	voucher_txt << expire.y<<" " << expire.m<<" "<<expire.d<<endl ;
+	voucher_txt << stock;
+}
+
