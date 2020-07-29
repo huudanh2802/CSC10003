@@ -35,6 +35,14 @@ public:
 	int checkLogin(const string& input_username, const string& input_password);
 	Account* login(const string& input_username, const string& input_pass);
 	void changePassword();
+	virtual int checkName(const string& searchname) = 0;
+	virtual int checkAccount() = 0;
+	virtual void editProfile() = 0;
+	virtual int Type() = 0;
+	virtual string Name() = 0;
+	virtual string getAddress() = 0;
+	virtual Date Dob() = 0;
+	virtual int Phone() = 0;
 };
 
 class Database {
@@ -45,6 +53,10 @@ public:
 	void deleteData();
 	void loadData(ifstream& user_data);
 	Account* login();
+	int Number();
+	void searchviewProfilecustomer();
+	void editProfilecustomer();
+	void exportCustomerlist();
 };
 
 

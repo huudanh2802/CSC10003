@@ -1,6 +1,7 @@
 #include "..//Header//seller.h"
+#include "..//Header//customer.h"
 
-Seller::Seller():Account()
+Seller::Seller() :Account()
 {
 	name = "//";
 	title = "//";
@@ -30,7 +31,7 @@ void Seller::outputData(ofstream& user_data)
 	Account::outputData(user_data);
 	user_data << dob.y << " " << setfill('0') << setw(2) << dob.m << " " << setfill('0') << setw(2) << dob.d << endl;
 	user_data << name << endl;
-	user_data << setfill('0') << setw(10)<< phone << endl;
+	user_data << setfill('0') << setw(10) << phone << endl;
 	user_data << title << endl;
 }
 
@@ -41,6 +42,31 @@ void Seller::viewProfile()
 	cout << "DOB :" << dob.d << "/" << dob.m << "/" << dob.y << endl;
 	cout << "Phone number:" << setfill('0') << setw(10) << phone << endl;
 	cout << "Title :" << title << endl;
+}
+
+int Seller::Type()
+{
+	return 0;
+}
+
+string Seller::Name()
+{
+	return name;
+}
+
+string Seller::getAddress()
+{
+	return 0;
+}
+
+Date Seller::Dob()
+{
+	return dob;
+}
+
+int Seller::Phone()
+{
+	return phone;
 }
 
 void Seller::viewMenu(Database& list)
@@ -57,12 +83,115 @@ void Seller::viewMenu(Database& list)
 		case 4: break;
 		case 5: break;
 		case 6: break;
-		case 7: break;
-		case 8: break;
-		case 9: break;
+		case 7: list.searchviewProfilecustomer(); break;
+		case 8: list.editProfilecustomer(); break;
+		case 9: list.exportCustomerlist(); break;
 		case 10: break;
 		case 11: break;
 		case 0: break;
 		}
 	} while (choice != 0);
 }
+
+int Seller::checkAccount()
+{
+	return 0;
+}
+
+int Seller::checkName(const string& searchname)
+{
+	if (name.compare(searchname) == 0)
+	{
+		return 1;
+	}
+	return 0;
+}
+
+void Database::searchviewProfilecustomer()
+{
+	int flag = 0;
+	string searchname;
+	cout << "Enter name of customer you want to search and view: ";
+	getline(cin, searchname);
+	getline(cin, searchname);
+	for (int i = 0; i < num; i++)
+	{
+		if (data[i]->checkAccount() == 1)
+		{
+			if (data[i]->checkName(searchname))
+			{
+				data[i]->viewProfile();
+				flag = 1;
+			}
+		}
+	}
+	if (flag == 0)
+	{
+		cout << "Can't find customer" << endl;
+	}
+}
+
+void Seller:: editProfile()
+{
+	cout << "Enter date of birth: ";
+	cin >> dob.d >> dob.m >> dob.y;
+	cout << "Enter phone: ";
+	cin >> phone;
+	cout << "Enter name: ";
+	getline(cin, name);
+	getline(cin, name);
+	cout << "Enter title: ";
+	getline(cin, title);
+}
+
+void Database::editProfilecustomer()
+{
+	int flag = 0;
+	string searchname;
+	cout << "Enter name of customer you want to edit: ";
+	getline(cin, searchname);
+	getline(cin, searchname);
+	for (int i = 0; i < num; i++)
+	{
+		if (data[i]->checkAccount() == 1)
+		{
+			if (data[i]->checkName(searchname))
+			{
+				data[i]->editProfile();
+				flag = 1;
+			}
+		}
+	}
+	if (flag == 0)
+	{
+		cout << "Can't find customer" << endl;
+	}
+	else
+	{
+		cout << "Edit successfully" << endl;
+	}
+}
+
+void Database::exportCustomerlist()
+{
+	int flag = 0;
+	ofstream fo;
+	fo.open("Data/Customerlist.csv");
+	char s[] = "Name,Date of birth,Phone,Address\n";
+	fo << s;
+	for (int i = 0; i < data.size(); i++)
+	{
+		if (data[i]->Type() == 1)
+		{
+			flag = 1;
+			fo << data[i]->Name() << ","<< data[i]->Dob().y << "/" << data[i]->Dob().m << "/" << data[i]->Dob().d << "," << data[i]->Phone() << "," << data[i]->getAddress() << endl;
+		}
+	}
+	fo.close();
+	if (flag == 1)
+	{
+		cout << "Export successfully" << endl;
+	}
+}
+
+

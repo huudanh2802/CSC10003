@@ -1,6 +1,6 @@
 #include "..//Header//customer.h"
 
-Customer::Customer():Account()
+Customer::Customer() :Account()
 {
 	name = "//";
 	address = "//";
@@ -43,10 +43,35 @@ void Customer::viewProfile()
 	cout << "Address :" << address << endl;
 }
 
+int Customer::Type()
+{
+	return 1;
+}
+
+string Customer::Name()
+{
+	return name;
+}
+
+string Customer::getAddress()
+{
+	return address;
+}
+
+Date Customer::Dob()
+{
+	return dob;
+}
+
+int Customer::Phone()
+{
+	return phone;
+}
+
 void Customer::viewMenu(Database& list)
 {
 	int choice;
-	if (name.compare("//")==0)
+	if (name.compare("//") == 0)
 	{
 		do {
 			cout << "1.View all product\n2.Add product to cart\n3.Search product\n4.View cart\n5.Remove product from cart\n6.View list of products based on categories\n7.Compare 2 products\n8.Checkout\n9.Create account\n0.Exit\nChoice :";
@@ -90,4 +115,31 @@ void Customer::viewMenu(Database& list)
 			}
 		} while (choice != 0);
 	}
+}
+
+int Customer::checkName(const string& searchname)
+{
+	if (name.compare(searchname) == 0)
+	{
+		return 1;
+	}
+	return 0;
+}
+
+int Customer::checkAccount()
+{
+	return 1;
+}
+
+void Customer::editProfile()
+{
+	cout << "Enter date of birth: ";
+	cin >> dob.d >> dob.m >> dob.y;
+	cout << "Enter phone: ";
+	cin >> phone;
+	cout << "Enter name: ";
+	getline(cin, name);
+	getline(cin, name);
+	cout << "Enter address: ";
+	getline(cin, address);
 }

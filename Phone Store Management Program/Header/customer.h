@@ -11,10 +11,18 @@ private:int type;
 	   string address;
 public:
 	Customer();
-	void inputData(ifstream &user_data);
+	void inputData(ifstream& user_data);
 	void outputData(ofstream& fin);
 	void viewProfile();
-	void viewMenu(Database& list);// Store and execute function, pass in Database for function create, change profile information 
+	void viewMenu(Database& list);// Store and execute function, pass in Database for function create, change profile information
+	int checkName(const string& searchname);
+	int checkAccount();
+	void editProfile();
+	int Type();
+	string Name();
+	string getAddress();
+	Date Dob();
+	int Phone();
 };
 
 #endif

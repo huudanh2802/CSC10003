@@ -193,6 +193,11 @@ Account* Database::login()
 	return account;
 }
 
+int Database::Number()
+{
+	return num;
+}
+
 void Account::outputData(ofstream& user_data)
 {
 	user_data << user << endl;
