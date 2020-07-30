@@ -137,6 +137,61 @@ Product::Product()
 	name = "//";
 }
 
+
+
+void Product::createProduct()
+{
+	vector <Product*> p;
+	loadProduct(p);
+	Product* tmp = nullptr;
+	tmp = new Product;
+	cout << "Enter ID: ";
+	cin >> tmp->ID;
+	cout << "Enter name: ";
+	getline(cin, tmp->name);
+	getline(cin, tmp->name);
+	cout << "Enter price: ";
+	cin >> tmp->price;
+	cout << "Enter stock: ";
+	cin >> tmp->stock;
+	p.push_back(tmp);
+	saveProduct(p);
+}
+
+void Product::loadProduct(vector <Product*> &p)
+{
+	int n;
+	Product* pd;
+	ifstream fin;
+	fin.open("Data/product.txt");
+	fin >> n;
+	for (int i = 0; i < n; i++)
+	{
+		pd = nullptr;
+		pd = new Product;
+		fin >> pd->ID;
+		getline(fin, pd->name);
+		getline(fin, pd->name);
+		fin >> pd->price;
+		fin >> pd->stock;
+		p.push_back(pd);
+	}
+}
+
+void Product::saveProduct(vector<Product*> p)
+{
+	ofstream fout;
+	fout.open("Data/product.txt");
+	fout << p.size() << endl;
+	for (int i = 0; i < p.size(); i++)
+	{
+		fout << p[i]->ID << endl;
+		fout << p[i]->name << endl;
+		fout << p[i]->price << endl;
+		fout << p[i]->stock << endl;
+	}
+}
+
 Order::Order()
 {
 	ID = 0;

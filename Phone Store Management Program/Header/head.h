@@ -59,6 +59,10 @@ private:int ID, price, stock;
 	   string name;
 public:
 	Product();
+	void createProduct();
+	void loadProduct(vector <Product*> &p);
+	void saveProduct(vector <Product*> p);
+
 };
 
 class Order {
