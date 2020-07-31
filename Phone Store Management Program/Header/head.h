@@ -74,6 +74,10 @@ public:
 	void loadFromTxt(ifstream& fin);
 	bool comparingID (const Product&);
 	void updateStock(const Product&);
+	void createProduct();
+	void loadProduct(vector <Product*> &p);
+	void saveProduct(vector <Product*> p);
+
 };
 
 class Store {
