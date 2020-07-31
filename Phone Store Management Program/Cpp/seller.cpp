@@ -75,13 +75,15 @@ void Seller::viewMenu(Database& list)
 	do {
 		cout << "1.Import list of product from csv file\n2.Create product\n3.Edit information of the product\n4.Search and view information of a product\n5.Create voucher\n6.Remove product\n7.Search and view profile of a customer\n8.Edit customer profile\n9.Export list of customer to a csv file\n10.View list of purchased in a month\n11.Edit order status\n0.Exit\nChoice :";
 		cin >> choice;
+		Store listProduct;
+		Voucher voucher;
 		switch (choice)
 		{
-		case 1: break;
+		case 1: listProduct.importProductFromCSV(); break;
 		case 2: break;
 		case 3: break;
 		case 4: break;
-		case 5: break;
+		case 5: voucher.createVoucher();   break;
 		case 6: break;
 		case 7: list.searchviewProfilecustomer(); break;
 		case 8: list.editProfilecustomer(); break;

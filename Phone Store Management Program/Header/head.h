@@ -35,6 +35,7 @@ public:
 	int checkLogin(const string& input_username, const string& input_password);
 	Account* login(const string& input_username, const string& input_pass);
 	void changePassword();
+	virtual void createAccount();
 	virtual int checkName(const string& searchname) = 0;
 	virtual int checkAccount() = 0;
 	virtual void editProfile() = 0;
@@ -57,10 +58,11 @@ public:
 	void searchviewProfilecustomer();
 	void editProfilecustomer();
 	void exportCustomerlist();
+	void createAccount();
 };
 
 
-/// PRODUCT
+/// <PRODUCT>
 class Product {
 private:
 	int ID, price, stock;
@@ -70,8 +72,8 @@ public:
 	void loadFromCSV(ifstream& fin, string data);
 	void saveToTxt(ofstream& fout);
 	void loadFromTxt(ifstream& fin);
-	bool operator == (const Product&);
-	
+	bool comparingID (const Product&);
+	void updateStock(const Product&);
 };
 
 class Store {
@@ -79,10 +81,11 @@ private:
 	string name;
 	vector<Product*> store;
 public:
-	void loadFromCSV();
+	void loadFromCSV(ifstream& fin);
 	void saveToTxt();
 	void loadFromTxt();
 	void importProductFromCSV();
+	void deleteListProduct();
 };
 
 

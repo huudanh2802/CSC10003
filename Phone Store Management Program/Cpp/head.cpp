@@ -16,7 +16,7 @@ Database::Database()
 void Date::input() {
 	cout << "Day: ";
 	cin >> d;
-	cout << "Month";
+	cout << "Month: ";
 	cin >> m;
 	cout << "Year: ";
 	cin >> y;
@@ -30,7 +30,7 @@ Product::Product() {
 	name = "";
 }
 
-bool Product::operator==(const Product& a) {
+bool Product::comparingID(const Product& a) {
 	if (a.ID == this->ID) return true;
 	return false;
 }
@@ -74,11 +74,14 @@ void Product::loadFromTxt(ifstream& fin) {
 
 }
 
-void Store::loadFromCSV() {
-	ifstream fin;
-	fin.open("Product.csv");
+void Product::updateStock(const Product& temp) {
+	this->stock += temp.stock;
+}
 
+void Store::loadFromCSV(ifstream& fin) {
+	
 	string s;
+	fin.ignore(1);
 	getline(fin, s);
 
 	Product* p;
@@ -96,7 +99,7 @@ void Store::loadFromCSV() {
 void Store::loadFromTxt() {
 	ifstream fin;
 	int n;
-
+	fin.open(".//Data//Product.txt");
 	Product* p;
 
 	fin >> n;
@@ -111,6 +114,65 @@ void Store::loadFromTxt() {
 	fin.close();
 }
 
+void Store::saveToTxt() {
+	ofstream fout;
+	fout.open(".//Data//Product.txt");
+
+	fout << store.size() << endl;
+	for (int i = 0; i < store.size(); i++)
+	{
+		store[i]->saveToTxt(fout);
+	}
+}
+
+void Store::deleteListProduct() { 
+	for (int i = 0; i < store.size(); i++)
+	{
+		delete store[i];
+	}
+	store.clear();
+}
+
+void Store::importProductFromCSV() {
+	Date tempDate;
+	cout << "Import date: " << endl;
+	tempDate.input();
+
+	string tempStr;
+	tempStr = to_string(tempDate.y) + to_string(tempDate.m) + to_string(tempDate.d);
+	tempStr = "Product" + tempStr + ".csv";
+	ifstream fin;
+	fin.open(tempStr);
+	Store fromCsv;
+	if(fin.is_open())
+		fromCsv.loadFromCSV(fin);
+	else {
+		cout << "Can not open this file" << endl;
+		return;
+	}
+	loadFromTxt();
+
+	Product* temp = NULL;
+	for (int i = 0; i < fromCsv.store.size(); i++)
+	{
+		int flag = 0;
+		for (int j = 0; j < store.size(); j++)
+		{
+			if (store[j]->comparingID(*fromCsv.store[i])) {
+				store[j]->updateStock(*fromCsv.store[i]);
+				flag = 1;
+			}
+			
+		}
+		if (flag == 0) {
+		temp = fromCsv.store[i];
+		store.push_back(temp);
+		}
+	}
+
+	saveToTxt();
+	deleteListProduct();
+}
 
 
 // <\PRODUCT> 
@@ -193,6 +255,13 @@ Account* Database::login()
 	return account;
 }
 
+void Database::createAccount() {
+	Customer* acc = new Customer;
+	acc->createAccount();
+	data.push_back(acc);
+	num++;
+}
+
 int Database::Number()
 {
 	return num;
@@ -232,12 +301,20 @@ void Account::changePassword()
 	pass = tempPass1;
 }
 
+void Account::createAccount() {
+	cout << "Enter user name: ";
+	getline(cin, user);
+	getline(cin, user);
+	cout << "Enter password: ";
+	enterPass(pass);
+}
 
 Order::Order()
 {
 	ID = 0;
 	num = 0;
 }
+
 
 // VOUCHER
 Voucher::Voucher()

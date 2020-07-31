@@ -23,6 +23,7 @@ public:
 	string getAddress();
 	Date Dob();
 	int Phone();
+	void createAccount();
 };
 
 #endif
