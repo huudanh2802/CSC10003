@@ -335,6 +335,7 @@ void Product::createProduct()
 				cin >> check;
 				if (check == 2) return;
 			}
+			if (check == 1) break;
 		}
 	}
 	cout << "Name: ";
@@ -363,9 +364,105 @@ void Product::viewProduct()
 	vector <Product*> p;
 	loadProduct(p);
 	listProduct();
+	if (p.size() == 0) return;
 	cout << "Would you like to see product information? (1: Yes/ 2. No)" << endl;
 	cin >> choose;
-	if (choose == 1) viewProductInf(p);
+	if (choose == 1)
+	{
+		int no;
+		cout << "Enter numerical order to view product information: ";
+		cin >> no;
+		viewProductInf(p, no);
+	}
+}
+
+void Product::editProduct()
+{
+	system("cls");
+	int no, choose;
+	vector <Product*> p;
+	loadProduct(p);
+	listProduct();
+	if (p.size() == 0) return;
+	cout << "Enter numerical order to edit product information:  ";
+	cin >> no;
+	viewProductInf(p, no);
+	int retry = 1, check = 1, flag = 0;
+	while (retry == 1) {
+		flag = 1;
+		cout << "Select the information to edit\n1. ID\n2. Name\n3. Price\n4. Stock\n5. CPU\n6. Ram\n7. Storage\n0. Exit\n";
+		cin >> choose;
+		switch (choose)
+		{
+		case 0:
+			flag = 0;
+			retry = 2;
+			break;
+		case 1:
+			while (check == 1) {
+				flag = 1;
+				check = 2;
+				cout << "Enter new ID: ";
+				cin >> p[no - 1]->ID;
+				for (int i = 0; i < p.size(); i++)
+				{
+					if ((p[no - 1]->ID == p[i]->ID) && (i != no - 1))
+					{
+						flag = 0;
+						cout << "ID existed! Try again? (1.Yes/ 2.No)\n";
+						cin >> check;
+					}
+					if (check == 1) break;
+				}
+			}
+			break;
+		case 2:
+			cout << "Enter new name: ";
+			getline(cin, p[no - 1]->name);
+			getline(cin, p[no - 1]->name);
+			break;
+		case 3:
+			cout << "Enter new price: ";
+			cin >> p[no - 1]->price;
+			break;
+		case 4:
+			cout << "Enter new stock: ";
+			cin >> p[no - 1]->stock;
+			break;
+		case 5:
+			cout << "Enter new cpu: ";
+			getline(cin, p[no - 1]->cpu);
+			getline(cin, p[no - 1]->cpu);
+			break;
+		case 6:
+			cout << "Enter new ram: ";
+			cin >> p[no - 1]->ram;
+			break;
+		case 7:
+			cout << "Enter new storage: ";
+			cin >> p[no - 1]->storage;
+			break;
+		default:
+			cout << "There is no option for this. Try again? (1. Yes/ 2.No)\n";
+			cin >> retry;
+			if (retry == 2) flag = 2;
+			break;
+		}
+		if (choose <= 7 && choose > 0)
+		{
+			cout << "Edit more information? (1. Yes/ 2.No)\n";
+			cin >> retry;
+		}
+	}
+	if (flag == 1)
+	{
+		cout << "Edit successfully!\n";
+		saveProduct(p);
+	}
+	else
+	{
+		cout << "Edit failed!\n";
+	}
 }
 
 void Product::listProduct()
@@ -374,17 +471,20 @@ void Product::listProduct()
 	vector <Product*> p;
 	loadProduct(p);
 	cout << "List of product:\n";
+	if (p.size() == 0)
+	{
+		cout << "List is empty!" << endl;
+		return;
+	}
 	for (int i = 0; i < p.size(); i++)
 	{
 		cout << i + 1 << ". " << p[i]->name << endl;
 	}	
 }
 
-void Product::viewProductInf(vector <Product*> p)
+void Product::viewProductInf(vector <Product*> p, int no)
 {
-	cout << "Enter numerical order to view product information: ";
-	int no;
-	cin >> no;
+
 	if (no > p.size()) cout << "This product is unavailable!" << endl;
 	else
 	{

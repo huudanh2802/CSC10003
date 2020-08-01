@@ -82,7 +82,7 @@ void Seller::viewMenu(Database& list)
 		{
 		case 1: listProduct.importProductFromCSV(); break;
 		case 2: method.createProduct(); break;
-		case 3: break;
+		case 3: method.editProduct();  break;
 		case 4: break;
 		case 5: voucher.createVoucher();   break;
 		case 6: break;

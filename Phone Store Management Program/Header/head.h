@@ -77,8 +77,9 @@ public:
 	void updateStock(const Product&);
 	void createProduct();
 	void viewProduct();
+	void editProduct();
 	void listProduct();
-	void viewProductInf(vector <Product*> p);
+	void viewProductInf(vector <Product*> p, int no);
 	void loadProduct(vector <Product*> &p);
 	void saveProduct(vector <Product*> p);
 
