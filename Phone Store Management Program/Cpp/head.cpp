@@ -323,6 +323,7 @@ void Product::createProduct()
 	int check = 1;
 	while (check == 1)
 	{
+		check = 2;
 		cout << "Enter product information:\n";
 		cout << "ID: ";
 		cin >> tmp->ID;
@@ -343,22 +344,59 @@ void Product::createProduct()
 	cin >> tmp->price;
 	cout << "Stock: ";
 	cin >> tmp->stock;
+	cout << "CPU: ";
+	getline(cin, tmp->cpu);
+	getline(cin, tmp->cpu);
+	cout << "Ram (GB): ";
+	cin >> tmp->ram;
+	cout << "Storage (GB): ";
+	cin >> tmp->storage;
 	p.push_back(tmp);
+	cout << "Create successfully!" << endl;
 	saveProduct(p);
 }
 
 void Product::viewProduct()
 {
+	system("cls");
+	int choose = 0;
+	vector <Product*> p;
+	loadProduct(p);
+	listProduct();
+	cout << "Would you like to see product information? (1: Yes/ 2. No)" << endl;
+	cin >> choose;
+	if (choose == 1) viewProductInf(p);
+}
+
+void Product::listProduct()
+{
+	system("cls");
 	vector <Product*> p;
 	loadProduct(p);
 	cout << "List of product:\n";
 	for (int i = 0; i < p.size(); i++)
 	{
-		cout << "Product " << i + 1 << endl;
-		cout << "ID: " << p[i]->ID << endl;
-		cout << "Name: " << p[i]->name << endl;
-		cout << "Price: " << p[i]->price << endl;
-		cout << "Stock: " << p[i]->stock << endl;
+		cout << i + 1 << ". " << p[i]->name << endl;
+	}	
+}
+
+void Product::viewProductInf(vector <Product*> p)
+{
+	cout << "Enter numerical order to view product information: ";
+	int no;
+	cin >> no;
+	if (no > p.size()) cout << "This product is unavailable!" << endl;
+	else
+	{
+		system("cls");
+		cout << "Product Information" << endl;
+		cout << "ID: " << p[no - 1]->ID << endl;
+		cout << "Name: " << p[no - 1]->name << endl;
+		cout << "Price: " << p[no - 1]->price << endl;
+		cout << "Stock: " << p[no - 1]->stock << endl;
+		cout << "CPU: " << p[no - 1]->cpu << endl;
+		cout << "Ram: " << p[no - 1]->ram << endl;
+		cout << "Storage: " << p[no - 1]->storage << endl;
 	}
 }
 
@@ -378,6 +416,10 @@ void Product::loadProduct(vector <Product*> &p)
 		getline(fin, pd->name);
 		fin >> pd->price;
 		fin >> pd->stock;
+		getline(fin, pd->cpu);
+		getline(fin, pd->cpu);
+		fin >> pd->ram;
+		fin >> pd->storage;
 		p.push_back(pd);
 	}
 	fin.close();
@@ -394,6 +436,9 @@ void Product::saveProduct(vector<Product*> p)
 		fout << p[i]->name << endl;
 		fout << p[i]->price << endl;
 		fout << p[i]->stock << endl;
+		fout << p[i]->cpu << endl;
+		fout << p[i]->ram << endl;
+		fout << p[i]->storage << endl;
 	}
 	fout.close();
 }

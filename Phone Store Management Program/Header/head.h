@@ -67,6 +67,7 @@ class Product {
 private:
 	int ID, price, stock, ram, storage;
 	string name, cpu;
+
 public:
 	Product();
 	void loadFromCSV(ifstream& fin, string data);
@@ -76,6 +77,8 @@ public:
 	void updateStock(const Product&);
 	void createProduct();
 	void viewProduct();
+	void listProduct();
+	void viewProductInf(vector <Product*> p);
 	void loadProduct(vector <Product*> &p);
 	void saveProduct(vector <Product*> p);
 

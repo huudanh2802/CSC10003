@@ -78,9 +78,10 @@ void Customer::viewMenu(Database& list)
 		do {
 			cout << "1.View all product\n2.Add product to cart\n3.Search product\n4.View cart\n5.Remove product from cart\n6.View list of products based on categories\n7.Compare 2 products\n8.Checkout\n9.Create account\n0.Exit\nChoice :";
 			cin >> choice;
+			Product method;
 			switch (choice)
 			{
-			case 1: break;
+			case 1: method.viewProduct(); break;
 			case 2: break;
 			case 3: break;
 			case 4: break;

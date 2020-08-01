@@ -77,10 +77,11 @@ void Seller::viewMenu(Database& list)
 		cin >> choice;
 		Store listProduct;
 		Voucher voucher;
+		Product method;
 		switch (choice)
 		{
 		case 1: listProduct.importProductFromCSV(); break;
-		case 2: break;
+		case 2: method.createProduct(); break;
 		case 3: break;
 		case 4: break;
 		case 5: voucher.createVoucher();   break;
