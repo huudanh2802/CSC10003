@@ -65,8 +65,8 @@ public:
 /// <PRODUCT>
 class Product {
 private:
-	int ID, price, stock;
-	string name;
+	int ID, price, stock, ram, storage;
+	string name, cpu;
 public:
 	Product();
 	void loadFromCSV(ifstream& fin, string data);

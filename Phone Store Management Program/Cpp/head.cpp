@@ -28,6 +28,9 @@ Product::Product() {
 	price = 0;
 	stock = 0;
 	name = "";
+	cpu = "";
+	ram = 0;
+	storage = 0;
 }
 
 bool Product::comparingID(const Product& a) {
