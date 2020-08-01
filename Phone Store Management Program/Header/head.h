@@ -10,11 +10,16 @@
 #include <vector>
 #include <stdexcept>
 #include <conio.h>
+#include<sstream>
+#include<time.h>
+#include<stdlib.h>
+
 
 using namespace std;
 
 struct Date {
 	int d, m, y;
+	void input();
 };
 
 class Database;
@@ -30,6 +35,7 @@ public:
 	int checkLogin(const string& input_username, const string& input_password);
 	Account* login(const string& input_username, const string& input_pass);
 	void changePassword();
+	virtual void createAccount();
 	virtual int checkName(const string& searchname) = 0;
 	virtual int checkAccount() = 0;
 	virtual void editProfile() = 0;
@@ -52,19 +58,43 @@ public:
 	void searchviewProfilecustomer();
 	void editProfilecustomer();
 	void exportCustomerlist();
+	void createAccount();
 };
 
+
+/// <PRODUCT>
 class Product {
-private:int ID, price, stock;
-	   string name;
+private:
+	int ID, price, stock, ram, storage;
+	string name, cpu;
 public:
 	Product();
+	void loadFromCSV(ifstream& fin, string data);
+	void saveToTxt(ofstream& fout);
+	void loadFromTxt(ifstream& fin);
+	bool comparingID (const Product&);
+	void updateStock(const Product&);
 	void createProduct();
 	void viewProduct();
 	void loadProduct(vector <Product*> &p);
 	void saveProduct(vector <Product*> p);
 
 };
+
+class Store {
+private:
+	string name;
+	vector<Product*> store;
+public:
+	void loadFromCSV(ifstream& fin);
+	void saveToTxt();
+	void loadFromTxt();
+	void importProductFromCSV();
+	void deleteListProduct();
+};
+
+
+/// </PRODUCT>
 
 class Order {
 private:int ID, num;
@@ -75,7 +105,11 @@ public:
 
 class Voucher {
 private:Date expire;
+	   int code;
 	   int stock, discount;
 public:Voucher();
+	  void createVoucher();
+	  void loadFromTxt();
+	  void saveToTxt();
 };
 #endif

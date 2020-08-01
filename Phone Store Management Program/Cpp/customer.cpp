@@ -1,4 +1,6 @@
 #include "..//Header//customer.h"
+#include "..//Header//password.h"
+
 
 Customer::Customer() :Account()
 {
@@ -86,7 +88,7 @@ void Customer::viewMenu(Database& list)
 			case 6: break;
 			case 7: break;
 			case 8: break;
-			case 9: break;
+			case 9: list.createAccount(); break;
 			case 0: break;
 			}
 		} while (choice != 0);
@@ -142,4 +144,20 @@ void Customer::editProfile()
 	getline(cin, name);
 	cout << "Enter address: ";
 	getline(cin, address);
+}
+
+void Customer::createAccount() {
+
+	Account::createAccount();
+	cout << endl;
+	cout << "Enter date of birth: ";
+	cin >> dob.d >> dob.m >> dob.y;
+	cout << "Enter phone: ";
+	cin >> phone;
+	cout << "Enter name: ";
+	getline(cin, name);
+	getline(cin, name);
+	cout << "Enter address: ";
+	getline(cin, address);
+	
 }
