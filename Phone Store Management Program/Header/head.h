@@ -60,6 +60,7 @@ private:int ID, price, stock;
 public:
 	Product();
 	void createProduct();
+	void viewProduct();
 	void loadProduct(vector <Product*> &p);
 	void saveProduct(vector <Product*> p);
 

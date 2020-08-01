@@ -145,17 +145,46 @@ void Product::createProduct()
 	loadProduct(p);
 	Product* tmp = nullptr;
 	tmp = new Product;
-	cout << "Enter ID: ";
-	cin >> tmp->ID;
-	cout << "Enter name: ";
+	int check = 1;
+	while (check == 1)
+	{
+		cout << "Enter product information:\n";
+		cout << "ID: ";
+		cin >> tmp->ID;
+		for (int i = 0; i < p.size(); i++)
+		{
+			if (tmp->ID == p[i]->ID)
+			{
+				cout << "ID existed! Try again? (1.Yes/ 2.No)\n";
+				cin >> check;
+				if (check == 2) return;
+			}
+		}
+	}
+	cout << "Name: ";
 	getline(cin, tmp->name);
 	getline(cin, tmp->name);
-	cout << "Enter price: ";
+	cout << "Price: ";
 	cin >> tmp->price;
-	cout << "Enter stock: ";
+	cout << "Stock: ";
 	cin >> tmp->stock;
 	p.push_back(tmp);
 	saveProduct(p);
+}
+
+void Product::viewProduct()
+{
+	vector <Product*> p;
+	loadProduct(p);
+	cout << "List of product:\n";
+	for (int i = 0; i < p.size(); i++)
+	{
+		cout << "Product " << i + 1 << endl;
+		cout << "ID: " << p[i]->ID << endl;
+		cout << "Name: " << p[i]->name << endl;
+		cout << "Price: " << p[i]->price << endl;
+		cout << "Stock: " << p[i]->stock << endl;
+	}
 }
 
 void Product::loadProduct(vector <Product*> &p)
@@ -176,6 +205,7 @@ void Product::loadProduct(vector <Product*> &p)
 		fin >> pd->stock;
 		p.push_back(pd);
 	}
+	fin.close();
 }
 
 void Product::saveProduct(vector<Product*> p)
@@ -190,6 +220,7 @@ void Product::saveProduct(vector<Product*> p)
 		fout << p[i]->price << endl;
 		fout << p[i]->stock << endl;
 	}
+	fout.close();
 }
 
 Order::Order()
