@@ -53,9 +53,17 @@ void Product::loadFromCSV(ifstream& fin, string data) {
 	getline(ss, tmp, ',');
 	price = stoi(tmp);
 
-	getline(ss, tmp, '\n');
+	getline(ss, tmp, ',');
 	stock = stoi(tmp);
 
+	getline(ss, tmp, ',');
+	cpu = tmp;
+
+	getline(ss, tmp, ',');
+	ram = stoi(tmp);
+
+	getline(ss, tmp, '\n');
+	storage = stoi(tmp);
 }
 
 void Product::saveToTxt(ofstream& fout)
@@ -64,6 +72,10 @@ void Product::saveToTxt(ofstream& fout)
 	fout << name << endl;
 	fout << price << endl;
 	fout << stock << endl;
+	fout << cpu << endl;
+	fout << ram << endl;
+	fout << storage << endl;
+
 }
 
 void Product::loadFromTxt(ifstream& fin) {
@@ -74,6 +86,12 @@ void Product::loadFromTxt(ifstream& fin) {
 
 	fin >> price;
 	fin >> stock;
+
+	fin.ignore(1);
+	getline(fin, cpu, '\n');
+
+	fin >> ram;
+	fin >> storage;
 
 }
 
@@ -102,7 +120,7 @@ void Store::loadFromCSV(ifstream& fin) {
 void Store::loadFromTxt() {
 	ifstream fin;
 	int n;
-	fin.open(".//Data//Product.txt");
+	fin.open(".//Data//product.txt");
 	Product* p;
 
 	fin >> n;
@@ -119,7 +137,7 @@ void Store::loadFromTxt() {
 
 void Store::saveToTxt() {
 	ofstream fout;
-	fout.open(".//Data//Product.txt");
+	fout.open(".//Data//product.txt");
 
 	fout << store.size() << endl;
 	for (int i = 0; i < store.size(); i++)
@@ -143,14 +161,14 @@ void Store::importProductFromCSV() {
 
 	string tempStr;
 	tempStr = to_string(tempDate.y) + to_string(tempDate.m) + to_string(tempDate.d);
-	tempStr = "Product" + tempStr + ".csv";
+	tempStr = "product" + tempStr + ".csv";
 	ifstream fin;
 	fin.open(tempStr);
 	Store fromCsv;
 	if(fin.is_open())
 		fromCsv.loadFromCSV(fin);
 	else {
-		cout << "Can not open this file" << endl;
+		cout << "Can not open " <<tempStr<<" file" << endl;
 		return;
 	}
 	loadFromTxt();
@@ -570,13 +588,24 @@ void Voucher::createVoucher() {
 	cout << "Discount (ex: 200.000 vnd) : ";
 	cin >> discount;
 	code = rand() % (RAND_MAX) + 1000;
+
+	saveToTxt();
+	cout << "Successfully!!!" << endl;
 }
 
 void Voucher::saveToTxt() {
 	ofstream voucher_txt;
-	voucher_txt.open("Voucher.txt");
-	voucher_txt << code<<endl;
-	voucher_txt << expire.y<<" " << expire.m<<" "<<expire.d<<endl ;
-	voucher_txt << stock;
+	voucher_txt.open("Data/Voucher.txt");
+	if (!voucher_txt.is_open()) {
+		cout << "Can't open Voucher.txt file" << endl;
+		return;
+	}
+	else {
+		voucher_txt << code << endl;
+		voucher_txt << expire.y << " " << expire.m << " " << expire.d << endl;
+		voucher_txt << discount << endl;
+		voucher_txt << stock << endl;
+	}
+	
 }
 
