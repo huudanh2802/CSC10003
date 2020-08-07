@@ -44,6 +44,7 @@ public:
 	virtual string getAddress() = 0;
 	virtual Date Dob() = 0;
 	virtual int Phone() = 0;
+	string getUsername();
 };
 
 class Database {
@@ -82,7 +83,16 @@ public:
 	void viewProductInf(vector <Product*> p, int no);
 	void loadProduct(vector <Product*> &p);
 	void saveProduct(vector <Product*> p);
-
+	void input();
+	void output();
+	int getID();
+	int getPrice();
+	int getStock();
+	int getRam();
+	int getStorage();
+	string getName();
+	string getCpu();
+	void loadCartTxt(vector <Product*>& p,char*data);
 };
 
 class Store {
@@ -105,6 +115,8 @@ private:int ID, num;
 	   vector<Product*>cart;
 public:
 	Order();
+	void addProduct();
+	void saveCartTxt(string &user,string&name);
 };
 
 class Voucher {

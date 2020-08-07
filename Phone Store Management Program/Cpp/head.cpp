@@ -518,6 +518,41 @@ void Product::viewProductInf(vector <Product*> p, int no)
 	}
 }
 
+int Product::getID()
+{
+	return ID;
+}
+
+int Product::getPrice()
+{
+	return price;
+}
+
+int Product::getStock()
+{
+	return stock;
+}
+
+int Product::getRam()
+{
+	return ram;
+}
+
+int Product::getStorage()
+{
+	return storage;
+}
+
+string Product::getName()
+{
+	return name;
+}
+
+string Product::getCpu()
+{
+	return cpu;
+}
+
 void Product::loadProduct(vector <Product*> &p)
 {
 	int n;
@@ -609,3 +644,7 @@ void Voucher::saveToTxt() {
 	
 }
 
+string Account::getUsername()
+{
+	return user;
+}
