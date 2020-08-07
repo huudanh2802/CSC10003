@@ -83,8 +83,6 @@ public:
 	void viewProductInf(vector <Product*> p, int no);
 	void loadProduct(vector <Product*> &p);
 	void saveProduct(vector <Product*> p);
-	void input();
-	void output();
 	int getID();
 	int getPrice();
 	int getStock();
@@ -92,7 +90,13 @@ public:
 	int getStorage();
 	string getName();
 	string getCpu();
-	void loadCartTxt(vector <Product*>& p,char*data);
+	void setID(int &id);
+	void setPrice(int &Price);
+	void setStock(int &Stock);
+	void setRam(int &Ram);
+	void setStorage(int&Storage);
+	void setName(string &Name);
+	void setCpu(string& CPU);
 };
 
 class Store {
@@ -116,7 +120,9 @@ private:int ID, num;
 public:
 	Order();
 	void addProduct();
+	void loadCartTxt(string& user, string& name);
 	void saveCartTxt(string &user,string&name);
+	void removeProduct();
 };
 
 class Voucher {

@@ -553,6 +553,41 @@ string Product::getCpu()
 	return cpu;
 }
 
+void Product::setID(int &id)
+{
+	ID = id;
+}
+
+void Product::setPrice(int& Price)
+{
+	price = Price;
+}
+
+void Product::setStock(int& Stock)
+{
+	stock = Stock;
+}
+
+void Product::setRam(int& Ram)
+{
+	ram = Ram;
+}
+
+void Product::setStorage(int& Storage)
+{	
+	storage = Storage;
+}
+
+void Product::setName(string &Name)
+{
+	name = Name;
+}
+
+void Product::setCpu(string& CPU)
+{
+	cpu = CPU;
+}
+
 void Product::loadProduct(vector <Product*> &p)
 {
 	int n;

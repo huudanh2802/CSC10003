@@ -91,7 +91,7 @@ void Customer::viewMenu(Database& list)
 			case 2: cart.addProduct(); break;
 			case 3: break;
 			case 4: break;
-			case 5: break;
+			case 5: cart.removeProduct(); break;
 			case 6: break;
 			case 7: break;
 			case 8: break;
@@ -109,10 +109,10 @@ void Customer::viewMenu(Database& list)
 			switch (choice)
 			{
 			case 1: break;
-			case 2: cart.addProduct(); cart.saveCartTxt(username,name); break;
+			case 2: cart.loadCartTxt(username,name); cart.addProduct(); cart.saveCartTxt(username, name); break;
 			case 3: break;
 			case 4: break;
-			case 5: break;
+			case 5: cart.loadCartTxt(username, name); cart.removeProduct(); cart.saveCartTxt(username, name); break;
 			case 6: break;
 			case 7: break;
 			case 8: break;
@@ -170,35 +170,49 @@ void Customer::createAccount() {
 	
 }
 
-void Product::loadCartTxt(vector <Product*>& p,char* data)
+void Order::loadCartTxt(string& user, string& name)
 {
+	char s[60], cart1[60] = "Data/Cart_";
+	strcpy_s(s, strlen(name.c_str()) + 1, name.c_str());
+	strcat_s(cart1, s);
+	strcat_s(cart1, "_");
+	strcpy_s(s, strlen(user.c_str()) + 1, user.c_str());
+	strcat_s(cart1, s);
+	strcat_s(cart1, ".txt");
 	int n;
 	Product* pd;
 	ifstream fin;
-	fin.open(data);
+	fin.open(cart1);
 	fin >> n;
 	for (int i = 0; i < n; i++)
 	{
 		pd = nullptr;
 		pd = new Product;
-		fin >> pd->ID;
-		getline(fin, pd->name);
-		getline(fin, pd->name);
-		fin >> pd->price;
-		fin >> pd->stock;
-		getline(fin, pd->cpu);
-		getline(fin, pd->cpu);
-		fin >> pd->ram;
-		fin >> pd->storage;
-		p.push_back(pd);
+		int ID , Stock,Price,Ram, Storage;
+		string Name, CPU ;
+		fin >> ID;
+		pd->setID(ID);
+		getline(fin, Name);
+		getline(fin, Name);
+		pd->setName(Name);
+		fin >> Price;
+		pd->setPrice(Price);
+		fin >> Stock;
+		pd->setStock(Stock);
+		getline(fin, CPU);
+		getline(fin, CPU);
+		pd->setCpu(CPU);
+		fin >> Ram;
+		pd->setRam(Ram);
+		fin >> Storage;
+		pd->setStorage(Storage);
+		cart.push_back(pd);
 	}
 	fin.close();
 }
 
 void Order::saveCartTxt(string &user,string &name)
 {
-	Product *p;
-	p = new Product;
 	ofstream fo;
 	char s[60], cart1[60] = "Data/Cart_";
 	strcpy_s(s, strlen(name.c_str()) + 1, name.c_str());
@@ -207,30 +221,26 @@ void Order::saveCartTxt(string &user,string &name)
 	strcpy_s(s, strlen(user.c_str()) + 1, user.c_str());
 	strcat_s(cart1, s);
 	strcat_s(cart1, ".txt");
-	ifstream fi;
-	int n;
-	fi.open(cart1);
-	if (fi.is_open())
-	{
-		fi >> n;
-		p->loadCartTxt(cart,cart1);
-	}
 	fo.open(cart1);
 	fo << cart.size()<<endl;
-	for (int i = 0; i < cart.size(); i++)
+	if (cart.size() != 0)
 	{
-		fo << cart[i]->getID() << endl;
-		fo << cart[i]->getName() << endl;
-		fo << cart[i]->getPrice() << endl;
-		fo << cart[i]->getStock() << endl;
-		fo << cart[i]->getCpu() << endl;
-		fo << cart[i]->getRam() << endl;
-		fo << cart[i]->getStorage() << endl;
+		for (int i = 0; i < cart.size(); i++)
+		{
+			fo << cart[i]->getID() << endl;
+			fo << cart[i]->getName() << endl;
+			fo << cart[i]->getPrice() << endl;
+			fo << cart[i]->getStock() << endl;
+			fo << cart[i]->getCpu() << endl;
+			fo << cart[i]->getRam() << endl;
+			fo << cart[i]->getStorage() << endl;
+		}
 	}
 }
 
 void Order::addProduct()
 {
+	int flag = 0;
 	vector<Product*> list;
 	Product *p;
 	p = new Product;
@@ -243,8 +253,46 @@ void Order::addProduct()
 	{
 		if (num-1 == i)
 		{
+			flag = 1;
 			cart.push_back(list[i]);
 		}
+	}
+	if (flag == 1)
+	{
+		cout << "Add product to cart successfully"<<endl;
+	}
+	else
+	{
+		cout << "Can't find product to add" << endl;
+	}
+}
+
+void Order::removeProduct()
+{
+	int flag = 0;
+	int id,temp;
+	cout << "Enter id of product you want to remove from cart: ";
+	cin >> id;
+	for (int i = 0; i < cart.size(); i++)
+	{
+		if (cart[i]->getID() == id)
+		{
+			flag = 1;
+			delete cart[i];
+			for (int j = i; j < cart.size() - 1; j++)
+			{
+				cart[j] = cart[j + 1];
+			}
+			cart.resize(cart.size()-1);
+		}
+	}
+	if (flag == 1)
+	{
+		cout << "Remove product from cart successfully" << endl;
+	}
+	else
+	{
+		cout << "Can't find product to remove" << endl;
 	}
 }
 	
