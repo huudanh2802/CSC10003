@@ -295,12 +295,12 @@ void Order::removeProduct()
 	}
 }
 	
-void Order::viewCart()
+bool Order::viewCart()
 {
 	if (cart.size() == 0)
 	{
 		cout << "Cart is empty" << endl;
-		return;
+		return false;
 	}
 	else
 	{
@@ -309,6 +309,7 @@ void Order::viewCart()
 			cout << "Product " << i + 1 << " :" << endl;
 			cart[i]->outputInfProduct();
 		}
+		return true;
 	}
 }
 

@@ -124,7 +124,7 @@ public:
 	void loadCartTxt(string& user, string& name);
 	void saveCartTxt(string &user,string&name);
 	void removeProduct();
-	void viewCart();
+	bool viewCart();
 };
 
 class Voucher {
