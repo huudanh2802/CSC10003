@@ -97,6 +97,7 @@ public:
 	void setStorage(int&Storage);
 	void setName(string &Name);
 	void setCpu(string& CPU);
+	void outputInfProduct();
 };
 
 class Store {
@@ -115,7 +116,7 @@ public:
 /// </PRODUCT>
 
 class Order {
-private:int ID, num;
+private:int ID;
 	   vector<Product*>cart;
 public:
 	Order();
@@ -123,6 +124,7 @@ public:
 	void loadCartTxt(string& user, string& name);
 	void saveCartTxt(string &user,string&name);
 	void removeProduct();
+	void viewCart();
 };
 
 class Voucher {

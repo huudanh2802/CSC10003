@@ -634,7 +634,6 @@ void Product::saveProduct(vector<Product*> p)
 Order::Order()
 {
 	ID = 0;
-	num = 0;
 }
 
 
@@ -683,3 +682,4 @@ string Account::getUsername()
 {
 	return user;
 }
+

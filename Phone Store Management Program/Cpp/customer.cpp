@@ -1,7 +1,6 @@
 #include "..//Header//customer.h"
 #include "..//Header//password.h"
 #include <string>
-
 Customer::Customer() :Account()
 {
 	name = "//";
@@ -90,7 +89,7 @@ void Customer::viewMenu(Database& list)
 			case 1: method.viewProduct(); break;
 			case 2: cart.addProduct(); break;
 			case 3: break;
-			case 4: break;
+			case 4: cart.viewCart(); break;
 			case 5: cart.removeProduct(); break;
 			case 6: break;
 			case 7: break;
@@ -111,7 +110,7 @@ void Customer::viewMenu(Database& list)
 			case 1: break;
 			case 2: cart.loadCartTxt(username,name); cart.addProduct(); cart.saveCartTxt(username, name); break;
 			case 3: break;
-			case 4: break;
+			case 4: cart.viewCart(); break;
 			case 5: cart.loadCartTxt(username, name); cart.removeProduct(); cart.saveCartTxt(username, name); break;
 			case 6: break;
 			case 7: break;
@@ -296,3 +295,30 @@ void Order::removeProduct()
 	}
 }
 	
+void Order::viewCart()
+{
+	if (cart.size() == 0)
+	{
+		cout << "Cart is empty" << endl;
+		return;
+	}
+	else
+	{
+		for (int i = 0; i < cart.size(); i++)
+		{
+			cout << "Product " << i + 1 << " :" << endl;
+			cart[i]->outputInfProduct();
+		}
+	}
+}
+
+void Product::outputInfProduct()
+{
+	cout << "ID: " << ID << endl;
+	cout << "Name: "<<name << endl;
+	cout << "Price: " << price << endl;
+	cout << "Stock: " <<stock << endl;
+	cout << "CPU: " <<cpu << endl;
+	cout << "Ram: " << ram << endl;
+	cout << "Storage: " << storage << endl;
+}
