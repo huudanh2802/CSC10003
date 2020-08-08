@@ -72,11 +72,6 @@ int Customer::Phone()
 void Customer::viewMenu(Database& list)
 {
 	int choice;
-	Account* p;
-	p = new Customer;
-	p = this;
-	string username;
-	username = p->getUsername();
 	if (name.compare("//") == 0)
 	{
 		Order cart;
@@ -108,10 +103,10 @@ void Customer::viewMenu(Database& list)
 			switch (choice)
 			{
 			case 1: break;
-			case 2: cart.loadCartTxt(username,name); cart.addProduct(); cart.saveCartTxt(username, name); break;
+			case 2: cart.loadCartTxt(this->getUsername(),name); cart.addProduct(); cart.saveCartTxt(this->getUsername(), name); break;
 			case 3: break;
 			case 4: cart.viewCart(); break;
-			case 5: cart.loadCartTxt(username, name); cart.removeProduct(); cart.saveCartTxt(username, name); break;
+			case 5: cart.loadCartTxt(this->getUsername(), name); cart.removeProduct(); cart.saveCartTxt(this->getUsername(), name); break;
 			case 6: break;
 			case 7: break;
 			case 8: break;
@@ -169,7 +164,7 @@ void Customer::createAccount() {
 	
 }
 
-void Order::loadCartTxt(string& user, string& name)
+void Order::loadCartTxt(string user, string& name)
 {
 	char s[60], cart1[60] = "Data/Cart_";
 	strcpy_s(s, strlen(name.c_str()) + 1, name.c_str());
@@ -210,7 +205,7 @@ void Order::loadCartTxt(string& user, string& name)
 	fin.close();
 }
 
-void Order::saveCartTxt(string &user,string &name)
+void Order::saveCartTxt(string user,string &name)
 {
 	ofstream fo;
 	char s[60], cart1[60] = "Data/Cart_";
@@ -270,28 +265,31 @@ void Order::removeProduct()
 {
 	int flag = 0;
 	int id,temp;
-	cout << "Enter id of product you want to remove from cart: ";
-	cin >> id;
-	for (int i = 0; i < cart.size(); i++)
+	if (viewCart() == true)
 	{
-		if (cart[i]->getID() == id)
+		cout << "Enter id of product you want to remove from cart: ";
+		cin >> id;
+		for (int i = 0; i < cart.size(); i++)
 		{
-			flag = 1;
-			delete cart[i];
-			for (int j = i; j < cart.size() - 1; j++)
+			if (cart[i]->getID() == id)
 			{
-				cart[j] = cart[j + 1];
+				flag = 1;
+				delete cart[i];
+				for (int j = i; j < cart.size() - 1; j++)
+				{
+					cart[j] = cart[j + 1];
+				}
+				cart.resize(cart.size() - 1);
 			}
-			cart.resize(cart.size()-1);
 		}
-	}
-	if (flag == 1)
-	{
-		cout << "Remove product from cart successfully" << endl;
-	}
-	else
-	{
-		cout << "Can't find product to remove" << endl;
+		if (flag == 1)
+		{
+			cout << "Remove product from cart successfully" << endl;
+		}
+		else
+		{
+			cout << "Can't find product to remove" << endl;
+		}
 	}
 }
 	

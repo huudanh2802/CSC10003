@@ -121,8 +121,8 @@ private:int ID;
 public:
 	Order();
 	void addProduct();
-	void loadCartTxt(string& user, string& name);
-	void saveCartTxt(string &user,string&name);
+	void loadCartTxt(string user, string& name);
+	void saveCartTxt(string user,string&name);
 	void removeProduct();
 	bool viewCart();
 };
