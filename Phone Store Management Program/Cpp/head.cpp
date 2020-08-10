@@ -483,6 +483,33 @@ void Product::editProduct()
 	}
 }
 
+void Product::removeProduct()
+{
+	system("cls");
+	vector <Product*> p;
+	loadProduct(p);
+	listProduct();
+	int retry = 1, no;
+	while (retry == 1) {
+		retry = 2;
+		cout << "Enter numerical order to remove product: ";
+		cin >> no;
+		if (no >= p.size())
+		{
+			cout << "This product is unavailable! Retry? (1.Yes/ 2.No)\n";
+			cin >> retry;
+			if (retry == 0) return;
+		}
+	}
+	for (int i = no - 1; i < p.size() - 1; i++)
+	{
+		p[i] = p[i + 1];
+	}
+	p.resize(p.size() - 1);
+	saveProduct(p);
+	cout << "Remove successfully!" << endl;
+}
+
 void Product::listProduct()
 {
 	system("cls");

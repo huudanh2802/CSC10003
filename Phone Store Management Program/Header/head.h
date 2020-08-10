@@ -79,6 +79,7 @@ public:
 	void createProduct();
 	void viewProduct();
 	void editProduct();
+	void removeProduct();
 	void listProduct();
 	void viewProductInf(vector <Product*> p, int no);
 	void loadProduct(vector <Product*> &p);
