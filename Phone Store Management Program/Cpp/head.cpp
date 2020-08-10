@@ -283,6 +283,15 @@ void Database::createAccount() {
 	num++;
 }
 
+void Database::changeProfileInformation(string user_name) {
+	for (int i = 0; i < num; i++)
+	{
+		if (user_name == data[i]->getUsername()) {
+			data[i]->changeProfileInformation();
+		}
+	}
+}
+
 int Database::Number()
 {
 	return num;
@@ -778,5 +787,10 @@ void Voucher::saveToTxt() {
 string Account::getUsername()
 {
 	return user;
+}
+
+void Account::changeProfileInformation()
+{
+	return;
 }
 

@@ -45,6 +45,7 @@ public:
 	virtual Date Dob() = 0;
 	virtual int Phone() = 0;
 	string getUsername();
+	virtual void changeProfileInformation();
 };
 
 class Database {
@@ -60,6 +61,7 @@ public:
 	void editProfilecustomer();
 	void exportCustomerlist();
 	void createAccount();
+	void changeProfileInformation(string user_name);
 };
 
 
