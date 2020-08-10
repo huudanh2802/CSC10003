@@ -394,6 +394,70 @@ void Product::viewProduct()
 	}
 }
 
+void Product::viewProductBaseOnCategories()
+{
+	vector <Product*> p;
+	loadProduct(p);
+	int retry = 0, flag = 0, no = 1, choose, sprice = 0, bprice = 100000000, sram = 0, bram = 16, sstorage = 0, bstorage = 1028;
+	string cpu;
+	while (retry != 1)
+	{
+		cout << "Filter:\n1.Price\n2.CPU\n3.Storage\n4.Ram\n5.View list product base on categories\n";
+		cin >> choose;
+		switch (choose)
+		{
+		case 1:
+			cout << "Enter price range (Smaller price < Your phone price < Bigger price)\n";
+			cout << "Smaller price: ";
+			cin >> sprice;
+			cout << "Bigger price: ";
+			cin >> bprice;
+			break;
+		case 2:
+			cout << "Enter memory range (Smaller memory < Your phone memory < Bigger memory)\n";
+			cout << "Smaller memory: ";
+			cin >> sram;
+			cout << "Bigger memory: ";
+			cin >> bram;
+			break;
+		case 3:
+			cout << "Enter storage range (Smaller storage < Your phone storage < Bigger storage)\n";
+			cout << "Smaller storage: ";
+			cin >> sstorage;
+			cout << "Bigger storage: ";
+			cin >> bstorage;
+			break;
+		case 4:
+			cout << "Enter name of cpu: ";
+			getline(cin, cpu);
+			getline(cin, cpu);
+			flag = 1;
+			break;
+		case 5:
+			retry = 1;
+			break;
+		}
+	}
+	for (int i = 0; i < p.size(); i++)
+	{
+		if (p[i]->price > sprice&& p[i]->price < bprice
+			&& p[i]->ram > sram&& p[i]->ram < bram
+			&& p[i]->storage > sstorage&& p[i]->storage < bstorage)
+		{
+			if (flag == 0)
+			{
+				cout << no << "." << p[i]->name << endl;
+				no++;
+			}
+			if (flag == 1 && p[i]->cpu == cpu)
+			{
+				cout << no << "." << p[i]->name << endl;
+				no++;
+			}
+		}
+	}
+}
+
 void Product::editProduct()
 {
 	system("cls");
@@ -526,6 +590,8 @@ void Product::listProduct()
 		cout << i + 1 << ". " << p[i]->name << endl;
 	}	
 }
+
+
 
 void Product::viewProductInf(vector <Product*> p, int no)
 {

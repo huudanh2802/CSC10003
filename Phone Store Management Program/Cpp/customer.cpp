@@ -86,7 +86,7 @@ void Customer::viewMenu(Database& list)
 			case 3: break;
 			case 4: cart.viewCart(); break;
 			case 5: cart.removeProduct(); break;
-			case 6: break;
+			case 6: method.viewProductBaseOnCategories(); break;
 			case 7: break;
 			case 8: break;
 			case 9: list.createAccount(); break;
