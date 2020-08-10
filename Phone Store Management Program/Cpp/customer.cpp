@@ -114,7 +114,7 @@ void Customer::viewMenu(Database& list)
 			case 10: break;
 			case 11: break;
 			case 12: break;
-			case 13: break;
+			case 13:this->changeProfileInformation(); break;
 			case 0: break;
 			}
 		} while (choice != 0);
@@ -320,4 +320,17 @@ void Product::outputInfProduct()
 	cout << "CPU: " <<cpu << endl;
 	cout << "Ram: " << ram << endl;
 	cout << "Storage: " << storage << endl;
+}
+
+void Customer::changeProfileInformation() {
+
+	cout << "Enter date of birth: ";
+	cin >> dob.d >> dob.m >> dob.y;
+	cout << "Enter phone: ";
+	cin >> phone;
+	cout << "Enter name: ";
+	getline(cin, name);
+	getline(cin, name);
+	cout << "Enter address: ";
+	getline(cin, address);
 }

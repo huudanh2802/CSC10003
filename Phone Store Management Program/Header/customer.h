@@ -24,6 +24,7 @@ public:
 	Date Dob();
 	int Phone();
 	void createAccount();
+	void changeProfileInformation();
 };
 
 #endif
