@@ -81,6 +81,7 @@ public:
 	void createProduct();
 	void viewProduct();
 	void editProduct();
+	void removeProduct();
 	void listProduct();
 	void viewProductInf(vector <Product*> p, int no);
 	void loadProduct(vector <Product*> &p);
@@ -120,6 +121,8 @@ public:
 class Order {
 private:int ID;
 	   vector<Product*>cart;
+	   int status;
+	   Date purchase;
 public:
 	Order();
 	void addProduct();

@@ -85,7 +85,7 @@ void Seller::viewMenu(Database& list)
 		case 3: method.editProduct();  break;
 		case 4: break;
 		case 5: voucher.createVoucher();   break;
-		case 6: break;
+		case 6: method.removeProduct(); break;
 		case 7: list.searchviewProfilecustomer(); break;
 		case 8: list.editProfilecustomer(); break;
 		case 9: list.exportCustomerlist(); break;
