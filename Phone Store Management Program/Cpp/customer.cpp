@@ -302,11 +302,14 @@ bool Order::viewCart()
 	}
 	else
 	{
+		int S = 0;
 		for (int i = 0; i < cart.size(); i++)
 		{
 			cout << "Product " << i + 1 << " :" << endl;
 			cart[i]->outputInfProduct();
+			S = S + cart[i]->getPrice();
 		}
+		cout << "Total :" << S << "$" << endl;
 		return true;
 	}
 }

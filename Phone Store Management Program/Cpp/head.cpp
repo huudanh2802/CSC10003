@@ -634,6 +634,10 @@ void Product::saveProduct(vector<Product*> p)
 Order::Order()
 {
 	ID = 0;
+	purchase.d = 0;
+	purchase.m = 0;
+	purchase.y = 0;
+	status = 0;
 }
 
 
