@@ -80,6 +80,7 @@ public:
 	void updateStock(const Product&);
 	void createProduct();
 	void viewProduct();
+	void viewProductBaseOnCategories();
 	void editProduct();
 	void removeProduct();
 	void listProduct();
