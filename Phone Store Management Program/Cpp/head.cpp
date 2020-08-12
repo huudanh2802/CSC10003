@@ -667,6 +667,54 @@ void Product::saveProduct(vector<Product*> p)
 	fout.close();
 }
 
+void Product::output() {
+	cout <<endl<< name << endl;
+	cout << "Chip: " << cpu << endl;
+	cout << "Ram: " << ram << endl;
+	cout << "Storage: " << storage << endl;
+	cout << "Price: " << price  << endl;
+}
+
+void Store::searchProduct() {
+	string name;
+	cout << "Searching: " << endl;
+	getline(cin, name, '\n');
+	getline(cin, name, '\n');
+
+	char* tmpName = strcpy(new char[sizeof(name) + 1], name.c_str());
+	
+	//chuan hoa ten nhap vao
+	for (int i = 0; i < strlen(tmpName); i++)
+	{
+		if (tmpName[i] >= 65 && tmpName[i] <= 90) {
+			tmpName[i] += 32;
+		}
+	}
+	string strName(tmpName);
+	loadFromTxt();
+	//chuan hoa ten tu file, sau do so sanh 
+	for (int i = 0; i < store.size(); i++)
+	{
+		char* tmpProductName = strcpy(new char[sizeof(store[i]->getName()) + 1], store[i]->getName().c_str());
+		for (int i = 0; i < strlen(tmpProductName); i++)
+		{ 
+			if (tmpProductName[i] >= 65 && tmpProductName[i] <= 90) {
+				tmpProductName[i] += 32;
+			}
+		}
+		string strProductName(tmpProductName);
+
+		int flag = 0;
+		for (int i = 0; i < strlen(tmpName); i++)
+		{
+			if(tmpName[i] == tmpProductName[i])
+				flag++;
+
+		}
+		if(flag == strlen(tmpName))store[i]->output();
+	}
+}
+
 Order::Order()
 {
 	ID = 0;

@@ -71,10 +71,13 @@ int Customer::Phone()
 
 void Customer::viewMenu(Database& list)
 {
+	Store listProduct;
 	int choice;
 	if (name.compare("//") == 0)
 	{
+		
 		Order cart;
+		
 		do {
 			cout << "1.View all product\n2.Add product to cart\n3.Search product\n4.View cart\n5.Remove product from cart\n6.View list of products based on categories\n7.Compare 2 products\n8.Checkout\n9.Create account\n0.Exit\nChoice :";
 			cin >> choice;
@@ -83,7 +86,7 @@ void Customer::viewMenu(Database& list)
 			{
 			case 1: method.viewProduct(); break;
 			case 2: cart.addProduct(); break;
-			case 3: break;
+			case 3: listProduct.searchProduct(); break;
 			case 4: cart.viewCart(); break;
 			case 5: cart.removeProduct(); break;
 			case 6: break;
@@ -104,7 +107,7 @@ void Customer::viewMenu(Database& list)
 			{
 			case 1: break;
 			case 2: cart.loadCartTxt(this->getUsername(),name); cart.addProduct(); cart.saveCartTxt(this->getUsername(), name); break;
-			case 3: break;
+			case 3: listProduct.searchProduct(); break;
 			case 4: cart.viewCart(); break;
 			case 5: cart.loadCartTxt(this->getUsername(), name); cart.removeProduct(); cart.saveCartTxt(this->getUsername(), name); break;
 			case 6: break;

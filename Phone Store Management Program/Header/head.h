@@ -101,6 +101,7 @@ public:
 	void setName(string &Name);
 	void setCpu(string& CPU);
 	void outputInfProduct();
+	void output(); //for customer( without stock )
 };
 
 class Store {
@@ -113,6 +114,7 @@ public:
 	void loadFromTxt();
 	void importProductFromCSV();
 	void deleteListProduct();
+	void searchProduct();
 };
 
 
