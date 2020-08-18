@@ -14,7 +14,6 @@
 #include<time.h>
 #include<stdlib.h>
 
-
 using namespace std;
 
 struct Date {
@@ -23,6 +22,7 @@ struct Date {
 };
 
 class Database;
+class Order;
 
 class Account {
 private: string user, pass;
@@ -31,7 +31,7 @@ public:
 	virtual void inputData(ifstream& fin);
 	virtual void outputData(ofstream& fin);
 	virtual void viewProfile();
-	virtual void viewMenu(Database& list) = 0;
+	virtual void viewMenu(Database& account_listt) = 0;
 	int checkLogin(const string& input_username, const string& input_password);
 	Account* login(const string& input_username, const string& input_pass);
 	void changePassword();
@@ -60,10 +60,9 @@ public:
 	void searchviewProfilecustomer();
 	void editProfilecustomer();
 	void exportCustomerlist();
-	void createAccount();
+	void createAccount(Account* acc);
 	void changeProfileInformation(string user_name);
 };
-
 
 /// <PRODUCT>
 class Product {
@@ -76,7 +75,7 @@ public:
 	void loadFromCSV(ifstream& fin, string data);
 	void saveToTxt(ofstream& fout);
 	void loadFromTxt(ifstream& fin);
-	bool comparingID (const Product&);
+	bool comparingID(const Product&);
 	void updateStock(const Product&);
 	void createProduct();
 	void viewProduct();
@@ -85,7 +84,7 @@ public:
 	void removeProduct();
 	void listProduct();
 	void viewProductInf(vector <Product*> p, int no);
-	void loadProduct(vector <Product*> &p);
+	void loadProduct(vector <Product*>& p);
 	void saveProduct(vector <Product*> p);
 	int getID();
 	int getPrice();
@@ -94,45 +93,49 @@ public:
 	int getStorage();
 	string getName();
 	string getCpu();
-	void setID(int &id);
-	void setPrice(int &Price);
-	void setStock(int &Stock);
-	void setRam(int &Ram);
-	void setStorage(int&Storage);
-	void setName(string &Name);
+	void setID(int& id);
+	void setPrice(int& Price);
+	void setStock(int& Stock);
+	void setRam(int& Ram);
+	void setStorage(int& Storage);
+	void setName(string& Name);
 	void setCpu(string& CPU);
 	void outputInfProduct();
+	void inputData(ifstream& user_data);
 	void output(); //for customer( without stock )
+	void outputData(ofstream& fout);
 };
 
-class Store {
-private:
-	string name;
-	vector<Product*> store;
+/// </PRODUCT>
+
+class Order {
+private:int ID;
+	   string purchaser;
+	   vector<Product*>cart;
+	   int status;
+	   Date purchase;
+	   int voucher_ID;
+	   int total;
 public:
+	Order();
+	void addProduct();
+	void loadCartTxt(string user, string& name);
+	void saveCartTxt(string user, string& name);
+	void removeProduct();
+	bool viewCart();
 	void loadFromCSV(ifstream& fin);
 	void saveToTxt();
 	void loadFromTxt();
 	void importProductFromCSV();
 	void deleteListProduct();
 	void searchProduct();
-};
-
-
-/// </PRODUCT>
-
-class Order {
-private:int ID;
-	   vector<Product*>cart;
-	   int status;
-	   Date purchase;
-public:
-	Order();
-	void addProduct();
-	void loadCartTxt(string user, string& name);
-	void saveCartTxt(string user,string&name);
-	void removeProduct();
-	bool viewCart();
+	void inputData(ifstream& user_data);
+	vector<Order*> loadListOfOrder();
+	void saveOrder(vector<Order*>& list);
+	void outputData(ofstream& fout);
+	void calCart();
+	void checkOut(string user, string& name, vector<Order*>& list, int& flag);
+	bool checkCart();
 };
 
 class Voucher {
@@ -144,4 +147,7 @@ public:Voucher();
 	  void loadFromTxt();
 	  void saveToTxt();
 };
+
+void getCurrentDate(Date& dCur);
+
 #endif

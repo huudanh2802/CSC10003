@@ -3,20 +3,28 @@
 #include "Header/customer.h"
 
 int main()
+
 {
-	Database list;
+	Database account_list;
 	Account* login;
+
 	ifstream data_file;
 	data_file.open("Data/user.txt");
-	if (!data_file.is_open())
-	{
-		throw invalid_argument("Can't open data file (user.txt)");
+	try {
+		if (!data_file.is_open())
+		{
+			throw "Can't open data file (user.txt)!";
+		}
+	}
+	catch (const char* invalid_argument) {
+		cout << invalid_argument << endl;
 		exit(0);
 	}
-	list.loadData(data_file);
+	account_list.loadData(data_file);
 	int time = 0, choice;
 	int func;
 	do {
+		system("cls");
 		int status = 0;
 		func = 1;
 		if (time != 0) {
@@ -27,7 +35,7 @@ int main()
 		if (func == 0)
 		{
 			data_file.close();
-			list.deleteData();
+			account_list.deleteData();
 			return 0;
 		}
 		else
@@ -41,7 +49,7 @@ int main()
 			{
 			case 1:
 			{
-				login = list.login();
+				login = account_list.login();
 				do {
 					system("cls");
 					cout << "1.Show menu\n2.View profile info\n3.Change password\n4.Logout" << endl;
@@ -51,7 +59,7 @@ int main()
 					{
 					case 1:
 						system("cls");
-						login->viewMenu(list);
+						login->viewMenu(account_list);
 						break;
 					case 2:
 					{
@@ -78,7 +86,7 @@ int main()
 			}
 			case 2:
 				login = new Customer;
-				login->viewMenu(list);
+				login->viewMenu(account_list);
 				break;
 			}
 		}

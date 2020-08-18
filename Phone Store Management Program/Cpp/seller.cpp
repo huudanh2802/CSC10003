@@ -69,31 +69,89 @@ int Seller::Phone()
 	return phone;
 }
 
-void Seller::viewMenu(Database& list)
+void Seller::viewMenu(Database& account_list)
 {
+	vector<Order*>order_list;
+	Order temp;
+	order_list = temp.loadListOfOrder();
 	int choice;
 	do {
+		system("cls");
 		cout << "1.Import list of product from csv file\n2.Create product\n3.Edit information of the product\n4.Search and view information of a product\n5.Create voucher\n6.Remove product\n7.Search and view profile of a customer\n8.Edit customer profile\n9.Export list of customer to a csv file\n10.View list of purchased in a month\n11.Edit order status\n0.Exit\nChoice :";
 		cin >> choice;
-		Store listProduct;
+		Order listProduct;
 		Voucher voucher;
 		Product method;
 		switch (choice)
 		{
-		case 1: listProduct.importProductFromCSV(); break;
-		case 2: method.createProduct(); break;
-		case 3: method.editProduct();  break;
-		case 4: break;
-		case 5: voucher.createVoucher();   break;
-		case 6: method.removeProduct(); break;
-		case 7: list.searchviewProfilecustomer(); break;
-		case 8: list.editProfilecustomer(); break;
-		case 9: list.exportCustomerlist(); break;
-		case 10: break;
-		case 11: break;
+		case 1: {
+			system("cls"); 
+			listProduct.importProductFromCSV(); 
+			system("pause");
+			break;
+		}
+		case 2: {
+			system("cls");
+			method.createProduct(); 
+			system("pause"); 
+			break; 
+		}
+		case 3: {
+			system("cls");
+			method.editProduct();
+			system("pause");
+			break; 
+		}
+		case 4: {
+			system("cls"); 
+			listProduct.searchProduct(); 
+			system("pause");
+			break; 
+		}
+		case 5: {
+			system("cls");
+			voucher.createVoucher();
+			system("pause");
+			break;
+		}
+		case 6: {
+			system("cls"); 
+			method.removeProduct(); 
+			system("pause");
+			break; 
+		}
+		case 7: {
+			system("cls");	
+			account_list.searchviewProfilecustomer();
+			system("pause");
+			break; 
+		}
+		case 8: {
+			system("cls"); 
+			account_list.editProfilecustomer(); 
+			system("pause");
+			break; 
+		}
+		case 9: {
+			system("cls"); 
+			account_list.exportCustomerlist(); 
+			system("pause");
+			break; 
+		}
+		case 10: {
+			system("cls"); 
+			system("pause"); 
+			break;
+		}
+		case 11: {
+			system("cls"); 
+			system("pause"); 
+			break; 
+		}
 		case 0: break;
 		}
 	} while (choice != 0);
+	temp.saveOrder(order_list);
 }
 
 int Seller::checkAccount()
@@ -134,7 +192,7 @@ void Database::searchviewProfilecustomer()
 	}
 }
 
-void Seller:: editProfile()
+void Seller::editProfile()
 {
 	cout << "Enter date of birth: ";
 	cin >> dob.d >> dob.m >> dob.y;
@@ -187,7 +245,7 @@ void Database::exportCustomerlist()
 		if (data[i]->Type() == 1)
 		{
 			flag = 1;
-			fo << data[i]->Name() << ","<< data[i]->Dob().y << "/" << data[i]->Dob().m << "/" << data[i]->Dob().d << "," << data[i]->Phone() << "," << data[i]->getAddress() << endl;
+			fo << data[i]->Name() << "," << data[i]->Dob().y << "/" << data[i]->Dob().m << "/" << data[i]->Dob().d << "," << data[i]->Phone() << "," << data[i]->getAddress() << endl;
 		}
 	}
 	fo.close();
@@ -196,5 +254,3 @@ void Database::exportCustomerlist()
 		cout << "Export successfully" << endl;
 	}
 }
-
-

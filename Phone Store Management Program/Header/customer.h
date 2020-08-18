@@ -14,7 +14,7 @@ public:
 	void inputData(ifstream& user_data);
 	void outputData(ofstream& fin);
 	void viewProfile();
-	void viewMenu(Database& list);// Store and execute function, pass in Database for function create, change profile information
+	void viewMenu(Database& account_list);// Store and execute function, pass in Database for function create, change profile information
 	int checkName(const string& searchname);
 	int checkAccount();
 	void editProfile();

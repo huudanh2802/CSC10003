@@ -22,7 +22,7 @@ void Date::input() {
 	cin >> y;
 }
 
-// PRODUCT 
+// PRODUCT
 Product::Product() {
 	ID = 0;
 	price = 0;
@@ -38,9 +38,7 @@ bool Product::comparingID(const Product& a) {
 	return false;
 }
 
-
 void Product::loadFromCSV(ifstream& fin, string data) {
-
 	stringstream ss(data);
 	string tmp = "";
 
@@ -75,7 +73,6 @@ void Product::saveToTxt(ofstream& fout)
 	fout << cpu << endl;
 	fout << ram << endl;
 	fout << storage << endl;
-
 }
 
 void Product::loadFromTxt(ifstream& fin) {
@@ -92,15 +89,13 @@ void Product::loadFromTxt(ifstream& fin) {
 
 	fin >> ram;
 	fin >> storage;
-
 }
 
 void Product::updateStock(const Product& temp) {
 	this->stock += temp.stock;
 }
 
-void Store::loadFromCSV(ifstream& fin) {
-	
+void Order::loadFromCSV(ifstream& fin) {
 	string s;
 	fin.ignore(1);
 	getline(fin, s);
@@ -111,13 +106,13 @@ void Store::loadFromCSV(ifstream& fin) {
 		p = NULL;
 		p = new Product;
 		p->loadFromCSV(fin, s);
-		store.push_back(p);
+		cart.push_back(p);
 	}
 
 	fin.close();
 }
 
-void Store::loadFromTxt() {
+void Order::loadFromTxt() {
 	ifstream fin;
 	int n;
 	fin.open(".//Data//product.txt");
@@ -129,32 +124,32 @@ void Store::loadFromTxt() {
 		p = NULL;
 		p = new Product;
 		p->loadFromTxt(fin);
-		store.push_back(p);
+		cart.push_back(p);
 	}
 
 	fin.close();
 }
 
-void Store::saveToTxt() {
+void Order::saveToTxt() {
 	ofstream fout;
 	fout.open(".//Data//product.txt");
 
-	fout << store.size() << endl;
-	for (int i = 0; i < store.size(); i++)
+	fout << cart.size() << endl;
+	for (int i = 0; i < cart.size(); i++)
 	{
-		store[i]->saveToTxt(fout);
+		cart[i]->saveToTxt(fout);
 	}
 }
 
-void Store::deleteListProduct() { 
-	for (int i = 0; i < store.size(); i++)
+void Order::deleteListProduct() {
+	for (int i = 0; i < cart.size(); i++)
 	{
-		delete store[i];
+		delete cart[i];
 	}
-	store.clear();
+	cart.clear();
 }
 
-void Store::importProductFromCSV() {
+void Order::importProductFromCSV() {
 	Date tempDate;
 	cout << "Import date: " << endl;
 	tempDate.input();
@@ -164,30 +159,29 @@ void Store::importProductFromCSV() {
 	tempStr = "product" + tempStr + ".csv";
 	ifstream fin;
 	fin.open(tempStr);
-	Store fromCsv;
-	if(fin.is_open())
+	Order fromCsv;
+	if (fin.is_open())
 		fromCsv.loadFromCSV(fin);
 	else {
-		cout << "Can not open " <<tempStr<<" file" << endl;
+		cout << "Can not open " << tempStr << " file" << endl;
 		return;
 	}
 	loadFromTxt();
 
 	Product* temp = NULL;
-	for (int i = 0; i < fromCsv.store.size(); i++)
+	for (int i = 0; i < fromCsv.cart.size(); i++)
 	{
 		int flag = 0;
-		for (int j = 0; j < store.size(); j++)
+		for (int j = 0; j < cart.size(); j++)
 		{
-			if (store[j]->comparingID(*fromCsv.store[i])) {
-				store[j]->updateStock(*fromCsv.store[i]);
+			if (cart[j]->comparingID(*fromCsv.cart[i])) {
+				cart[j]->updateStock(*fromCsv.cart[i]);
 				flag = 1;
 			}
-			
 		}
 		if (flag == 0) {
-		temp = fromCsv.store[i];
-		store.push_back(temp);
+			temp = fromCsv.cart[i];
+			cart.push_back(temp);
 		}
 	}
 
@@ -195,9 +189,7 @@ void Store::importProductFromCSV() {
 	deleteListProduct();
 }
 
-
-// <\PRODUCT> 
-
+// <\PRODUCT>
 
 void Account::inputData(ifstream& user_data) //Get username and password
 {
@@ -227,7 +219,7 @@ void Database::loadData(ifstream& user_data) //Load user from user.txt
 void Database::deleteData() //Deallocate vector data
 {
 	ofstream user_data;
-	user_data.open(((string)".//Data//user.txt").c_str(),ios::trunc);
+	user_data.open(((string)".//Data//user.txt").c_str(), ios::trunc);
 	if (!user_data.is_open()) {
 		cout << "user.txt can't be opened" << endl;
 		exit(0);
@@ -251,7 +243,7 @@ int Account::checkLogin(const string& input_username, const string& input_passwo
 
 Account* Database::login()
 {
-	Account* account =nullptr;
+	Account* account = nullptr;
 	string input_username, input_password;
 	while (true)
 	{
@@ -276,8 +268,7 @@ Account* Database::login()
 	return account;
 }
 
-void Database::createAccount() {
-	Customer* acc = new Customer;
+void Database::createAccount(Account* acc) {
 	acc->createAccount();
 	data.push_back(acc);
 	num++;
@@ -324,8 +315,8 @@ void Account::changePassword()
 		enterPass(tempPass1);
 		cout << "\nConfirm new password:";
 		enterPass(tempPass2);
-		if (tempPass1.compare( tempPass2) != 0) cout << "\nNew Password and confirmed new password is different" << endl;
-		else if (pass.compare( tempPass1) == 0) cout << "\nNew Password must different from old password" << endl;
+		if (tempPass1.compare(tempPass2) != 0) cout << "\nNew Password and confirmed new password is different" << endl;
+		else if (pass.compare(tempPass1) == 0) cout << "\nNew Password must different from old password" << endl;
 		else break;
 	};
 	pass = tempPass1;
@@ -338,8 +329,6 @@ void Account::createAccount() {
 	cout << "Enter password: ";
 	enterPass(pass);
 }
-
-
 
 void Product::createProduct()
 {
@@ -382,6 +371,8 @@ void Product::createProduct()
 	p.push_back(tmp);
 	cout << "Create successfully!" << endl;
 	saveProduct(p);
+
+	for (int i = 0; i < p.size(); i++) delete p[i]; //fix memory leak
 }
 
 void Product::viewProduct()
@@ -401,6 +392,8 @@ void Product::viewProduct()
 		cin >> no;
 		viewProductInf(p, no);
 	}
+
+	for (int i = 0; i < p.size(); i++) delete p[i]; //fix memory leak
 }
 
 void Product::viewProductBaseOnCategories()
@@ -449,9 +442,9 @@ void Product::viewProductBaseOnCategories()
 	}
 	for (int i = 0; i < p.size(); i++)
 	{
-		if (p[i]->price > sprice&& p[i]->price < bprice
-			&& p[i]->ram > sram&& p[i]->ram < bram
-			&& p[i]->storage > sstorage&& p[i]->storage < bstorage)
+		if (p[i]->price > sprice && p[i]->price < bprice
+			&& p[i]->ram > sram && p[i]->ram < bram
+			&& p[i]->storage > sstorage && p[i]->storage < bstorage)
 		{
 			if (flag == 0)
 			{
@@ -465,6 +458,8 @@ void Product::viewProductBaseOnCategories()
 			}
 		}
 	}
+
+	for (int i = 0; i < p.size(); i++) delete p[i]; //fix memory leak
 }
 
 void Product::editProduct()
@@ -554,6 +549,8 @@ void Product::editProduct()
 	{
 		cout << "Edit failed!\n";
 	}
+
+	for (int i = 0; i < p.size(); i++) delete p[i]; //fix memory leak
 }
 
 void Product::removeProduct()
@@ -581,6 +578,8 @@ void Product::removeProduct()
 	p.resize(p.size() - 1);
 	saveProduct(p);
 	cout << "Remove successfully!" << endl;
+
+	for (int i = 0; i < p.size(); i++) delete p[i]; //fix memory leak
 }
 
 void Product::listProduct()
@@ -597,14 +596,13 @@ void Product::listProduct()
 	for (int i = 0; i < p.size(); i++)
 	{
 		cout << i + 1 << ". " << p[i]->name << endl;
-	}	
+	}
+
+	for (int i = 0; i < p.size(); i++) delete p[i]; //fix memory leak
 }
-
-
 
 void Product::viewProductInf(vector <Product*> p, int no)
 {
-
 	if (no > p.size()) cout << "This product is unavailable!" << endl;
 	else
 	{
@@ -655,7 +653,7 @@ string Product::getCpu()
 	return cpu;
 }
 
-void Product::setID(int &id)
+void Product::setID(int& id)
 {
 	ID = id;
 }
@@ -676,11 +674,11 @@ void Product::setRam(int& Ram)
 }
 
 void Product::setStorage(int& Storage)
-{	
+{
 	storage = Storage;
 }
 
-void Product::setName(string &Name)
+void Product::setName(string& Name)
 {
 	name = Name;
 }
@@ -690,7 +688,7 @@ void Product::setCpu(string& CPU)
 	cpu = CPU;
 }
 
-void Product::loadProduct(vector <Product*> &p)
+void Product::loadProduct(vector <Product*>& p)
 {
 	int n;
 	Product* pd;
@@ -734,21 +732,22 @@ void Product::saveProduct(vector<Product*> p)
 }
 
 void Product::output() {
-	cout <<endl<< name << endl;
+	cout << endl << name << endl;
 	cout << "Chip: " << cpu << endl;
 	cout << "Ram: " << ram << endl;
 	cout << "Storage: " << storage << endl;
-	cout << "Price: " << price  << endl;
+	cout << "Price: " << price << endl;
 }
 
-void Store::searchProduct() {
+void Order::searchProduct() {
 	string name;
 	cout << "Searching: " << endl;
 	getline(cin, name, '\n');
 	getline(cin, name, '\n');
 
-	char* tmpName = strcpy(new char[sizeof(name) + 1], name.c_str());
-	
+	char* tmpName = new char[name.length() + 1];
+	strcpy(tmpName, name.c_str());
+
 	//chuan hoa ten nhap vao
 	for (int i = 0; i < strlen(tmpName); i++)
 	{
@@ -758,12 +757,14 @@ void Store::searchProduct() {
 	}
 	string strName(tmpName);
 	loadFromTxt();
-	//chuan hoa ten tu file, sau do so sanh 
-	for (int i = 0; i < store.size(); i++)
+	//chuan hoa ten tu file, sau do so sanh
+	for (int i = 0; i < cart.size(); i++)
 	{
-		char* tmpProductName = strcpy(new char[sizeof(store[i]->getName()) + 1], store[i]->getName().c_str());
+		char* tmpProductName = new char[cart[i]->getName().length() + 1];
+		strcpy(tmpProductName, cart[i]->getName().c_str());
+
 		for (int i = 0; i < strlen(tmpProductName); i++)
-		{ 
+		{
 			if (tmpProductName[i] >= 65 && tmpProductName[i] <= 90) {
 				tmpProductName[i] += 32;
 			}
@@ -773,23 +774,28 @@ void Store::searchProduct() {
 		int flag = 0;
 		for (int i = 0; i < strlen(tmpName); i++)
 		{
-			if(tmpName[i] == tmpProductName[i])
+			if (tmpName[i] == tmpProductName[i])
 				flag++;
-
 		}
-		if(flag == strlen(tmpName))store[i]->output();
+		if (flag == strlen(tmpName))cart[i]->output();
+
+		delete[]tmpProductName;
 	}
+
+	delete[]tmpName;
 }
 
 Order::Order()
 {
 	ID = 0;
+	purchaser = "//";
 	purchase.d = 0;
 	purchase.m = 0;
 	purchase.y = 0;
 	status = 0;
+	voucher_ID = 0;
+	total = 0;
 }
-
 
 // VOUCHER
 Voucher::Voucher()
@@ -806,30 +812,35 @@ Voucher::Voucher()
 void Voucher::createVoucher() {
 	cout << "The number of voucher you want to create: ";
 	cin >> stock;
-	cout << "Expire date: "<<endl;
+	cout << "Expire date: " << endl;
 	expire.input();
 	cout << "Discount (ex: 200.000 vnd) : ";
 	cin >> discount;
-	code = rand() % (RAND_MAX) + 1000;
-
+	code = rand() % (RAND_MAX)+1000;
 	saveToTxt();
 	cout << "Successfully!!!" << endl;
 }
 
 void Voucher::saveToTxt() {
+	int flag = 1;
+	ifstream temp;
 	ofstream voucher_txt;
-	voucher_txt.open("Data/Voucher.txt");
-	if (!voucher_txt.is_open()) {
+	temp.open("Data/Voucher.txt");
+	if (!temp.is_open()) {
 		cout << "Can't open Voucher.txt file" << endl;
-		return;
+		flag = 0;
 	}
-	else {
-		voucher_txt << code << endl;
-		voucher_txt << expire.y << " " << expire.m << " " << expire.d << endl;
-		voucher_txt << discount << endl;
-		voucher_txt << stock << endl;
+	if (temp.peek() == ifstream::traits_type::eof()) {
+		flag = 0;
+		temp.close();
 	}
-	
+	if (flag == 0) voucher_txt.open("Data/Voucher.txt");
+	else voucher_txt.open("Data/Voucher.txt", ios_base::app);
+	voucher_txt << code << endl;
+	voucher_txt << expire.y << " " << expire.m << " " << expire.d << endl;
+	voucher_txt << discount << endl;
+	voucher_txt << stock << endl;
+	voucher_txt.close();
 }
 
 string Account::getUsername()
@@ -842,3 +853,153 @@ void Account::changeProfileInformation()
 	return;
 }
 
+void Product::inputData(ifstream& fin)
+{
+	fin >> ID;
+	getline(fin, name);
+	getline(fin, name);
+	fin >> price;
+	getline(fin, cpu);
+	getline(fin, cpu);
+	fin >> ram;
+	fin >> storage;
+}
+
+void Order::inputData(ifstream& fin)
+{
+	Product* product;
+	fin >> ID;
+	getline(fin, purchaser);
+	getline(fin, purchaser);
+	fin >> purchase.y;
+	fin >> purchase.m;
+	fin >> purchase.d;
+	fin >> status;
+	fin >> voucher_ID;
+	fin >> total;
+	int n_products;
+	fin >> n_products;
+	for (int i = 0; i < n_products; i++)
+	{
+		product = new Product;
+		product->inputData(fin);
+		cart.push_back(product);
+	}
+}
+
+vector<Order*> Order::loadListOfOrder()
+{
+	vector<Order*> list;
+	Order* order;
+	ifstream fin;
+	fin.open("Data/Orders.txt");
+	if (!fin.is_open())
+	{
+		fin.close();
+		return list;
+	}
+	int n_orders;
+	fin >> n_orders;
+	for (int i = 0; i < n_orders; i++)
+	{
+		order = new Order;
+		order->inputData(fin);
+		list.push_back(order);
+	}
+	return list;
+	fin.close();
+}
+
+void Order::saveOrder(vector<Order*>& list)
+{
+	ofstream list_orders;
+	list_orders.open(((string)".//Data//Orders.txt").c_str(), ios::trunc);
+	if (!list_orders.is_open()) {
+		cout << "Orders.txt can't be opened" << endl;
+		exit(0);
+	}
+	list_orders << list.size() << endl;
+	for (int i = 0; i < list.size(); i++)
+	{
+		list[i]->outputData(list_orders);
+	}
+
+	list_orders.close();
+}
+
+void Product::outputData(ofstream& fout)
+{
+	fout << ID << endl;
+	fout << name << endl;
+	fout << price << endl;
+	fout << cpu << endl;
+	fout << ram << endl;
+	fout << storage << endl;
+}
+
+void Order::outputData(ofstream& fout)
+{
+	fout << ID << endl;
+	fout << purchaser << endl;
+	fout << purchase.y << " " << setfill('0') << setw(2) << purchase.m << " " << setfill('0') << setw(2) << purchase.d << endl;
+	fout << status << endl;
+	fout << voucher_ID << endl;
+	fout << total << endl;
+	fout << cart.size() << endl;
+	for (int i = 0; i < cart.size(); i++)
+	{
+		cart[i]->outputData(fout);
+	}
+}
+void Order::calCart()
+{
+	for (int i = 0; i < cart.size(); i++) total += cart[i]->getPrice();
+}
+
+bool Order::checkCart()
+{
+	if (cart.size() == 0)
+	{
+		cout << "Cart is empty" << endl;
+		return false;
+	}
+	else return true;
+}
+
+int getMonth(char* pch)
+{
+	if (strcmp(pch, "Jan") == 0) return 1;
+	if (strcmp(pch, "Feb") == 0) return 2;
+	if (strcmp(pch, "Mar") == 0) return 3;
+	if (strcmp(pch, "Apr") == 0) return 4;
+	if (strcmp(pch, "May") == 0) return 5;
+	if (strcmp(pch, "Jun") == 0) return 6;
+	if (strcmp(pch, "Jul") == 0) return 7;
+	if (strcmp(pch, "Aug") == 0) return 8;
+	if (strcmp(pch, "Sep") == 0) return 9;
+	if (strcmp(pch, "Oct") == 0) return 10;
+	if (strcmp(pch, "Nov") == 0) return 11;
+	if (strcmp(pch, "Dec") == 0) return  12;
+}
+
+void getCurrentDate(Date& dCur)
+{
+	time_t tt;
+	struct tm* ti;
+	time(&tt);
+	ti = localtime(&tt);
+	ti->tm_year;
+	char temp[MAX];
+	strcpy(temp, asctime(ti));
+	char* pch;
+	pch = strtok(temp, " ");
+	pch = strtok(NULL, " ");
+	dCur.m = getMonth(pch);
+	pch = strtok(NULL, " ");
+	dCur.d = atoi(pch);
+	pch = strtok(NULL, " ");
+	strcpy(temp, pch);
+	pch = strtok(NULL, " ");
+	dCur.y = atoi(pch);
+	cout << dCur.d << " " << dCur.m << " " << dCur.y << endl;
+}
