@@ -368,12 +368,16 @@ void Order::saveCartTxt(string user, string& name)
 			fo << cart[i]->getStorage() << endl;
 		}
 	}
-
+	for (int i = 0; i < cart.size(); i++)
+	{
+		delete cart[i];
+	}
 	fo.close(); //add close file
 }
 
 void Order::addProduct()
 {
+	Product* temp = 0;
 	int flag = 0;
 	vector<Product*> list;
 	Product* p;
@@ -388,7 +392,8 @@ void Order::addProduct()
 		if (num - 1 == i)
 		{
 			flag = 1;
-			cart.push_back(list[i]);
+			temp = list[i];
+			cart.push_back(temp);
 		}
 	}
 	if (flag == 1)
@@ -398,6 +403,13 @@ void Order::addProduct()
 	else
 	{
 		cout << "Can't find product to add" << endl;
+	}
+	for (int i = 0; i < list.size(); i++)
+	{
+		if (temp != list[i])
+		{
+			delete list[i];
+		}
 	}
 }
 
