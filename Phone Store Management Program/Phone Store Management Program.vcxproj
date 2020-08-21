@@ -153,6 +153,7 @@
     <ClCompile Include="Cpp\head.cpp" />
     <ClCompile Include="Cpp\password.cpp" />
     <ClCompile Include="Cpp\seller.cpp" />
+    <ClCompile Include="Cpp\WindowScreen.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

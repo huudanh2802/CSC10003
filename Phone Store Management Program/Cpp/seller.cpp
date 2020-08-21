@@ -77,8 +77,17 @@ void Seller::viewMenu(Database& account_list)
 	int choice;
 	do {
 		system("cls");
-		cout << "1.Import list of product from csv file\n2.Create product\n3.Edit information of the product\n4.Search and view information of a product\n5.Create voucher\n6.Remove product\n7.Search and view profile of a customer\n8.Edit customer profile\n9.Export list of customer to a csv file\n10.View list of purchased in a month\n11.Edit order status\n0.Exit\nChoice :";
-		cin >> choice;
+		//menu();
+		try {
+			cout << "1.Import list of product from csv file\n2.Create product\n3.Edit information of the product\n4.Search and view information of a product\n5.Create voucher\n6.Remove product\n7.Search and view profile of a customer\n8.Edit customer profile\n9.Export list of customer to a csv file\n10.View list of purchased in a month\n11.Edit order status\n0.Exit\nChoice :";
+			cin >> choice;
+			if( choice<0||choice>11)throw "Invalid input";
+		}
+		catch (const char* invalid_argument) {
+			cout << invalid_argument << endl;
+			system("pause");
+			continue;
+		}
 		Order listProduct;
 		Voucher voucher;
 		Product method;
@@ -86,65 +95,76 @@ void Seller::viewMenu(Database& account_list)
 		{
 		case 1: {
 			system("cls"); 
+			//menu();
 			listProduct.importProductFromCSV(); 
 			system("pause");
 			break;
 		}
 		case 2: {
 			system("cls");
+			//menu();
 			method.createProduct(); 
 			system("pause"); 
 			break; 
 		}
 		case 3: {
 			system("cls");
+			//menu();
 			method.editProduct();
 			system("pause");
 			break; 
 		}
 		case 4: {
 			system("cls"); 
+			//menu();
 			listProduct.searchProduct(); 
 			system("pause");
 			break; 
 		}
 		case 5: {
 			system("cls");
+			//menu();
 			voucher.createVoucher();
 			system("pause");
 			break;
 		}
 		case 6: {
 			system("cls"); 
+			//menu();
 			method.removeProduct(); 
 			system("pause");
 			break; 
 		}
 		case 7: {
 			system("cls");	
+			//menu();
 			account_list.searchviewProfilecustomer();
 			system("pause");
 			break; 
 		}
 		case 8: {
 			system("cls"); 
+			//menu();
 			account_list.editProfilecustomer(); 
 			system("pause");
 			break; 
 		}
 		case 9: {
 			system("cls"); 
+			//menu();
 			account_list.exportCustomerlist(); 
 			system("pause");
 			break; 
 		}
 		case 10: {
 			system("cls"); 
+			//menu();
 			system("pause"); 
 			break;
 		}
 		case 11: {
 			system("cls"); 
+			//menu();
 			system("pause"); 
 			break; 
 		}

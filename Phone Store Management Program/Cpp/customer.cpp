@@ -84,34 +84,45 @@ void Customer::viewMenu(Database& account_list)
 		int checkOut = -1;
 		do {
 			system("cls");
-			if (choice == 0) break;
-			cout << "1.View all product\n2.Add product to cart\n3.Search product\n4.View cart\n5.Remove product from cart\n6.View list of products based on categories\n7.Compare 2 products\n8.Checkout\n9.Create account\n0.Exit\nChoice :";
-			cin >> choice;
-
+			//menu();
+			try {
+				if (choice == 0) break;
+				cout << "1.View all product\n2.Add product to cart\n3.Search product\n4.View cart\n5.Remove product from cart\n6.View list of products based on categories\n7.Compare 2 products\n8.Checkout\n9.Create account\n0.Exit\nChoice :";
+				cin >> choice;
+				if (choice < 0 || choice>9) throw "Invalid input";
+			}
+			catch (const char* invalid_argument) {
+				cout << invalid_argument << endl;
+				system("pause");
+				continue;
+			}
 			switch (choice)
 			{
 			case 1: {
 				system("cls");
+				//menu();
 				method.viewProduct();
 				system("pause");
 				break;
 			}
 			case 2: {
 				system("cls");
+				//menu();
 				cart.addProduct();
 				cart.calCart();
 				system("pause");
-
 				break;
 			}
 			case 3: {
 				system("cls");
+				//menu();
 				listProduct.searchProduct();
 				system("pause");
 				break;
 			}
 			case 4: {
 				system("cls");
+				//menu();
 				cart.viewCart();
 				system("pause");
 
@@ -119,6 +130,7 @@ void Customer::viewMenu(Database& account_list)
 			}
 			case 5: {
 				system("cls");
+				//menu();
 				cart.removeProduct();
 				cart.calCart();
 				system("pause");
@@ -126,17 +138,21 @@ void Customer::viewMenu(Database& account_list)
 			}
 			case 6: {
 				system("cls");
+				//menu();
 				method.viewProductBaseOnCategories();
 				system("pause");
 				break;
 			}
 			case 7: {
+				system("cls");
+				//menu();
 				break;
 			}
 			case 8: {
 				if (cart.viewCart())
 				{
 					system("cls");
+					//menu();
 					cout << "Create an account then log back in" << endl;
 					account_list.createAccount(this);
 					cart.saveCartTxt(this->getUsername(), name);
@@ -147,6 +163,7 @@ void Customer::viewMenu(Database& account_list)
 			}
 			case 9: {
 				system("cls");
+				//menu();
 				account_list.createAccount(this);
 				choice = 0;
 				system("pause");
@@ -165,19 +182,29 @@ void Customer::viewMenu(Database& account_list)
 		int checkOut = -1;
 		do {
 			system("cls");
-			cout << "1.View all product\n2.Add product to cart\n3.Search product\n4.View cart\n5.Remove product from cart\n6.View list of products based on categories\n7.Compare 2 products\n8.Uses voucher\n9.Checkout\n10.View order status\n11.Cancel order\n12.Change profile information\n0.Exit\nChoice :";
-			cin >> choice;
-
+			//menu();
+			try {
+				cout << "1.View all product\n2.Add product to cart\n3.Search product\n4.View cart\n5.Remove product from cart\n6.View list of products based on categories\n7.Compare 2 products\n8.Uses voucher\n9.Checkout\n10.View order status\n11.Cancel order\n12.Change profile information\n0.Exit\nChoice :";
+				cin >> choice;
+				if(choice<0||choice>12)throw "Invalid input";
+			}
+			catch (const char* invalid_argument) {
+				cout << invalid_argument << endl;
+				system("pause");
+				continue;
+			}
 			switch (choice)
 			{
 			case 1: {
 				system("cls");
+				//menu();
 				method.viewProduct();
 				system("pause");
 				break;
 			}
 			case 2: {
 				system("cls");
+				//menu();
 				cart.addProduct();
 				cart.saveCartTxt(this->getUsername(), name);
 				system("pause");
@@ -185,36 +212,42 @@ void Customer::viewMenu(Database& account_list)
 			}
 			case 3: {
 				system("cls");
+				//menu();
 				listProduct.searchProduct();
 				system("pause");
 				break; }
 			case 4: {
 				system("cls");
+				//menu();
 				cart.viewCart();
 				system("pause");
 				break; }
 			case 5: {
 				system("cls");
+				//menu();
 				cart.removeProduct();
 				cart.saveCartTxt(this->getUsername(), name);
 				system("pause");
 				break; }
 			case 6: {
 				system("cls");
+				//menu();
 				method.viewProductBaseOnCategories();
 				system("pause");
 				break; }
 			case 7: {
 				system("cls");
+				//menu();
 				system("pause");
 				break; }
 			case 8: {
 				system("cls");
-
+				//menu();
 				system("pause");
 				break; }
 			case 9: {
 				system("cls");
+				//menu();
 				if (cart.viewCart())
 				{
 					cart.checkOut(this->getUsername(), name, order_list, checkOut);
@@ -223,17 +256,20 @@ void Customer::viewMenu(Database& account_list)
 				break; }
 			case 10: {
 				system("cls");
+				//menu();
 				cart.viewOrderStatus(order_list, this->getUsername());
 				system("pause");
 				break;
 			}
 			case 11: {
 				system("cls");
+				//menu();
 				system("pause");
 				break;
 			}
 			case 12: {
 				system("cls");
+				//menu();
 				this->changeProfileInformation();
 				system("pause");
 				break;
@@ -364,16 +400,13 @@ void Order::saveCartTxt(string user, string& name)
 			fo << cart[i]->getStorage() << endl;
 		}
 	}
-	for (int i = 0; i < cart.size(); i++)
-	{
-		delete cart[i];
-	}
+
 	fo.close(); //add close file
 }
 
 void Order::addProduct()
 {
-	Product* temp = 0;
+	Product* temp = nullptr;
 	int flag = 0;
 	vector<Product*> list;
 	Product* p;
@@ -385,28 +418,39 @@ void Order::addProduct()
 	cin >> num;
 	for (int i = 0; i < list.size(); i++)
 	{
-		if (num - 1 == i)
+		if (num - 1 == i && list[i]->getStock() > 0)
 		{
 			flag = 1;
-			temp = list[i];
+			temp = new Product;
+			*temp = *list[i];
 			cart.push_back(temp);
+			break;
+		}
+		if (list[i]->getStock() == 0)
+		{
+			flag = 2;
+			break;
 		}
 	}
 	if (flag == 1)
 	{
 		cout << "Add product to cart successfully" << endl;
 	}
+	else if (flag == 2)
+	{
+		cout << "Item out of stock" << endl;
+	}
 	else
 	{
 		cout << "Can't find product to add" << endl;
 	}
+
 	for (int i = 0; i < list.size(); i++)
 	{
-		if (temp != list[i])
-		{
 			delete list[i];
-		}
 	}
+	list.clear();
+	delete p;
 }
 
 void Order::removeProduct()
@@ -505,6 +549,8 @@ void Order::checkOut(string user, string& name, vector<Order*>& list, int& flag)
 		exit(0);
 	}
 
+	for (int i = 0; i < cart.size(); i++)
+		cart[i]->resizeStock();
 	this->ID = rand() % 900000 + 100000;
 	this->purchaser = user;
 	getCurrentDate(this->purchase);
@@ -533,4 +579,23 @@ void Order::viewOrderStatus(vector<Order*>& list, string name)
 			list[i]->viewCart();
 		}
 	}
+}
+
+
+void Product::resizeStock()
+{
+	vector <Product*> p;
+	loadProduct(p);
+	for (int i = 0; i < p.size(); i++)
+	{
+		if (name == p[i]->name)
+		{
+			p[i]->stock--;
+			break;
+		}
+	}
+	saveProduct(p);
+
+	for (int i = 0; i < p.size(); i++) delete p[i]; //fix memory leak
+
 }

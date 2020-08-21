@@ -230,8 +230,9 @@ void Database::deleteData() //Deallocate vector data
 		data[i]->outputData(user_data);
 		user_data << '\n';
 	}
-	for (int i = 0; i < num; i++)
+	for (int i = 0; i < data.size(); i++)
 		delete data[i];
+	data.clear();
 	user_data.close();
 }
 
@@ -245,10 +246,13 @@ Account* Database::login()
 {
 	Account* account = nullptr;
 	string input_username, input_password;
+	int i = 0;
 	while (true)
 	{
+		system("cls");
+		//store_management_program();
 		cout << "Username :";
-		getline(cin, input_username);
+		if(i==0) getline(cin, input_username);
 		getline(cin, input_username);
 		cout << "Password :";
 		enterPass(input_password);
@@ -262,6 +266,7 @@ Account* Database::login()
 		}
 		if (account != nullptr) break;
 		else {
+			i++;
 			cout << "Invalid username/password" << endl;
 		}
 	}
@@ -378,6 +383,7 @@ void Product::createProduct()
 void Product::viewProduct()
 {
 	system("cls");
+	//menu();
 	int choose = 0;
 	vector <Product*> p;
 	loadProduct(p);
@@ -465,6 +471,7 @@ void Product::viewProductBaseOnCategories()
 void Product::editProduct()
 {
 	system("cls");
+	//menu();
 	int no, choose;
 	vector <Product*> p;
 	loadProduct(p);
@@ -555,7 +562,6 @@ void Product::editProduct()
 
 void Product::removeProduct()
 {
-	system("cls");
 	vector <Product*> p;
 	loadProduct(p);
 	listProduct();
@@ -585,6 +591,7 @@ void Product::removeProduct()
 void Product::listProduct()
 {
 	system("cls");
+	//menu();
 	vector <Product*> p;
 	loadProduct(p);
 	cout << "List of product:\n";
@@ -595,7 +602,7 @@ void Product::listProduct()
 	}
 	for (int i = 0; i < p.size(); i++)
 	{
-		cout << i + 1 << ". " << p[i]->name << endl;
+		cout << i + 1 << ". " << p[i]->name <<"      ( Stock:"<<p[i]->stock<<")"<< endl;
 	}
 
 	for (int i = 0; i < p.size(); i++) delete p[i]; //fix memory leak
@@ -606,7 +613,6 @@ void Product::viewProductInf(vector <Product*> p, int no)
 	if (no > p.size()) cout << "This product is unavailable!" << endl;
 	else
 	{
-		system("cls");
 		cout << "Product Information" << endl;
 		cout << "ID: " << p[no - 1]->ID << endl;
 		cout << "Name: " << p[no - 1]->name << endl;
@@ -787,6 +793,7 @@ void Order::searchProduct() {
 
 Order::Order()
 {
+	srand(unsigned(time(NULL)));
 	ID = 0;
 	purchaser = "//";
 	purchase.d = 0;
@@ -1002,4 +1009,18 @@ void getCurrentDate(Date& dCur)
 	pch = strtok(NULL, " ");
 	dCur.y = atoi(pch);
 	cout << dCur.d << " " << dCur.m << " " << dCur.y << endl;
+}
+
+
+Product& Product::operator=(const Product& copy)
+{
+	this->ID = copy.ID;
+	this->price = copy.price;
+	this->stock = copy.stock;
+	this->ram = copy.ram;
+	this->storage = copy.storage;
+	this->name = copy.name;
+	this->cpu = copy.cpu;
+
+	return *this;
 }
