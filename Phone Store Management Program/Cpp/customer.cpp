@@ -165,7 +165,7 @@ void Customer::viewMenu(Database& account_list)
 		int checkOut = -1;
 		do {
 			system("cls");
-			cout << "1.View all product\n2.Add product to cart\n3.Search product\n4.View cart\n5.Remove product from cart\n6.View list of products based on categories\n7.Compare 2 products\n8.Uses voucher\n9.Checkout\n10.View order status\n11.View order status\n12.Cancel order\n13.Change profile information\n0.Exit\nChoice :";
+			cout << "1.View all product\n2.Add product to cart\n3.Search product\n4.View cart\n5.Remove product from cart\n6.View list of products based on categories\n7.Compare 2 products\n8.Uses voucher\n9.Checkout\n10.View order status\n11.Cancel order\n12.Change profile information\n0.Exit\nChoice :";
 			cin >> choice;
 
 			switch (choice)
@@ -223,6 +223,7 @@ void Customer::viewMenu(Database& account_list)
 				break; }
 			case 10: {
 				system("cls");
+				cart.viewOrderStatus(order_list, this->getUsername());
 				system("pause");
 				break;
 			}
@@ -232,11 +233,6 @@ void Customer::viewMenu(Database& account_list)
 				break;
 			}
 			case 12: {
-				system("cls");
-				system("pause");
-				break;
-			}
-			case 13: {
 				system("cls");
 				this->changeProfileInformation();
 				system("pause");
@@ -517,4 +513,24 @@ void Order::checkOut(string user, string& name, vector<Order*>& list, int& flag)
 	list.push_back(temp);
 	temp->saveOrder(list);
 	cout << "Check out successfully" << endl;
+}
+
+void Order::viewOrderStatus(vector<Order*>& list, string name)
+{
+	for (int i = 0; i < list.size(); i++)
+	{
+		if (strcmp(name.c_str(), list[i]->purchaser.c_str()) == 0)
+		{
+			cout << "ID: " << list[i]->ID<<endl;
+			cout << "Purchase: " << list[i]->purchase.d << "/" << list[i]->purchase.m << "/" << list[i]->purchase.y << endl;
+			switch (list[i]->status)
+			{
+			case 0: cout << "Status: Confirmed" << endl; break;
+			case 1: cout << "Status: Pending" << endl; break;
+			case 2: cout << "Status: Finished" << endl; break;
+			}
+			cout << "Voucher ID: " << list[i]->voucher_ID << endl;
+			list[i]->viewCart();
+		}
+	}
 }

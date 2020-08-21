@@ -136,6 +136,7 @@ public:
 	void calCart();
 	void checkOut(string user, string& name, vector<Order*>& list, int& flag);
 	bool checkCart();
+	void viewOrderStatus(vector<Order*>& list, string name);
 };
 
 class Voucher {
