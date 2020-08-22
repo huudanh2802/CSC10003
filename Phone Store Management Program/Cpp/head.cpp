@@ -747,7 +747,7 @@ void Product::output() {
 
 void Order::searchProduct() {
 	string name;
-	cout << "Searching: " << endl;
+	cout << "Searching (Enter name): " << endl;
 	getline(cin, name, '\n');
 	getline(cin, name, '\n');
 
@@ -848,6 +848,56 @@ void Voucher::saveToTxt() {
 	voucher_txt << discount << endl;
 	voucher_txt << stock << endl;
 	voucher_txt.close();
+}
+
+void Voucher::loadFromTxt() {
+	ifstream voucher_txt;
+	voucher_txt.open("Data/Voucher.txt");
+	if (!voucher_txt.is_open()) {
+		cout << "Can't open file Data/Voucher.txt" << endl;
+	}
+	else {
+		int n;
+		voucher_txt >> n;
+		Voucher* v = NULL;
+		for (int i = 0; i < n; i++)
+		{
+			v = new Voucher;
+			voucher_txt >> v->code;
+			voucher_txt >> v->expire.y >> v->expire.m >> v->expire.d;
+			voucher_txt >> v->discount;
+			voucher_txt >> v->stock;
+			list.push_back(v);
+		}
+	}
+	voucher_txt.close();
+}
+
+void Voucher::saveListToTxt() {
+	ofstream fout;
+	fout.open("Data/Voucher.txt");
+	if (!fout.is_open()) {
+		cout << "Can't open file Data/Voucher.txt" << endl;
+	}
+	else {
+		fout << list.size() << endl;
+		for (int i = 0; i < list.size(); i++)
+		{
+			fout << list[i]->code << endl;
+			fout << list[i]->expire.y<<" " << list[i]->expire.m<<" " << list[i]->expire.d << endl;
+			fout << list[i]->discount << endl;
+			fout << list[i]->stock << endl;
+		}
+	}
+	fout.close();
+}
+
+Voucher::~Voucher() {
+	for (int i = 0; i < list.size(); i++)
+	{
+		delete list[i];
+	}
+	list.clear();
 }
 
 string Account::getUsername()
