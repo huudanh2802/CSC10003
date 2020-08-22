@@ -264,6 +264,7 @@ void Customer::viewMenu(Database& account_list)
 			case 11: {
 				system("cls");
 				//menu();
+				cart.cancelOrder(this->getUsername(), order_list);
 				system("pause");
 				break;
 			}
@@ -487,7 +488,7 @@ void Order::removeProduct()
 
 bool Order::viewCart()
 {
-	if (cart.size() == 0)
+	 if (cart.size() == 0)
 	{
 		cout << "Cart is empty" << endl;
 		return false;
@@ -559,6 +560,46 @@ void Order::checkOut(string user, string& name, vector<Order*>& list, int& flag)
 	list.push_back(temp);
 	temp->saveOrder(list);
 	cout << "Check out successfully" << endl;
+}
+
+void Order::cancelOrder(string user_name, vector<Order*>& list) {
+	int flag = 0;
+	for (int i = 0; i < list.size(); i++)
+	{
+		if (user_name == list[i]->purchaser && list[i]->status != 2) {
+			int total = 0;
+			flag = 1;
+			cout << "ID of order: " << list[i]->ID << endl;
+			for (int i = 0; i < list[i]->cart.size(); i++)
+			{
+				cout << list[i]->cart[i]->getName() << endl;
+				cout << list[i]->cart[i]->getPrice() << endl;
+				total += list[i]->cart[i]->getPrice();
+			}
+			cout << "Total: " << total << endl;
+		}
+	}
+	if (flag == 0) {
+		cout << "Your order is empty" << endl;
+		return;
+	}
+	else {
+		int id;
+		cout << "Enter the order's ID (enter 0 to exit ): ";
+		cin >> id;
+		if (id == 0) return;
+
+		for (int i = 0; i < list.size(); i++)
+		{
+			if (list[i]->ID == id) {
+				delete list[i];
+				list.erase(list.begin() + i);
+			}
+		}
+		cout << "Your order has been cancelled " << endl;
+	}
+
+	this->saveOrder(list);
 }
 
 void Order::viewOrderStatus(vector<Order*>& list, string name)
