@@ -73,6 +73,7 @@ void Customer::viewMenu(Database& account_list)
 {
 	vector<Order*>order_list;
 	Order temp;
+	Voucher voucher;
 	order_list = temp.loadListOfOrder();
 	int choice = -1;
 
@@ -243,6 +244,7 @@ void Customer::viewMenu(Database& account_list)
 			case 8: {
 				system("cls");
 				//menu();
+				voucher.usesVoucher(order_list, this->getUsername());
 				system("pause");
 				break; }
 			case 9: {
@@ -604,11 +606,13 @@ void Order::cancelOrder(string user_name, vector<Order*>& list) {
 
 void Order::viewOrderStatus(vector<Order*>& list, string name)
 {
+	int flag = 0;
 	for (int i = 0; i < list.size(); i++)
 	{
 		if (strcmp(name.c_str(), list[i]->purchaser.c_str()) == 0)
 		{
-			cout << "ID: " << list[i]->ID<<endl;
+			flag = 1;
+			cout << "ID: " << list[i]->ID << endl;
 			cout << "Purchase: " << list[i]->purchase.d << "/" << list[i]->purchase.m << "/" << list[i]->purchase.y << endl;
 			switch (list[i]->status)
 			{
@@ -620,6 +624,30 @@ void Order::viewOrderStatus(vector<Order*>& list, string name)
 			list[i]->viewCart();
 		}
 	}
+	if (flag != 1)
+	{
+		cout << "Can't view order status" << endl;
+	}
+}
+
+int Order::getTotal()
+{
+	return total;
+}
+
+void Order::setTotal(int x)
+{
+	total = x;
+}
+
+int Order::getVoucherID()
+{
+	return voucher_ID;
+}
+
+string Order::getPurchaser()
+{
+	return purchaser;
 }
 
 

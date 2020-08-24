@@ -1023,6 +1023,66 @@ bool Order::checkCart()
 	else return true;
 }
 
+int Date::compareDate(int day, int month, int year)
+{
+	if (this->y < year)
+	{
+		return 0;
+	}
+	else if (this->y == year && this->m < month)
+	{
+		return 0;
+	}
+	else if (this->m == month && this->d < day)
+	{
+		return 0;
+	}
+	return 1;
+}
+void Voucher::usesVoucher(vector<Order*>& order,string username)
+{
+	int id,flag1 = 0,flag2 = 0;
+	Order o;
+	time_t now = time(0);
+	struct tm newtime;
+	localtime_s(&newtime, &now);
+	int yearnow = 1900 + newtime.tm_year;
+	int monthnow = 1 + newtime.tm_mon;
+	int daynow = newtime.tm_mday;
+	loadFromTxt();
+	if (list.size() == 0)
+	{
+		cout << "Don't have any voucher to use" << endl;
+	}
+	else
+	{
+		for (int i = 0; i < order.size(); i++)
+		{
+			if (strcmp(order[i]->getPurchaser().c_str(), username.c_str()) == 0)
+			{
+				flag1 = 1;
+				for (int j = 0; j < list.size(); j++)
+				{
+					if (order[i]->getVoucherID() == list[j]->code&& list[j]->stock!=0)
+					{
+						flag2 = 1;
+						int temp = order[i]->getTotal();
+						temp = temp - list[j]->discount;
+						order[i]->setTotal(temp);
+						list[j]->stock = list[j]->stock - 1;
+						o.saveOrder(order);
+						saveListToTxt();
+						break;
+					}
+				}
+			}
+		}
+		if (flag1 != 1) cout << "Doesn't have order to use voucher" << endl;
+		else if (flag2 != 1) cout << "ID voucher is valid or voucher out of stock" << endl;
+		else cout << "Uses voucher succesfully" << endl;
+	}
+}
+
 int getMonth(char* pch)
 {
 	if (strcmp(pch, "Jan") == 0) return 1;
