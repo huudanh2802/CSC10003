@@ -145,8 +145,9 @@ void Customer::viewMenu(Database& account_list)
 				break;
 			}
 			case 7: {
-				system("cls");
 				//menu();
+				method.compareProduct();
+				system("pause");
 				break;
 			}
 			case 8: {

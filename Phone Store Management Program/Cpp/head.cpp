@@ -584,7 +584,6 @@ void Product::removeProduct()
 	p.resize(p.size() - 1);
 	saveProduct(p);
 	cout << "Remove successfully!" << endl;
-
 	for (int i = 0; i < p.size(); i++) delete p[i]; //fix memory leak
 }
 
@@ -604,7 +603,6 @@ void Product::listProduct()
 	{
 		cout << i + 1 << ". " << p[i]->name <<"      ( Stock:"<<p[i]->stock<<")"<< endl;
 	}
-
 	for (int i = 0; i < p.size(); i++) delete p[i]; //fix memory leak
 }
 
@@ -623,6 +621,40 @@ void Product::viewProductInf(vector <Product*> p, int no)
 		cout << "Storage: " << p[no - 1]->storage << endl;
 	}
 }
+
+void Product::compareProduct()
+{
+	system("cls");
+	vector <Product*> p;
+	loadProduct(p);
+	int retry = 1, p1, p2;
+	while (retry == 1)
+	{
+		retry = 2;
+		system("cls");
+		listProduct();
+		cout << "Please choose 2 products to compare: ";
+		cin >> p1 >> p2;
+		if (p1 > p.size() || p2 > p.size())
+		{
+			cout << "Product unavailable! Try again?\n1.Yes\n2.No\n";
+			cin >> retry;
+		}
+		else
+		{
+			system("cls");
+			cout << "Compare"; gotoxy(25, 0); cout << "Product"; gotoxy(50, 0); cout << "Product 2" << endl;
+			cout << "Name"; gotoxy(25, 1); cout << p[p1 - 1]->name; gotoxy(50, 1); cout << p[p2 - 1]->name << endl;
+			cout << "Price"; gotoxy(25, 2); cout << p[p1 - 1]->price; gotoxy(50, 2); cout << p[p2 - 1]->price << endl;
+			cout << "CPU"; gotoxy(25, 3); cout << p[p1 - 1]->cpu; gotoxy(50, 3); cout << p[p2 - 1]->cpu << endl;
+			cout << "Ram"; gotoxy(25, 4); cout << p[p1 - 1]->ram; gotoxy(50, 4); cout << p[p2 - 1]->ram << endl;
+			cout << "Storage"; gotoxy(25, 5); cout << p[p1 - 1]->storage; gotoxy(50, 5); cout << p[p2 - 1]->storage << endl;
+		}
+	}
+	for (int i = 0; i < p.size(); i++) delete p[i];
+}
+
+
 
 int Product::getID()
 {
