@@ -165,6 +165,7 @@ void Seller::viewMenu(Database& account_list)
 		case 11: {
 			system("cls"); 
 			//menu();
+			listProduct.editOrderStatus();
 			system("pause"); 
 			break; 
 		}
@@ -273,4 +274,43 @@ void Database::exportCustomerlist()
 	{
 		cout << "Export successfully" << endl;
 	}
+}
+
+void Order::editOrderStatus()
+{
+	system("cls");
+	vector <Order*> order_list;
+	Order tmp;
+	order_list = tmp.loadListOfOrder();
+	string name;
+	cout << "Input name of customer you want to edit order status: ";
+	getline(cin, name);
+	getline(cin, name);
+	viewOrderStatus(order_list, name);
+	for (int i = 0; i < order_list.size(); i++)
+	{
+		int tmp, retry = 1;
+		while (retry == 1)
+		{
+			if (strcmp(name.c_str(), order_list[i]->purchaser.c_str()) == 0)
+			{
+				retry = 2;
+				cout << "Choose a transition status:\n1.Confirmed\n2.Pending\n3.Finished\n";
+				cin >> tmp;
+				if (tmp < 1 || tmp > 3)
+				{
+					cout << "You entered incorrectly. Try again?\n1.Yes\n2.No\n";
+					cin >> retry;
+				}
+				else
+				{
+					order_list[i]->status = tmp - 1;
+					cout << "Edit successfully!\n";
+				}
+			}
+		}
+		if (retry == 2) break;
+	}
+	saveOrder(order_list);
+	for (int i = 0; i < order_list.size(); i++) delete order_list[i];
 }

@@ -398,7 +398,6 @@ void Product::viewProduct()
 		cin >> no;
 		viewProductInf(p, no);
 	}
-
 	for (int i = 0; i < p.size(); i++) delete p[i]; //fix memory leak
 }
 
