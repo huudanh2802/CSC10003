@@ -159,6 +159,7 @@ void Seller::viewMenu(Database& account_list)
 		case 10: {
 			system("cls"); 
 			//menu();
+			listProduct.purchasedProductInAMonth(order_list);
 			system("pause"); 
 			break;
 		}
@@ -313,4 +314,31 @@ void Order::editOrderStatus()
 	}
 	saveOrder(order_list);
 	for (int i = 0; i < order_list.size(); i++) delete order_list[i];
+}
+
+void Order::purchasedProductInAMonth( vector<Order*>& list) {
+	int month;
+	int flag = 0;
+	cout << "Enter the month you want to see: ";
+	cin >> month;
+	for (int i = 0; i < list.size(); i++)
+	{
+		if (list[i]->purchase.m == month && list[i]->status == 2) {
+			cout << "Purchaser: " << list[i]->purchaser << endl;
+			cout << "ID: " << list[i]->ID << endl;
+			cout << "Purchase: " << list[i]->purchase.d << "/" << list[i]->purchase.m << "/" << list[i]->purchase.y << endl;
+			switch (list[i]->status)
+			{
+			case 0: cout << "Status: Confirmed" << endl; break;
+			case 1: cout << "Status: Pending" << endl; break;
+			case 2: cout << "Status: Finished" << endl; break;
+			}
+			cout << "Voucher ID: " << list[i]->voucher_ID << endl;
+			list[i]->viewCart();
+			flag = 1;
+		}
+	}
+	if (flag == 0) {
+		cout << "No order in this month" << endl;
+	}
 }

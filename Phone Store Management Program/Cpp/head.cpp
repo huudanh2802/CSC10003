@@ -151,19 +151,20 @@ void Order::deleteListProduct() {
 
 void Order::importProductFromCSV() {
 	Date tempDate;
+
 	cout << "Import date: " << endl;
 	tempDate.input();
 
 	string tempStr;
 	tempStr = to_string(tempDate.y) + to_string(tempDate.m) + to_string(tempDate.d);
-	tempStr = "product" + tempStr + ".csv";
+	tempStr = "product_" + tempStr + ".csv";
 	ifstream fin;
 	fin.open(tempStr);
 	Order fromCsv;
 	if (fin.is_open())
 		fromCsv.loadFromCSV(fin);
 	else {
-		cout << "Can not open " << tempStr << " file" << endl;
+		cout << "Can't open " << tempStr << " file" << endl;
 		return;
 	}
 	loadFromTxt();
@@ -184,6 +185,7 @@ void Order::importProductFromCSV() {
 			cart.push_back(temp);
 		}
 	}
+	cout << "Import successfully" << endl;
 
 	saveToTxt();
 	deleteListProduct();

@@ -40,7 +40,7 @@ int main()
 		func = 1;
 		if (time != 0) {
 			system("cls");
-			////store_management_program();
+			//store_management_program();
 			try {
 				cout << "1.Login\n0.Exit\nEnter function :";
 				cin >> func;
@@ -63,7 +63,7 @@ int main()
 			system("cls");
 			++time;
 			try {
-				////store_management_program();
+				//store_management_program();
 				cout << "1.Login\n2.Login as guest \nChoice :";
 				cin >> choice;
 				if (choice < 1 || choice>2)throw "Invalid input";
@@ -81,7 +81,7 @@ int main()
 				login = account_list.login();
 				do {
 					system("cls");
-					//menu();
+					menu();
 					try {
 						cout << "1.Show menu\n2.View profile info\n3.Change password\n4.Logout" << endl;
 						cout << "Choose function :";
@@ -97,13 +97,13 @@ int main()
 					{
 					case 1:
 						system("cls");
-						//menu();
+						menu();
 						login->viewMenu(account_list);
 						break;
 					case 2:
 					{
 						system("cls");
-						//menu();
+						menu();
 						login->viewProfile();
 						system("pause");
 						break;
@@ -111,7 +111,7 @@ int main()
 					case 3:
 					{
 						system("cls");
-						//menu();
+						menu();
 						login->changePassword();
 						system("pause");
 						break;
