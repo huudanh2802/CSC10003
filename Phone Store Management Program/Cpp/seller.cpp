@@ -12,7 +12,7 @@ Seller::Seller() :Account()
 	dob.y = 0;
 }
 
-void Seller::inputData(ifstream& fin) //Get name, dob, phone, title from user.txt
+void Seller::inputData(fstream& fin) //Get name, dob, phone, title from user.txt
 {
 	Account::inputData(fin);
 	fin >> dob.y;
@@ -25,7 +25,7 @@ void Seller::inputData(ifstream& fin) //Get name, dob, phone, title from user.tx
 	getline(fin, title);
 }
 
-void Seller::outputData(ofstream& user_data)
+void Seller::outputData(fstream& user_data)
 {
 	user_data << type << endl;
 	Account::outputData(user_data);
@@ -69,7 +69,7 @@ int Seller::Phone()
 	return phone;
 }
 
-void Seller::viewMenu(Database& account_list)
+void Seller::viewMenu(Database& account_list, int& switchS)
 {
 	vector<Order*>order_list;
 	Order temp;
@@ -201,7 +201,7 @@ void Database::searchviewProfilecustomer()
 	{
 		if (data[i]->checkAccount() == 1)
 		{
-			if (data[i]->checkName(searchname))
+			if (!data[i]->checkName(searchname))
 			{
 				data[i]->viewProfile();
 				flag = 1;
@@ -255,6 +255,11 @@ void Database::editProfilecustomer()
 	}
 }
 
+void Customer::export_Cus(ofstream& fout)
+{
+	fout << name << "," << dob.y << "/" << dob.m << "/" <<dob.d << "," << phone << "," << address << endl;
+
+}
 void Database::exportCustomerlist()
 {
 	int flag = 0;
@@ -267,7 +272,7 @@ void Database::exportCustomerlist()
 		if (data[i]->Type() == 1)
 		{
 			flag = 1;
-			fo << data[i]->Name() << "," << data[i]->Dob().y << "/" << data[i]->Dob().m << "/" << data[i]->Dob().d << "," << data[i]->Phone() << "," << data[i]->getAddress() << endl;
+
 		}
 	}
 	fo.close();

@@ -12,7 +12,7 @@ Customer::Customer() :Account()
 	dob.y = 0;
 }
 
-void Customer::inputData(ifstream& fin) //Get name, dob, phone, address from user.txt
+void Customer::inputData(fstream& fin) //Get name, dob, phone, address from user.txt
 {
 	Account::inputData(fin);
 	fin >> dob.y;
@@ -25,7 +25,7 @@ void Customer::inputData(ifstream& fin) //Get name, dob, phone, address from use
 	getline(fin, address);
 }
 
-void Customer::outputData(ofstream& user_data)
+void Customer::outputData(fstream& user_data)
 {
 	user_data << type << endl;
 	Account::outputData(user_data);
@@ -69,218 +69,235 @@ int Customer::Phone()
 	return phone;
 }
 
-void Customer::viewMenu(Database& account_list)
+void Customer::viewMenu(Database& account_list, int &switchS)
 {
-	vector<Order*>order_list;
-	Order temp;
-	Voucher voucher;
-	order_list = temp.loadListOfOrder();
-	int choice = -1;
-
-	if (name.compare("//") == 0)
-	{
-		Order cart;
-		Product method;
-		Order listProduct;
+		vector<Order*>order_list;
+		Order temp;
+		Voucher voucher;
+		order_list = temp.loadListOfOrder();
+		int choice = -1;
 		int checkOut = -1;
-		do {
-			system("cls");
-			//menu();
-			try {
-				if (choice == 0) break;
-				cout << "1.View all product\n2.Add product to cart\n3.Search product\n4.View cart\n5.Remove product from cart\n6.View list of products based on categories\n7.Compare 2 products\n8.Checkout\n9.Create account\n0.Exit\nChoice :";
-				cin >> choice;
-				if (choice < 0 || choice>9) throw "Invalid input";
-			}
-			catch (const char* invalid_argument) {
-				cout << invalid_argument << endl;
-				system("pause");
-				continue;
-			}
-			switch (choice)
-			{
-			case 1: {
+		if (name.compare("//") == 0)
+		{
+			switchS = 0;
+			Order cart;
+			Product method;
+			Order listProduct;
+			int checkOut = -1;
+			do {
 				system("cls");
 				//menu();
-				method.viewProduct();
-				system("pause");
-				break;
-			}
-			case 2: {
-				system("cls");
-				//menu();
-				cart.addProduct();
-				cart.calCart();
-				system("pause");
-				break;
-			}
-			case 3: {
-				system("cls");
-				//menu();
-				listProduct.searchProduct();
-				system("pause");
-				break;
-			}
-			case 4: {
-				system("cls");
-				//menu();
-				cart.viewCart();
-				system("pause");
-
-				break;
-			}
-			case 5: {
-				system("cls");
-				//menu();
-				cart.removeProduct();
-				cart.calCart();
-				system("pause");
-				break;
-			}
-			case 6: {
-				system("cls");
-				//menu();
-				method.viewProductBaseOnCategories();
-				system("pause");
-				break;
-			}
-			case 7: {
-				//menu();
-				method.compareProduct();
-				system("pause");
-				break;
-			}
-			case 8: {
-				if (cart.viewCart())
+				try {
+					if (choice == 0) break;
+					cout << "1.View all product\n2.Add product to cart\n3.Search product\n4.View cart\n5.Remove product from cart\n6.View list of products based on categories\n7.Compare 2 products\n8.Checkout\n9.Create account\n0.Exit\nChoice :";
+					cin >> choice;
+					if (choice < 0 || choice>9) throw "Invalid input";
+				}
+				catch (const char* invalid_argument) {
+					cout << invalid_argument << endl;
+					system("pause");
+					continue;
+				}
+				switch (choice)
 				{
+				case 1: {
 					system("cls");
 					//menu();
-					cout << "Create an account then log back in" << endl;
-					account_list.createAccount(this);
-					cart.saveCartTxt(this->getUsername(), name);
-					choice = 0;
+					method.viewProduct();
 					system("pause");
+					break;
 				}
-				break;
-			}
-			case 9: {
+				case 2: {
+					system("cls");
+					//menu();
+					cart.addProduct();
+					cart.calCart();
+					system("pause");
+					break;
+				}
+				case 3: {
+					system("cls");
+					//menu();
+					listProduct.searchProduct();
+					system("pause");
+					break;
+				}
+				case 4: {
+					system("cls");
+					//menu();
+					cart.viewCart();
+					system("pause");
+
+					break;
+				}
+				case 5: {
+					system("cls");
+					//menu();
+					cart.removeProduct();
+					cart.calCart();
+					system("pause");
+					break;
+				}
+				case 6: {
+					system("cls");
+					//menu();
+					method.viewProductBaseOnCategories();
+					system("pause");
+					break;
+				}
+				case 7: {
+					//menu();
+					method.compareProduct();
+					system("pause");
+					break;
+				}
+				case 8: {
+					if (cart.viewCart())
+					{
+						system("cls");
+						//menu();
+						cout << "Create an account first" << endl;
+						account_list.createAccount(this);
+						cart.saveCartTxt(user, name);
+						cart.deleteListProduct();
+						choice = 0;
+						switchS = 2;
+						system("pause");
+					}
+					break;
+				}
+				case 9: {
+					system("cls");
+					//menu();
+					account_list.createAccount(this);
+					choice = 0;
+					switchS = 1;
+					system("pause");
+					break;
+				}
+				case 0: break;
+				}
+			} while (choice != 0);
+		}
+		else
+		{
+			Product method;
+			Order listProduct;
+			Order cart;
+			cart.loadCartTxt(user, name);
+			do {
 				system("cls");
 				//menu();
-				account_list.createAccount(this);
-				choice = 0;
-				system("pause");
-				break;
-			}
-			case 0: break;
-			}
-		} while (choice != 0);
-	}
-	else
-	{
-		Product method;
-		Order listProduct;
-		Order cart;
-		cart.loadCartTxt(this->getUsername(), name);
-		int checkOut = -1;
-		do {
-			system("cls");
-			//menu();
-			try {
-				cout << "1.View all product\n2.Add product to cart\n3.Search product\n4.View cart\n5.Remove product from cart\n6.View list of products based on categories\n7.Compare 2 products\n8.Uses voucher\n9.Checkout\n10.View order status\n11.Cancel order\n12.Change profile information\n0.Exit\nChoice :";
-				cin >> choice;
-				if(choice<0||choice>12)throw "Invalid input";
-			}
-			catch (const char* invalid_argument) {
-				cout << invalid_argument << endl;
-				system("pause");
-				continue;
-			}
-			switch (choice)
-			{
-			case 1: {
-				system("cls");
-				//menu();
-				method.viewProduct();
-				system("pause");
-				break;
-			}
-			case 2: {
-				system("cls");
-				//menu();
-				cart.addProduct();
-				cart.saveCartTxt(this->getUsername(), name);
-				system("pause");
-				break;
-			}
-			case 3: {
-				system("cls");
-				//menu();
-				listProduct.searchProduct();
-				system("pause");
-				break; }
-			case 4: {
-				system("cls");
-				//menu();
-				cart.viewCart();
-				system("pause");
-				break; }
-			case 5: {
-				system("cls");
-				//menu();
-				cart.removeProduct();
-				cart.saveCartTxt(this->getUsername(), name);
-				system("pause");
-				break; }
-			case 6: {
-				system("cls");
-				//menu();
-				method.viewProductBaseOnCategories();
-				system("pause");
-				break; }
-			case 7: {
-				system("cls");
-				//menu();
-				system("pause");
-				break; }
-			case 8: {
-				system("cls");
-				//menu();
-				voucher.usesVoucher(order_list, this->getUsername());
-				system("pause");
-				break; }
-			case 9: {
-				system("cls");
-				//menu();
-				if (cart.viewCart())
+				if (switchS == 2) choice = 9;
+				else {
+					try {
+						cout << "1.View all product\n2.Add product to cart\n3.Search product\n4.View cart\n5.Remove product from cart\n6.View list of products based on categories\n7.Compare 2 products\n8.Uses voucher\n9.Checkout\n10.View order status\n11.Cancel order\n12.Change profile information\n0.Exit\nChoice :";
+						cin >> choice;
+						if (choice < 0 || choice>12)throw "Invalid input";
+					}
+					catch (const char* invalid_argument) {
+						cout << invalid_argument << endl;
+						system("pause");
+						continue;
+					}
+				}
+				switch (choice)
 				{
-					cart.checkOut(this->getUsername(), name, order_list, checkOut);
+				case 1: {
+					system("cls");
+					//menu();
+					method.viewProduct();
+					system("pause");
+					break;
 				}
-				system("pause");
-				break; }
-			case 10: {
-				system("cls");
-				//menu();
-				cart.viewOrderStatus(order_list, this->getUsername());
-				system("pause");
-				break;
-			}
-			case 11: {
-				system("cls");
-				//menu();
-				cart.cancelOrder(this->getUsername(), order_list);
-				system("pause");
-				break;
-			}
-			case 12: {
-				system("cls");
-				//menu();
-				this->changeProfileInformation();
-				system("pause");
-				break;
-			}
-			case 0: break;
-			}
-		} while (choice != 0);
+				case 2: {
+					system("cls");
+					//menu();
+					cart.addProduct();
+					cart.calCart();
+					cart.saveCartTxt(user, name);
+					system("pause");
+					break;
+				}
+				case 3: {
+					system("cls");
+					//menu();
+					listProduct.searchProduct();
+					system("pause");
+					break; }
+				case 4: {
+					system("cls");
+					//menu();
+					cart.viewCart();
+					system("pause");
+					break; }
+				case 5: {
+					system("cls");
+					//menu();
+					cart.removeProduct();
+					cart.saveCartTxt(user, name);
+					system("pause");
+					break; }
+				case 6: {
+					system("cls");
+					//menu();
+					method.viewProductBaseOnCategories();
+					system("pause");
+					break; }
+				case 7: {
+					system("cls");
+					//menu();
+					method.compareProduct();
+					system("pause");
+					break; }
+				case 8: {
+					system("cls");
+					//menu();
+					voucher.usesVoucher(order_list, user);
+					system("pause");
+					break; }
+				case 9: {
+					system("cls");
+					//menu();
+					if (switchS == 2)
+					{
+						cart.calCart();
+						cart.checkOut(user, name, order_list, checkOut);
+						switchS = 0;
+					}
+					else {
+						if (cart.viewCart())
+						{
+							cart.checkOut(user, name, order_list, checkOut);
+						}
+					}
+					system("pause");
+					break; }
+				case 10: {
+					system("cls");
+					//menu();
+					cart.viewOrderStatus(order_list, user);
+					system("pause");
+					break;
+				}
+				case 11: {
+					system("cls");
+					//menu();
+					cart.cancelOrder(user, order_list);
+					system("pause");
+					break;
+				}
+				case 12: {
+					system("cls");
+					//menu();
+					this->changeProfileInformation();
+					system("pause");
+					break;
+				}
+				case 0: break;
+				}
+			} while (choice != 0);
+		}
 		for (int i = 0; i < order_list.size(); i++)
 		{
 			if (i == order_list.size() - 1)
@@ -294,7 +311,6 @@ void Customer::viewMenu(Database& account_list)
 			order_list[i]->deleteListProduct();
 			delete order_list[i];
 		}
-	}
 }
 
 int Customer::checkName(const string& searchname)
@@ -324,8 +340,8 @@ void Customer::editProfile()
 	getline(cin, address);
 }
 
-void Customer::createAccount() {
-	Account::createAccount();
+void Customer::createAccount( Database& list) {
+	Account::createAccount(list);
 	cout << endl;
 	cout << "Enter date of birth: ";
 	cin >> dob.d >> dob.m >> dob.y;
@@ -358,22 +374,7 @@ void Order::loadCartTxt(string user, string& name)
 		pd = new Product;
 		int ID, Stock, Price, Ram, Storage;
 		string Name, CPU;
-		fin >> ID;
-		pd->setID(ID);
-		getline(fin, Name);
-		getline(fin, Name);
-		pd->setName(Name);
-		fin >> Price;
-		pd->setPrice(Price);
-		fin >> Stock;
-		pd->setStock(Stock);
-		getline(fin, CPU);
-		getline(fin, CPU);
-		pd->setCpu(CPU);
-		fin >> Ram;
-		pd->setRam(Ram);
-		fin >> Storage;
-		pd->setStorage(Storage);
+		pd->inputData(fin);
 		cart.push_back(pd);
 	}
 	fin.close();
@@ -395,20 +396,19 @@ void Order::saveCartTxt(string user, string& name)
 	{
 		for (int i = 0; i < cart.size(); i++)
 		{
-			fo << cart[i]->getID() << endl;
-			fo << cart[i]->getName() << endl;
-			fo << cart[i]->getPrice() << endl;
-			fo << cart[i]->getStock() << endl;
-			fo << cart[i]->getCpu() << endl;
-			fo << cart[i]->getRam() << endl;
-			fo << cart[i]->getStorage() << endl;
+			cart[i]->outputData(fo);
 		}
 	}
 
 	fo.close(); //add close file
 }
-
+bool Product::checkStock()
+{
+	if (stock == 0) return false;
+	else return true;
+}
 void Order::addProduct()
+
 {
 	Product* temp = nullptr;
 	int flag = 0;
@@ -422,19 +422,20 @@ void Order::addProduct()
 	cin >> num;
 	for (int i = 0; i < list.size(); i++)
 	{
-		if (num - 1 == i && list[i]->getStock() > 0)
+		if (num - 1 == i)
 		{
+			if (!list[i]->checkStock())
+			{
+				flag = 2;
+				break;
+			}
 			flag = 1;
 			temp = new Product;
 			*temp = *list[i];
 			cart.push_back(temp);
 			break;
 		}
-		if (list[i]->getStock() == 0)
-		{
-			flag = 2;
-			break;
-		}
+
 	}
 	if (flag == 1)
 	{
@@ -457,6 +458,14 @@ void Order::addProduct()
 	delete p;
 }
 
+bool Product::checkID(const int& id)
+{
+	if (ID == id) return true;
+	else return false;
+}
+
+
+
 void Order::removeProduct()
 {
 	int flag = 0;
@@ -467,7 +476,7 @@ void Order::removeProduct()
 		cin >> id;
 		for (int i = 0; i < cart.size(); i++)
 		{
-			if (cart[i]->getID() == id)
+			if (cart[i]->checkID(id))
 			{
 				flag = 1;
 				delete cart[i];

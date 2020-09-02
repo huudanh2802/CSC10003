@@ -11,6 +11,52 @@ Account::Account()
 Database::Database()
 {
 	num = 0;
+	data_file.open("Data/user.txt", fstream::in);
+	try {
+		if (!data_file.is_open())
+		{
+			throw "Can't open data file (user.txt)!";
+		}
+	}
+	catch (const char* invalid_argument) {
+		cout << invalid_argument << endl;
+		return;
+	}
+	Account* account;
+	int tType;
+	data_file >> num;
+	for (int i = 0; i < num; i++)
+	{
+		data_file >> tType;
+		if (tType == 0)
+			account = new Seller;
+		else
+			account = new Customer;
+		account->inputData(data_file);
+		data_file.ignore(1, '\n');
+		data.push_back(account);
+	}
+	data_file.close();
+
+}
+Database::~Database()
+{
+	data_file.open("Data/user.txt", fstream::out | fstream::trunc);
+	data_file << num << endl;
+	for (int i = 0; i < num; i++)
+	{
+		data[i]->outputData(data_file);
+		data_file << '\n';
+	}
+	for (int i = 0; i < data.size(); i++)
+		delete data[i];
+	data.clear();
+	data_file.close();
+}
+
+int Product::getPrice()
+{
+	return price;
 }
 
 void Date::input() {
@@ -193,49 +239,11 @@ void Order::importProductFromCSV() {
 
 // <\PRODUCT>
 
-void Account::inputData(ifstream& user_data) //Get username and password
+void Account::inputData(fstream& user_data) //Get username and password
 {
 	getline(user_data, user);
 	getline(user_data, user);
 	getline(user_data, pass);
-}
-
-void Database::loadData(ifstream& user_data) //Load user from user.txt
-{
-	Account* account;
-	int tType;
-	user_data >> num;
-	for (int i = 0; i < num; i++)
-	{
-		user_data >> tType;
-		if (tType == 0)
-			account = new Seller;
-		else
-			account = new Customer;
-		account->inputData(user_data);
-		user_data.ignore(1, '\n');
-		data.push_back(account);
-	}
-}
-
-void Database::deleteData() //Deallocate vector data
-{
-	ofstream user_data;
-	user_data.open(((string)".//Data//user.txt").c_str(), ios::trunc);
-	if (!user_data.is_open()) {
-		cout << "user.txt can't be opened" << endl;
-		exit(0);
-	}
-	user_data << num << endl;
-	for (int i = 0; i < num; i++)
-	{
-		data[i]->outputData(user_data);
-		user_data << '\n';
-	}
-	for (int i = 0; i < data.size(); i++)
-		delete data[i];
-	data.clear();
-	user_data.close();
 }
 
 int Account::checkLogin(const string& input_username, const string& input_password)
@@ -276,17 +284,22 @@ Account* Database::login()
 }
 
 void Database::createAccount(Account* acc) {
-	acc->createAccount();
+	acc->createAccount(*this);
 	data.push_back(acc);
 	num++;
 }
 
-void Database::changeProfileInformation(string user_name) {
+void Account::changeProfileInData(const string& user_name)
+{
+	if (user==user_name) {
+		this->changeProfileInformation();
+	}
+}
+
+void Database::changeProfileInformation(const string &user_name) {
 	for (int i = 0; i < num; i++)
 	{
-		if (user_name == data[i]->getUsername()) {
-			data[i]->changeProfileInformation();
-		}
+		data[i]->changeProfileInData(user_name);
 	}
 }
 
@@ -295,7 +308,7 @@ int Database::Number()
 	return num;
 }
 
-void Account::outputData(ofstream& user_data)
+void Account::outputData(fstream& user_data)
 {
 	user_data << user << endl;
 	user_data << pass << endl;
@@ -329,10 +342,44 @@ void Account::changePassword()
 	pass = tempPass1;
 }
 
-void Account::createAccount() {
-	cout << "Enter user name: ";
-	getline(cin, user);
-	getline(cin, user);
+bool Database::checkUser(const string& user)
+{
+	for (int i = 0; i < data.size(); i++)
+	{
+		if (data[i]->checkUser(user) == true)
+			return true;
+	}
+	return false;
+}
+
+bool Account::checkUser(const string& user)
+{
+	if (this->user.compare(user) == 0) return true;
+	else return false;
+}
+void Account::createAccount( Database& list) {
+	int check = 0;
+	int time = 0;
+	do {
+		system("cls");
+		cout << "Enter user name: ";
+		if(time==0) getline(cin, user);
+		getline(cin, user);
+		time++;
+		if (user.compare("//")) {
+			if (!list.checkUser(user)) check = 1;
+			else
+			{
+				cout << "User already existed" << endl;
+				system("pause");
+			}
+		}
+		else
+		{
+			cout << "Username can't be //" << endl;
+			system("pause");
+		}
+	} while (check == 0);
 	cout << "Enter password: ";
 	enterPass(pass);
 }
@@ -657,76 +704,6 @@ void Product::compareProduct()
 
 
 
-int Product::getID()
-{
-	return ID;
-}
-
-int Product::getPrice()
-{
-	return price;
-}
-
-int Product::getStock()
-{
-	return stock;
-}
-
-int Product::getRam()
-{
-	return ram;
-}
-
-int Product::getStorage()
-{
-	return storage;
-}
-
-string Product::getName()
-{
-	return name;
-}
-
-string Product::getCpu()
-{
-	return cpu;
-}
-
-void Product::setID(int& id)
-{
-	ID = id;
-}
-
-void Product::setPrice(int& Price)
-{
-	price = Price;
-}
-
-void Product::setStock(int& Stock)
-{
-	stock = Stock;
-}
-
-void Product::setRam(int& Ram)
-{
-	ram = Ram;
-}
-
-void Product::setStorage(int& Storage)
-{
-	storage = Storage;
-}
-
-void Product::setName(string& Name)
-{
-	name = Name;
-}
-
-void Product::setCpu(string& CPU)
-{
-	cpu = CPU;
-}
-
 void Product::loadProduct(vector <Product*>& p)
 {
 	int n;
@@ -778,6 +755,10 @@ void Product::output() {
 	cout << "Price: " << price << endl;
 }
 
+string Product::getName()
+{
+	return name;
+}
 void Order::searchProduct() {
 	string name;
 	cout << "Searching (Enter name): " << endl;
@@ -931,11 +912,6 @@ Voucher::~Voucher() {
 		delete list[i];
 	}
 	list.clear();
-}
-
-string Account::getUsername()
-{
-	return user;
 }
 
 void Account::changeProfileInformation()
