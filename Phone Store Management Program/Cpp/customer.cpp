@@ -89,9 +89,8 @@ void Customer::viewMenu(Database& account_list, int &switchS)
 				//menu();
 				try {
 					if (choice == 0) break;
-					cout << "1.View all product\n2.Add product to cart\n3.Search product\n4.View cart\n5.Remove product from cart\n6.View list of products based on categories\n7.Compare 2 products\n8.Checkout\n9.Create account\n0.Exit\nChoice :";
-					cin >> choice;
-					if (choice < 0 || choice>9) throw "Invalid input";
+					choice= menu( "1.View all product\n2.Add product to cart\n3.Search product\n4.View cart\n5.Remove product from cart\n6.View list of products based on categories\n7.Compare 2 products\n8.Checkout\n9.Create account\n10.Exit");
+					if (choice < 0 || choice>10) throw "Invalid input";
 				}
 				catch (const char* invalid_argument) {
 					cout << invalid_argument << endl;
@@ -175,9 +174,9 @@ void Customer::viewMenu(Database& account_list, int &switchS)
 					system("pause");
 					break;
 				}
-				case 0: break;
+				case 10: break;
 				}
-			} while (choice != 0);
+			} while (choice != 10);
 		}
 		else
 		{
@@ -191,9 +190,8 @@ void Customer::viewMenu(Database& account_list, int &switchS)
 				if (switchS == 2) choice = 9;
 				else {
 					try {
-						cout << "1.View all product\n2.Add product to cart\n3.Search product\n4.View cart\n5.Remove product from cart\n6.View list of products based on categories\n7.Compare 2 products\n8.Uses voucher\n9.Checkout\n10.View order status\n11.Cancel order\n12.Change profile information\n0.Exit\nChoice :";
-						cin >> choice;
-						if (choice < 0 || choice>12)throw "Invalid input";
+						choice=menu("1.View all product\n2.Add product to cart\n3.Search product\n4.View cart\n5.Remove product from cart\n6.View list of products based on categories\n7.Compare 2 products\n8.Uses voucher\n9.Checkout\n10.View order status\n11.Cancel order\n12.Change profile information\n13.Exit");
+						if (choice < 0 || choice>13)throw "Invalid input";
 					}
 					catch (const char* invalid_argument) {
 						cout << invalid_argument << endl;
@@ -294,9 +292,9 @@ void Customer::viewMenu(Database& account_list, int &switchS)
 					system("pause");
 					break;
 				}
-				case 0: break;
+				case 13: break;
 				}
-			} while (choice != 0);
+			} while (choice != 13);
 		}
 		for (int i = 0; i < order_list.size(); i++)
 		{
@@ -566,7 +564,7 @@ void Order::checkOut(string user, string& name, vector<Order*>& list, int& flag)
 		cart[i]->resizeStock();
 	this->ID = rand() % 900000 + 100000;
 	this->purchaser = user;
-	getCurrentDate(this->purchase);
+	this->purchase.getCurrentDate();
 	Order* temp = new Order;
 	temp = this;
 	list.push_back(temp);

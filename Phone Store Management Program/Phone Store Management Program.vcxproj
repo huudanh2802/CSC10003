@@ -147,6 +147,7 @@
     <ClInclude Include="Header\head.h" />
     <ClInclude Include="Header\password.h" />
     <ClInclude Include="Header\seller.h" />
+    <ClInclude Include="Header\window.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cpp\customer.cpp" />

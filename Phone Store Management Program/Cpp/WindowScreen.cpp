@@ -1,4 +1,4 @@
-#include "../Header/head.h"
+#include "../Header/window.h"
 
  void gotoxy(int x, int y)
 {
@@ -38,7 +38,7 @@ void store_management_program()
 
 }
 
-void menu()
+void menu_main()
 {
 	cout << flush;
 	fflush(stdout);
@@ -51,3 +51,63 @@ void menu()
 	cout << "\n";
 
 }
+
+int gety()
+{
+	HANDLE hConsoleOutput;
+	CONSOLE_SCREEN_BUFFER_INFO info;
+	hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+	GetConsoleScreenBufferInfo(hConsoleOutput, &info);
+	return info.dwCursorPosition.Y;
+}
+
+void turnCursor(bool on)
+{
+	CONSOLE_CURSOR_INFO cursor;
+	cursor.bVisible = on;
+	cursor.dwSize = 1;
+	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursor);
+}
+
+void gotoXY(int x, int y)
+{
+	HANDLE hConsoleOutput;
+	COORD Cursor;
+	Cursor.X = x;
+	Cursor.Y = y;
+	hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleCursorPosition(hConsoleOutput, Cursor);
+}
+
+void textColor(int x)
+{
+	HANDLE color;
+	color = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(color, x);
+}
+
+int print(const char* s, int choose)
+{
+	char* yourChoose, * ntok = 0, * str = new char[strlen(s) + 1];
+	strcpy_s(str, strlen(s) + 1, s);
+	yourChoose = strtok_s(str, "\n", &ntok);
+	int i = 1;
+	while (yourChoose)
+	{
+		if (i == choose)
+		{
+			textColor(12);
+			cout << yourChoose << endl;
+		}
+		else
+		{
+			textColor(15);
+			cout << yourChoose << "   " << endl;
+		}
+		yourChoose = strtok_s(0, "\n", &ntok);
+		i++;
+	}
+	delete[] str;
+	return i - 1;
+}
+

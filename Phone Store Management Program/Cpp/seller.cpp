@@ -79,9 +79,8 @@ void Seller::viewMenu(Database& account_list, int& switchS)
 		system("cls");
 		//menu();
 		try {
-			cout << "1.Import list of product from csv file\n2.Create product\n3.Edit information of the product\n4.Search and view information of a product\n5.Create voucher\n6.Remove product\n7.Search and view profile of a customer\n8.Edit customer profile\n9.Export list of customer to a csv file\n10.View list of purchased in a month\n11.Edit order status\n0.Exit\nChoice :";
-			cin >> choice;
-			if( choice<0||choice>11)throw "Invalid input";
+			choice = menu("1.Import list of product from csv file\n2.Create product\n3.Edit information of the product\n4.Search and view information of a product\n5.Create voucher\n6.Remove product\n7.Search and view profile of a customer\n8.Edit customer profile\n9.Export list of customer to a csv file\n10.View list of purchased in a month\n11.Edit order status\n12.Exit");
+			if (choice < 0 || choice>12)throw "Invalid input";
 		}
 		catch (const char* invalid_argument) {
 			cout << invalid_argument << endl;
@@ -170,10 +169,15 @@ void Seller::viewMenu(Database& account_list, int& switchS)
 			system("pause"); 
 			break; 
 		}
-		case 0: break;
+		case 12: break;
 		}
-	} while (choice != 0);
+	} while (choice != 12);
 	temp.saveOrder(order_list);
+	for (int i = 0; i < order_list.size(); i++)
+	{
+		order_list[i]->deleteListProduct();
+		delete order_list[i];
+	}
 }
 
 int Seller::checkAccount()

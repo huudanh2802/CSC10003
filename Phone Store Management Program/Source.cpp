@@ -27,37 +27,41 @@ int main()
 		if (time != 0) {
 			system("cls");
 			//store_management_program();
-			try {
-				cout << "1.Login\n0.Exit\nEnter function :";
-				cin >> func;
-				if (func < 0 || func>1) throw "Invalid input";
-			}
-			catch (const char* invalid_argument) {
-				cout << invalid_argument << endl;
-				system("pause");
-				continue;
-			}
+			do {
+				try {
+					func = menu("1.Login\n2.Exit");
+					if (func < 0 || func>2) throw "Invalid input";
+				}
+				catch (const char* invalid_argument) {
+					cout << invalid_argument << endl;
+					system("pause");
+					continue;
+				}
+				break;
+			} while (true);
 		}
-		if (func == 0)
+		if (func == 2)
 		{
 			break;
 		}
 		else
 		{
-			system("cls");
 			++time;
-			cout << "1.Login\n2.Login as guest \nChoice :";
-			cin >> choice;
-			try {
-				//store_management_program();
-	
-				if (choice < 1 || choice>2)throw "Invalid input";
-			}
-			catch (const char* invalid_argument) {
-				cout << invalid_argument << endl;
-				system("pause");
-				continue;
-			}
+			do {
+				system("cls");
+				try {
+
+					//store_management_program();
+					choice = menu("1.Login\n2.Login as guest ");
+					if (choice < 1 || choice>2)throw "Invalid input";
+				}
+				catch (const char* invalid_argument) {
+					cout << invalid_argument << endl;
+					system("pause");
+					continue;
+				}
+				break;
+			} while (true);
 			system("cls");
 			do {
 				if (switchS !=0) choice = 1;
@@ -74,17 +78,18 @@ int main()
 						switchS = 0;
 						system("cls");
 						//menu();
-						try {
-							cout << "1.Show menu\n2.View profile info\n3.Change password\n4.Logout" << endl;
-							cout << "Choose function :";
-							cin >> func;
-							if (choice < 1 || choice>4)throw "Invalid input";
-						}
-						catch (const char* invalid_argument) {
-							cout << invalid_argument << endl;
-							system("pause");
-							continue;
-						}
+						do {
+							try {
+								func = menu("1.Show menu\n2.View profile info\n3.Change password\n4.Logout");
+								if (choice < 1 || choice>4)throw "Invalid input";
+							}
+							catch (const char* invalid_argument) {
+								cout << invalid_argument << endl;
+								system("pause");
+								continue;
+							}
+							break;
+						} while (true);
 						}
 						switch (func)
 						{

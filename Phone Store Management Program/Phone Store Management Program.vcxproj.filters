@@ -27,6 +27,9 @@
     <ClInclude Include="Header\head.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Header\window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cpp\seller.cpp">

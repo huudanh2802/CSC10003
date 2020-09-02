@@ -2,6 +2,7 @@
 #include "..//Header//customer.h"
 #include "..//Header//seller.h"
 #include "..//Header//password.h"
+#include "..//Header//window.h"
 Account::Account()
 {
 	user = "//";
@@ -256,13 +257,11 @@ Account* Database::login()
 {
 	Account* account = nullptr;
 	string input_username, input_password;
-	int i = 0;
 	while (true)
 	{
 		system("cls");
 		//store_management_program();
 		cout << "Username :";
-		if(i==0) getline(cin, input_username);
 		getline(cin, input_username);
 		cout << "Password :";
 		enterPass(input_password);
@@ -276,7 +275,6 @@ Account* Database::login()
 		}
 		if (account != nullptr) break;
 		else {
-			i++;
 			cout << "Invalid username/password" << endl;
 		}
 	}
@@ -357,7 +355,7 @@ bool Account::checkUser(const string& user)
 	if (this->user.compare(user) == 0) return true;
 	else return false;
 }
-void Account::createAccount( Database& list) {
+void Account::createAccount(Database& list) {
 	int check = 0;
 	int time = 0;
 	do {
@@ -1108,7 +1106,7 @@ int getMonth(char* pch)
 	if (strcmp(pch, "Dec") == 0) return  12;
 }
 
-void getCurrentDate(Date& dCur)
+void Date::getCurrentDate()
 {
 	time_t tt;
 	struct tm* ti;
@@ -1120,14 +1118,13 @@ void getCurrentDate(Date& dCur)
 	char* pch;
 	pch = strtok(temp, " ");
 	pch = strtok(NULL, " ");
-	dCur.m = getMonth(pch);
+	m = getMonth(pch);
 	pch = strtok(NULL, " ");
-	dCur.d = atoi(pch);
+	d = atoi(pch);
 	pch = strtok(NULL, " ");
 	strcpy(temp, pch);
 	pch = strtok(NULL, " ");
-	dCur.y = atoi(pch);
-	cout << dCur.d << " " << dCur.m << " " << dCur.y << endl;
+	y = atoi(pch);
 }
 
 
@@ -1142,4 +1139,35 @@ Product& Product::operator=(const Product& copy)
 	this->cpu = copy.cpu;
 
 	return *this;
+}
+int menu(const char* s)
+{
+	turnCursor(0);
+	int y = gety(), choose = 1;
+	while (1)
+	{
+		gotoXY(0, y);
+		int nChoose = print(s, choose);
+		char input = _getch();
+		if (input == -32)
+		{
+			input = _getch();
+			switch (input)
+			{
+			case 72: choose = (choose > 1) ? choose - 1 : 1; break;
+			case 80: choose = (choose < nChoose) ? choose + 1 : input; break;
+			}
+		}
+		if ((input >= 48) && (input <= 57))
+		{
+			int x = input - 48;
+			if ((x > 0) && (x <= nChoose)) choose = x;
+		}
+		if (input == '\r')
+		{
+			textColor(15);
+			turnCursor(1);
+			return choose;
+		}
+	}
 }

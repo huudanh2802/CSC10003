@@ -1,10 +1,6 @@
 #ifndef _HEAD_H_
 #define _HEAD_H_
 #define MAX 1000
-#define WINWIDTH 113
-#define WINHEIGHT 1000
-#define _WIN32_WINNT 0x0502
-#define MAINICON 101   
 
 #pragma warning(disable : 4996)
 
@@ -20,12 +16,14 @@
 #include <Windows.h>
 #include <fcntl.h>
 #include <io.h>
+
 using namespace std;
 
 struct Date {
 	int d, m, y;
 	void input();
 	int compareDate(int day, int month, int year);
+	void getCurrentDate();
 };
 
 class Database;
@@ -157,12 +155,6 @@ public:Voucher();
 	  ~Voucher();
 	  void usesVoucher(vector<Order*>& Order,string username);
 };
-
-void getCurrentDate(Date& dCur);
-void gotoxy(int x, int y);
-void loadingScreen();
-void store_management_program();
-void menu();
-
+int menu(const char* s);
 
 #endif
