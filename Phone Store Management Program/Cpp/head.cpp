@@ -361,7 +361,6 @@ void Account::createAccount(Database& list) {
 	do {
 		system("cls");
 		cout << "Enter user name: ";
-		if(time==0) getline(cin, user);
 		getline(cin, user);
 		time++;
 		if (user.compare("//")) {
@@ -760,8 +759,7 @@ string Product::getName()
 void Order::searchProduct() {
 	string name;
 	cout << "Searching (Enter name): " << endl;
-	getline(cin, name, '\n');
-	getline(cin, name, '\n');
+	getline(cin, name);
 
 	char* tmpName = new char[name.length() + 1];
 	strcpy(tmpName, name.c_str());
