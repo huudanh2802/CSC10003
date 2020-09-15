@@ -69,6 +69,10 @@ int Seller::Phone()
 	return phone;
 }
 
+void Seller::export_Cus(ofstream& fout)
+{
+}
+
 void Seller::viewMenu(Database& account_list, int& switchS)
 {
 	vector<Order*>order_list;
@@ -200,12 +204,11 @@ void Database::searchviewProfilecustomer()
 	string searchname;
 	cout << "Enter name of customer you want to search and view: ";
 	getline(cin, searchname);
-	getline(cin, searchname);
 	for (int i = 0; i < num; i++)
 	{
 		if (data[i]->checkAccount() == 1)
 		{
-			if (!data[i]->checkName(searchname))
+			if (data[i]->checkName(searchname))
 			{
 				data[i]->viewProfile();
 				flag = 1;
@@ -236,7 +239,6 @@ void Database::editProfilecustomer()
 	int flag = 0;
 	string searchname;
 	cout << "Enter name of customer you want to edit: ";
-	getline(cin, searchname);
 	getline(cin, searchname);
 	for (int i = 0; i < num; i++)
 	{
@@ -275,8 +277,8 @@ void Database::exportCustomerlist()
 	{
 		if (data[i]->Type() == 1)
 		{
+			data[i]->export_Cus(fo);
 			flag = 1;
-
 		}
 	}
 	fo.close();

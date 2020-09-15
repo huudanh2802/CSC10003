@@ -1046,7 +1046,7 @@ int Date::compareDate(int day, int month, int year)
 }
 void Voucher::usesVoucher(vector<Order*>& order,string username)
 {
-	int id,flag1 = 0,flag2 = 0;
+	int id, flag1 = 0, flag2 = 0, flag3 = 0, flag4 = 0;
 	Order o;
 	time_t now = time(0);
 	struct tm newtime;
@@ -1061,29 +1061,49 @@ void Voucher::usesVoucher(vector<Order*>& order,string username)
 	}
 	else
 	{
-		for (int i = 0; i < order.size(); i++)
+		int num;
+		cout << "Do you want to use voucher ? (1.Yes/ 0.No): ";
+		cin >> num;
+		if (num != 1)
 		{
-			if (strcmp(order[i]->getPurchaser().c_str(), username.c_str()) == 0)
+			return;
+		}
+		else
+		{
+			for (int i = 0; i < order.size(); i++)
 			{
-				flag1 = 1;
-				for (int j = 0; j < list.size(); j++)
+				if (strcmp(order[i]->getPurchaser().c_str(), username.c_str()) == 0)
 				{
-					if (order[i]->getVoucherID() == list[j]->code&& list[j]->stock!=0)
+					flag1 = 1;
+					for (int j = 0; j < list.size(); j++)
 					{
-						flag2 = 1;
-						int temp = order[i]->getTotal();
-						temp = temp - list[j]->discount;
-						order[i]->setTotal(temp);
-						list[j]->stock = list[j]->stock - 1;
-						o.saveOrder(order);
-						saveListToTxt();
-						break;
+						if (order[i]->getVoucherID() == list[j]->code)
+						{
+							flag2 = 1;
+							if (list[j]->expire.compareDate(daynow, monthnow, yearnow) == 1)
+							{
+								flag3 = 1;
+								if (list[j]->stock != 0)
+								{
+									flag4 = 1;
+									int temp = order[i]->getTotal();
+									temp = temp - list[j]->discount;
+									order[i]->setTotal(temp);
+									list[j]->stock = list[j]->stock - 1;
+									o.saveOrder(order);
+									saveListToTxt();
+									break;
+								}
+							}
+						}
 					}
 				}
 			}
 		}
 		if (flag1 != 1) cout << "Doesn't have order to use voucher" << endl;
-		else if (flag2 != 1) cout << "ID voucher is valid or voucher out of stock" << endl;
+		else if (flag2 != 1) cout << "ID voucher is invalid" << endl;
+		else if (flag3 != 1) cout << "Voucher out of date" << endl;
+		else if (flag4 != 1) cout << "Voucher out of stock" << endl;
 		else cout << "Uses voucher succesfully" << endl;
 	}
 }

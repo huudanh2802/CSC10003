@@ -23,6 +23,7 @@ public:
 	string getAddress();
 	Date Dob();
 	int Phone();
+	void export_Cus(ofstream& fout);
 };
 
 #endif

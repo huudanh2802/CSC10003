@@ -48,6 +48,7 @@ public:
 	virtual int Type() = 0;
 	virtual void changeProfileInformation();
 	void changeProfileInData(const string& user_name);
+	virtual void export_Cus(ofstream& fout) = 0;
 };
 
 class Database {
