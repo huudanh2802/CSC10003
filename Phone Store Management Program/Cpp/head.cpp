@@ -398,8 +398,8 @@ void Product::createProduct()
 		{
 			if (tmp->ID == p[i]->ID)
 			{
-				cout << "ID existed! Try again? (1.Yes/ 2.No)\n";
-				cin >> check;
+				cout << "ID existed! Try again?\n";
+				check = menu("(Yes\nNo");
 				if (check == 2) return;
 			}
 			if (check == 1) break;
@@ -435,8 +435,8 @@ void Product::viewProduct()
 	loadProduct(p);
 	listProduct();
 	if (p.size() == 0) return;
-	cout << "Would you like to see product information? (1: Yes/ 2. No)" << endl;
-	cin >> choose;
+	cout << "Would you like to see product information?\n";
+	choose = menu("Yes\nNo");
 	if (choose == 1)
 	{
 		int no;
@@ -455,8 +455,8 @@ void Product::viewProductBaseOnCategories()
 	string cpu;
 	while (retry != 1)
 	{
-		cout << "Filter:\n1.Price\n2.CPU\n3.Storage\n4.Ram\n5.View list product base on categories\n";
-		cin >> choose;
+		cout << "Filter:\n";
+		choose = menu("1.Price\n2.Ram\n3.Storage\n4.CPU\nView list product base on categories");
 		switch (choose)
 		{
 		case 1:
@@ -487,10 +487,17 @@ void Product::viewProductBaseOnCategories()
 			flag = 1;
 			break;
 		case 5:
+			system("cls");
 			retry = 1;
 			break;
 		}
 	}
+	cout << "Your categories:\n";
+	cout << "Price: " << sprice << " < Your phone price < " << bprice << endl;
+	cout << "Memory: " << sram << " < Your phone memory < " << bram << endl;
+	cout << "Storage: " << sstorage << " < Your phone storage < " << bstorage << endl;
+	cout << "CPU: " << cpu << endl;
+	cout << "List phone:\n";
 	for (int i = 0; i < p.size(); i++)
 	{
 		if (p[i]->price > sprice && p[i]->price < bprice
@@ -528,8 +535,8 @@ void Product::editProduct()
 	int retry = 1, check = 1, flag = 0;
 	while (retry == 1) {
 		flag = 1;
-		cout << "Select the information to edit\n1. ID\n2. Name\n3. Price\n4. Stock\n5. CPU\n6. Ram\n7. Storage\n0. Exit\n";
-		cin >> choose;
+		cout << "Select the information to edit\n";
+		choose = menu("1. ID\n2. Name\n3. Price\n4. Stock\n5. CPU\n6. Ram\n7. Storage\n0. Exit");
 		switch (choose)
 		{
 		case 0:
@@ -547,8 +554,8 @@ void Product::editProduct()
 					if ((p[no - 1]->ID == p[i]->ID) && (i != no - 1))
 					{
 						flag = 0;
-						cout << "ID existed! Try again? (1.Yes/ 2.No)\n";
-						cin >> check;
+						cout << "ID existed! Try again?\n";
+						check = menu("(Yes\nNo");
 					}
 					if (check == 1) break;
 				}
@@ -581,15 +588,15 @@ void Product::editProduct()
 			cin >> p[no - 1]->storage;
 			break;
 		default:
-			cout << "There is no option for this. Try again? (1. Yes/ 2.No)\n";
-			cin >> retry;
+			cout << "There is no option for this. Try again?\n";
+			retry = menu("Yes\nNo");
 			if (retry == 2) flag = 2;
 			break;
 		}
 		if (choose <= 7 && choose > 0)
 		{
-			cout << "Edit more information? (1. Yes/ 2.No)\n";
-			cin >> retry;
+			cout << "Edit more information?\n";
+			retry = menu("Yes\nNo");
 		}
 	}
 	if (flag == 1)
@@ -617,8 +624,8 @@ void Product::removeProduct()
 		cin >> no;
 		if (no >= p.size())
 		{
-			cout << "This product is unavailable! Retry? (1.Yes/ 2.No)\n";
-			cin >> retry;
+			cout << "This product is unavailable! Retry?\n";
+			retry = menu("Yes\nNo");
 			if (retry == 0) return;
 		}
 	}

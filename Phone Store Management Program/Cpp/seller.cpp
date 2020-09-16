@@ -297,7 +297,6 @@ void Order::editOrderStatus()
 	string name;
 	cout << "Input name of customer you want to edit order status: ";
 	getline(cin, name);
-	getline(cin, name);
 	viewOrderStatus(order_list, name);
 	for (int i = 0; i < order_list.size(); i++)
 	{
@@ -307,12 +306,12 @@ void Order::editOrderStatus()
 			if (strcmp(name.c_str(), order_list[i]->purchaser.c_str()) == 0)
 			{
 				retry = 2;
-				cout << "Choose a transition status:\n1.Confirmed\n2.Pending\n3.Finished\n";
-				cin >> tmp;
+				cout << "Choose a transition status:\n";
+				tmp = menu("1.Confirmed\n2.Pending\n3.Finished");
 				if (tmp < 1 || tmp > 3)
 				{
-					cout << "You entered incorrectly. Try again?\n1.Yes\n2.No\n";
-					cin >> retry;
+					cout << "You entered incorrectly. Try again?\n";
+					retry = menu("1.Yes\n2.No");
 				}
 				else
 				{
