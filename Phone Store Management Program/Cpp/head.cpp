@@ -837,14 +837,15 @@ Voucher::Voucher()
 
 void Voucher::createVoucher() {
 	loadFromTxt();
+	Voucher *tmp = new Voucher;
 	cout << "The number of voucher you want to create: ";
-	cin >> stock;
+	cin >> tmp->stock;
 	cout << "Expire date: " << endl;
-	expire.input();
+	tmp->expire.input();
 	cout << "Discount (ex: 200.000 vnd) : ";
-	cin >> discount;
-	code = rand() % (RAND_MAX)+1000;
-	list.push_back(this);
+	cin >> tmp->discount;
+	tmp->code = rand() % (RAND_MAX)+1000;
+	list.push_back(tmp);
 	saveListToTxt();
 	cout << "Successfully!!!" << endl;
 }
