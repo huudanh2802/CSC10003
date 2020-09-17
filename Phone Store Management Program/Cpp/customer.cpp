@@ -1,5 +1,6 @@
 #include "..//Header//customer.h"
 #include "..//Header//password.h"
+#include "..//Header//window.h"
 
 Customer::Customer() :Account()
 {
@@ -86,7 +87,7 @@ void Customer::viewMenu(Database& account_list, int &switchS)
 			int checkOut = -1;
 			do {
 				system("cls");
-				//menu();
+				menu_main();
 				try {
 					if (choice == 0) break;
 					choice= menu( "1.View all product\n2.Add product to cart\n3.Search product\n4.View cart\n5.Remove product from cart\n6.View list of products based on categories\n7.Compare 2 products\n8.Checkout\n9.Create account\n10.Exit");
@@ -101,14 +102,14 @@ void Customer::viewMenu(Database& account_list, int &switchS)
 				{
 				case 1: {
 					system("cls");
-					//menu();
+					menu_main();
 					method.viewProduct();
 					system("pause");
 					break;
 				}
 				case 2: {
 					system("cls");
-					//menu();
+					menu_main();
 					cart.addProduct();
 					cart.calCart();
 					system("pause");
@@ -116,14 +117,14 @@ void Customer::viewMenu(Database& account_list, int &switchS)
 				}
 				case 3: {
 					system("cls");
-					//menu();
+					menu_main();
 					listProduct.searchProduct();
 					system("pause");
 					break;
 				}
 				case 4: {
 					system("cls");
-					//menu();
+					menu_main();
 					cart.viewCart();
 					system("pause");
 
@@ -131,7 +132,7 @@ void Customer::viewMenu(Database& account_list, int &switchS)
 				}
 				case 5: {
 					system("cls");
-					//menu();
+					menu_main();
 					cart.removeProduct();
 					cart.calCart();
 					system("pause");
@@ -139,13 +140,13 @@ void Customer::viewMenu(Database& account_list, int &switchS)
 				}
 				case 6: {
 					system("cls");
-					//menu();
+					menu_main();
 					method.viewProductBaseOnCategories();
 					system("pause");
 					break;
 				}
 				case 7: {
-					//menu();
+					menu_main();
 					method.compareProduct();
 					system("pause");
 					break;
@@ -154,7 +155,7 @@ void Customer::viewMenu(Database& account_list, int &switchS)
 					if (cart.viewCart())
 					{
 						system("cls");
-						//menu();
+						menu_main();
 						cout << "Create an account first" << endl;
 						account_list.createAccount(this);
 						cart.saveCartTxt(user, name);
@@ -167,7 +168,7 @@ void Customer::viewMenu(Database& account_list, int &switchS)
 				}
 				case 9: {
 					system("cls");
-					//menu();
+					menu_main();
 					account_list.createAccount(this);
 					choice = 0;
 					switchS = 1;
@@ -186,7 +187,7 @@ void Customer::viewMenu(Database& account_list, int &switchS)
 			cart.loadCartTxt(user, name);
 			do {
 				system("cls");
-				//menu();
+				menu_main();
 				if (switchS == 2) choice = 9;
 				else {
 					try {
@@ -203,14 +204,14 @@ void Customer::viewMenu(Database& account_list, int &switchS)
 				{
 				case 1: {
 					system("cls");
-					//menu();
+					menu_main();
 					method.viewProduct();
 					system("pause");
 					break;
 				}
 				case 2: {
 					system("cls");
-					//menu();
+					menu_main();
 					cart.addProduct();
 					cart.calCart();
 					cart.saveCartTxt(user, name);
@@ -219,44 +220,44 @@ void Customer::viewMenu(Database& account_list, int &switchS)
 				}
 				case 3: {
 					system("cls");
-					//menu();
+					menu_main();
 					listProduct.searchProduct();
 					system("pause");
 					break; }
 				case 4: {
 					system("cls");
-					//menu();
+					menu_main();
 					cart.viewCart();
 					system("pause");
 					break; }
 				case 5: {
 					system("cls");
-					//menu();
+					menu_main();
 					cart.removeProduct();
 					cart.saveCartTxt(user, name);
 					system("pause");
 					break; }
 				case 6: {
 					system("cls");
-					//menu();
+					menu_main();
 					method.viewProductBaseOnCategories();
 					system("pause");
 					break; }
 				case 7: {
 					system("cls");
-					//menu();
+					menu_main();
 					method.compareProduct();
 					system("pause");
 					break; }
 				case 8: {
 					system("cls");
-					//menu();
-					voucher.usesVoucher(order_list, user);
+					menu_main();
+					voucher.usesVoucher(cart, user);
 					system("pause");
 					break; }
 				case 9: {
 					system("cls");
-					//menu();
+					menu_main();
 					if (switchS == 2)
 					{
 						cart.calCart();
@@ -273,21 +274,21 @@ void Customer::viewMenu(Database& account_list, int &switchS)
 					break; }
 				case 10: {
 					system("cls");
-					//menu();
+					menu_main();
 					cart.viewOrderStatus(order_list, user);
 					system("pause");
 					break;
 				}
 				case 11: {
 					system("cls");
-					//menu();
+					menu_main();
 					cart.cancelOrder(user, order_list);
 					system("pause");
 					break;
 				}
 				case 12: {
 					system("cls");
-					//menu();
+					menu_main();
 					this->changeProfileInformation();
 					system("pause");
 					break;
@@ -510,9 +511,8 @@ bool Order::viewCart()
 		{
 			cout << "Product " << i + 1 << " :" << endl;
 			cart[i]->outputInfProduct();
-			S = S + cart[i]->getPrice();
 		}
-		cout << "Total :" << S << "$" << endl;
+		cout << "Total :" << total << "$" << endl;
 		return true;
 	}
 }
@@ -651,6 +651,11 @@ void Order::setTotal(int x)
 int Order::getVoucherID()
 {
 	return voucher_ID;
+}
+
+void Order::setVoucherID(int x)
+{
+	voucher_ID = x;
 }
 
 string Order::getPurchaser()

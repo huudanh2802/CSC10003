@@ -260,7 +260,7 @@ Account* Database::login()
 	while (true)
 	{
 		system("cls");
-		//store_management_program();
+		store_management_program();
 		cout << "Username :";
 		getline(cin, input_username);
 		cout << "Password :";
@@ -362,6 +362,8 @@ void Account::createAccount(Database& list) {
 		system("cls");
 		cout << "Enter user name: ";
 		getline(cin, user);
+		getline(cin, user);
+
 		time++;
 		if (user.compare("//")) {
 			if (!list.checkUser(user)) check = 1;
@@ -429,7 +431,7 @@ void Product::createProduct()
 void Product::viewProduct()
 {
 	system("cls");
-	//menu();
+	menu_main();
 	int choose = 0;
 	vector <Product*> p;
 	loadProduct(p);
@@ -523,7 +525,7 @@ void Product::viewProductBaseOnCategories()
 void Product::editProduct()
 {
 	system("cls");
-	//menu();
+	menu_main();
 	int no, choose;
 	vector <Product*> p;
 	loadProduct(p);
@@ -642,7 +644,7 @@ void Product::removeProduct()
 void Product::listProduct()
 {
 	system("cls");
-	//menu();
+	menu_main();
 	vector <Product*> p;
 	loadProduct(p);
 	cout << "List of product:\n";
@@ -767,7 +769,7 @@ void Order::searchProduct() {
 	string name;
 	cout << "Searching (Enter name): " << endl;
 	getline(cin, name);
-
+	getline(cin, name);
 	char* tmpName = new char[name.length() + 1];
 	strcpy(tmpName, name.c_str());
 
@@ -834,6 +836,7 @@ Voucher::Voucher()
 }
 
 void Voucher::createVoucher() {
+	loadFromTxt();
 	cout << "The number of voucher you want to create: ";
 	cin >> stock;
 	cout << "Expire date: " << endl;
@@ -841,7 +844,8 @@ void Voucher::createVoucher() {
 	cout << "Discount (ex: 200.000 vnd) : ";
 	cin >> discount;
 	code = rand() % (RAND_MAX)+1000;
-	saveToTxt();
+	list.push_back(this);
+	saveListToTxt();
 	cout << "Successfully!!!" << endl;
 }
 
@@ -1051,7 +1055,7 @@ int Date::compareDate(int day, int month, int year)
 	}
 	return 1;
 }
-void Voucher::usesVoucher(vector<Order*>& order,string username)
+void Voucher::usesVoucher(Order& cart,string username)
 {
 	int id, flag1 = 0, flag2 = 0, flag3 = 0, flag4 = 0;
 	Order o;
@@ -1077,14 +1081,13 @@ void Voucher::usesVoucher(vector<Order*>& order,string username)
 		}
 		else
 		{
-			for (int i = 0; i < order.size(); i++)
-			{
-				if (strcmp(order[i]->getPurchaser().c_str(), username.c_str()) == 0)
-				{
+			int voucher;
+			cout << "Enter ID voucher you want to use: ";
+			cin >> voucher;
 					flag1 = 1;
 					for (int j = 0; j < list.size(); j++)
 					{
-						if (order[i]->getVoucherID() == list[j]->code)
+						if (voucher == list[j]->code)
 						{
 							flag2 = 1;
 							if (list[j]->expire.compareDate(daynow, monthnow, yearnow) == 1)
@@ -1093,19 +1096,17 @@ void Voucher::usesVoucher(vector<Order*>& order,string username)
 								if (list[j]->stock != 0)
 								{
 									flag4 = 1;
-									int temp = order[i]->getTotal();
+									int temp = cart.getTotal();
 									temp = temp - list[j]->discount;
-									order[i]->setTotal(temp);
+									cart.setTotal(temp);
 									list[j]->stock = list[j]->stock - 1;
-									o.saveOrder(order);
+									cart.setVoucherID(list[j]->code);
 									saveListToTxt();
 									break;
 								}
 							}
 						}
-					}
 				}
-			}
 		}
 		if (flag1 != 1) cout << "Doesn't have order to use voucher" << endl;
 		else if (flag2 != 1) cout << "ID voucher is invalid" << endl;

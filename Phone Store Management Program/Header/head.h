@@ -139,6 +139,7 @@ public:
 	int getTotal();
 	void setTotal(int x);
 	int getVoucherID();
+	void setVoucherID(int x);
 	string getPurchaser();
 	void purchasedProductInAMonth( vector<Order*>& list);
 };
@@ -154,7 +155,7 @@ public:Voucher();
 	  void saveToTxt();
 	  void saveListToTxt();
 	  ~Voucher();
-	  void usesVoucher(vector<Order*>& Order,string username);
+	  void usesVoucher(Order& cart,string username);
 };
 int menu(const char* s);
 

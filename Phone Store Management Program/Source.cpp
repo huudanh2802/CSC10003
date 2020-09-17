@@ -1,20 +1,22 @@
 #include "Header/head.h"
 #include "Header/seller.h"
 #include "Header/customer.h"
+#include "Header/window.h"
 
 int main()
 
 {
-	//SetConsoleTitle(TEXT("Store Management Program"));
-	//HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	//HANDLE buff = GetStdHandle(STD_OUTPUT_HANDLE);
-	//COORD sizeOfBuff;
-	//sizeOfBuff.X = 120;
-	//sizeOfBuff.Y = 40;
-	//SetConsoleScreenBufferSize(buff, sizeOfBuff);
-	//HWND hwnd = GetConsoleWindow();
-	//if (hwnd != NULL) { SetWindowPos(hwnd, 0, 0, 0, 900, 700, SWP_SHOWWINDOW | SWP_NOMOVE); }
-	//loadingScreen();
+	SetConsoleTitle(TEXT("Store Management Program"));
+	textColor(15);
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	HANDLE buff = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD sizeOfBuff;
+	sizeOfBuff.X = 120;
+	sizeOfBuff.Y = 40;
+	SetConsoleScreenBufferSize(buff, sizeOfBuff);
+	HWND hwnd = GetConsoleWindow();
+	if (hwnd != NULL) { SetWindowPos(hwnd, 0, 0, 0, 900, 700, SWP_SHOWWINDOW | SWP_NOMOVE); }
+	loadingScreen();
 	Database account_list;
 	Account* login=nullptr;
 	int switchS = 0;
@@ -26,7 +28,7 @@ int main()
 		func = 1;
 		if (time != 0) {
 			system("cls");
-			//store_management_program();
+			store_management_program();
 			do {
 				try {
 					func = menu("1.Login\n2.Exit");
@@ -51,7 +53,7 @@ int main()
 				system("cls");
 				try {
 
-					//store_management_program();
+					store_management_program();
 					choice = menu("1.Login\n2.Login as guest ");
 					if (choice < 1 || choice>2)throw "Invalid input";
 				}
@@ -77,7 +79,7 @@ int main()
 						else {
 						switchS = 0;
 						system("cls");
-						//menu();
+						menu_main();
 						do {
 							try {
 								func = menu("1.Show menu\n2.View profile info\n3.Change password\n4.Logout");
@@ -95,13 +97,13 @@ int main()
 						{
 						case 1:
 							system("cls");
-							//menu();
+							menu_main();
 							login->viewMenu(account_list,switchS);
 							break;
 						case 2:
 						{
 							system("cls");
-							//menu();
+							menu_main();
 							login->viewProfile();
 							system("pause");
 							break;
@@ -109,7 +111,7 @@ int main()
 						case 3:
 						{
 							system("cls");
-							//menu();
+							menu_main();
 							login->changePassword();
 							system("pause");
 							break;

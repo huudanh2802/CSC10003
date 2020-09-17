@@ -1,5 +1,6 @@
 #include "..//Header//seller.h"
 #include "..//Header//customer.h"
+#include "..//Header//window.h"
 
 Seller::Seller() :Account()
 {
@@ -81,7 +82,7 @@ void Seller::viewMenu(Database& account_list, int& switchS)
 	int choice;
 	do {
 		system("cls");
-		//menu();
+		menu_main();
 		try {
 			choice = menu("1.Import list of product from csv file\n2.Create product\n3.Edit information of the product\n4.Search and view information of a product\n5.Create voucher\n6.Remove product\n7.Search and view profile of a customer\n8.Edit customer profile\n9.Export list of customer to a csv file\n10.View list of purchased in a month\n11.Edit order status\n12.Exit");
 			if (choice < 0 || choice>12)throw "Invalid input";
@@ -98,77 +99,77 @@ void Seller::viewMenu(Database& account_list, int& switchS)
 		{
 		case 1: {
 			system("cls"); 
-			//menu();
+			menu_main();
 			listProduct.importProductFromCSV(); 
 			system("pause");
 			break;
 		}
 		case 2: {
 			system("cls");
-			//menu();
+			menu_main();
 			method.createProduct(); 
 			system("pause"); 
 			break; 
 		}
 		case 3: {
 			system("cls");
-			//menu();
+			menu_main();
 			method.editProduct();
 			system("pause");
 			break; 
 		}
 		case 4: {
 			system("cls"); 
-			//menu();
+			menu_main();
 			listProduct.searchProduct(); 
 			system("pause");
 			break; 
 		}
 		case 5: {
 			system("cls");
-			//menu();
+			menu_main();
 			voucher.createVoucher();
 			system("pause");
 			break;
 		}
 		case 6: {
 			system("cls"); 
-			//menu();
+			menu_main();
 			method.removeProduct(); 
 			system("pause");
 			break; 
 		}
 		case 7: {
 			system("cls");	
-			//menu();
+			menu_main();
 			account_list.searchviewProfilecustomer();
 			system("pause");
 			break; 
 		}
 		case 8: {
 			system("cls"); 
-			//menu();
+			menu_main();
 			account_list.editProfilecustomer(); 
 			system("pause");
 			break; 
 		}
 		case 9: {
 			system("cls"); 
-			//menu();
+			menu_main();
 			account_list.exportCustomerlist(); 
 			system("pause");
 			break; 
 		}
 		case 10: {
 			system("cls"); 
-			//menu();
+			menu_main();
 			listProduct.purchasedProductInAMonth(order_list);
 			system("pause"); 
 			break;
 		}
 		case 11: {
 			system("cls"); 
-			//menu();
+			menu_main();
 			listProduct.editOrderStatus();
 			system("pause"); 
 			break; 
@@ -203,6 +204,7 @@ void Database::searchviewProfilecustomer()
 	int flag = 0;
 	string searchname;
 	cout << "Enter name of customer you want to search and view: ";
+	getline(cin, searchname);
 	getline(cin, searchname);
 	for (int i = 0; i < num; i++)
 	{
@@ -291,11 +293,13 @@ void Database::exportCustomerlist()
 void Order::editOrderStatus()
 {
 	system("cls");
+	menu_main();
 	vector <Order*> order_list;
 	Order tmp;
 	order_list = tmp.loadListOfOrder();
 	string name;
 	cout << "Input name of customer you want to edit order status: ";
+	getline(cin, name);
 	getline(cin, name);
 	viewOrderStatus(order_list, name);
 	for (int i = 0; i < order_list.size(); i++)
