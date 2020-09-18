@@ -44,7 +44,7 @@ Apple A13 Bionic 6 Core
 4
 64
 100041
-nv6
+nv8
 2020 08 19
 2
 0
