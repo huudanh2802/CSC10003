@@ -25,7 +25,7 @@ public:
 	int Phone();
 	void createAccount( Database& list);
 	void changeProfileInformation();
-	void export_Cus(ofstream& fout);
+	void export_file(ofstream& fout);
 };
 
 #endif

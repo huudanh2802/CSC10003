@@ -70,8 +70,9 @@ int Seller::Phone()
 	return phone;
 }
 
-void Seller::export_Cus(ofstream& fout)
+void Seller::export_file(ofstream& fout)
 {
+	return;
 }
 
 void Seller::viewMenu(Database& account_list, int& switchS)
@@ -263,7 +264,7 @@ void Database::editProfilecustomer()
 	}
 }
 
-void Customer::export_Cus(ofstream& fout)
+void Customer::export_file(ofstream& fout)
 {
 	fout << name << "," << dob.y << "/" << dob.m << "/" <<dob.d << "," << phone << "," << address << endl;
 
@@ -279,7 +280,7 @@ void Database::exportCustomerlist()
 	{
 		if (data[i]->Type() == 1)
 		{
-			data[i]->export_Cus(fo);
+			data[i]->export_file(fo);
 			flag = 1;
 		}
 	}
