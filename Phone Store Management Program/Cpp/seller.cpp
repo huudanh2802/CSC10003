@@ -295,28 +295,41 @@ void Order::editOrderStatus()
 {
 	system("cls");
 	menu_main();
+	int check = 0, id = -1;
 	vector <Order*> order_list;
 	Order tmp;
 	order_list = tmp.loadListOfOrder();
 	string name;
-	cout << "Input name of customer you want to edit order status: ";
+	cout << "Input id of customer you want to edit order status: ";
 	getline(cin, name);
 	getline(cin, name);
 	viewOrderStatus(order_list, name);
 	for (int i = 0; i < order_list.size(); i++)
 	{
+		if (strcmp(name.c_str(), order_list[i]->purchaser.c_str()) == 0)
+		{
+			check = 1;
+		}
+	}
+	if (check == 1)
+	{
+		cout << "Enter Order ID to edit: ";
+		cin >> id;
+	}
+	for (int i = 0; i < order_list.size(); i++)
+	{
 		int tmp, retry = 1;
 		while (retry == 1)
 		{
-			if (strcmp(name.c_str(), order_list[i]->purchaser.c_str()) == 0)
+			if (strcmp(name.c_str(), order_list[i]->purchaser.c_str()) == 0 && id == order_list[i]->ID)
 			{
 				retry = 2;
-				cout << "Choose a transition status:\n";
-				tmp = menu("1.Confirmed\n2.Pending\n3.Finished");
+				cout << "Choose a transition status:\n1.Confirmed\n2.Pending\n3.Finished\nYour choose: ";
+				cin >> tmp;
 				if (tmp < 1 || tmp > 3)
 				{
-					cout << "You entered incorrectly. Try again?\n";
-					retry = menu("1.Yes\n2.No");
+					cout << "You entered incorrectly. Try again?\n1.Yes\n2.No\n";
+					cin >> retry;
 				}
 				else
 				{

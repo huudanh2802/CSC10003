@@ -624,7 +624,7 @@ void Product::removeProduct()
 		retry = 2;
 		cout << "Enter numerical order to remove product: ";
 		cin >> no;
-		if (no >= p.size())
+		if (no > p.size())
 		{
 			cout << "This product is unavailable! Retry?\n";
 			retry = menu("Yes\nNo");
@@ -697,7 +697,7 @@ void Product::compareProduct()
 		else
 		{
 			system("cls");
-			cout << "Compare"; gotoxy(25, 0); cout << "Product"; gotoxy(50, 0); cout << "Product 2" << endl;
+			cout << "Compare"; gotoxy(25, 0); cout << "Product 1"; gotoxy(50, 0); cout << "Product 2" << endl;
 			cout << "Name"; gotoxy(25, 1); cout << p[p1 - 1]->name; gotoxy(50, 1); cout << p[p2 - 1]->name << endl;
 			cout << "Price"; gotoxy(25, 2); cout << p[p1 - 1]->price; gotoxy(50, 2); cout << p[p2 - 1]->price << endl;
 			cout << "CPU"; gotoxy(25, 3); cout << p[p1 - 1]->cpu; gotoxy(50, 3); cout << p[p2 - 1]->cpu << endl;
